@@ -17,14 +17,27 @@ services:
       # Optional: Pre-fill the server host for Adminer.
       # 'db' is the service name of the PostgreSQL container within the Docker network.
       ADMINER_DEFAULT_SERVER: db
+  # agent:
+  #   build:
+  #     dockerfile: Dockerfile.adk
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     GOOGLE_APPLICATION_CREDENTIALS: .key.json
+  #     PG_HOST: db
+  #     PROJECT_ID: o11y-movie-guru
+  #   volumes:
+  #     - .key.json:/app/.key.json:ro
   agent:
     build:
-      dockerfile: Dockerfile.adk
+      context: code
+      dockerfile: Dockerfile.gke
     ports:
-      - "8000:8000"
+      - "8001:8000"
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: .key.json
       PG_HOST: db
       PROJECT_ID: o11y-movie-guru
+      GOOGLE_GENAI_USE_VERTEXAI: true
     volumes:
       - .key.json:/app/.key.json:ro

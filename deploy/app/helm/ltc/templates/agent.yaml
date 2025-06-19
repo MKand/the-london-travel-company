@@ -18,7 +18,7 @@ spec:
         image: "{{ .Values.Config.Image.Repository }}/agent:{{ .Values.Config.Image.Tag }}"
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 8000
         env:
         - name: POSTGRES_HOST
           value: "db-service.ltc.svc.cluster.local"
@@ -30,60 +30,18 @@ spec:
           value: "main"
         - name: POSTGRES_DB_NAME
           value: "london-db"
-        - name: TABLE_NAME
-          value: "movies"
-        - name: REDIS_PORT
-          value: "6379"
-        - name: REDIS_HOST
-          value: "cache-service.ltc.svc.cluster.local"
-        - name: FLOWS_URL
-          value: "http://flows-service.ltc.svc.cluster.local:3400"
-        - name: LOCATION
-          value: {{ .Values.Config.geminiApiLocation }}
-        - name: ENABLE_METRICS
-          value: "true"
-        - name: OTEL_EXPORTER_OTLP_INSECURE
-          value: "true"
-        - name: OTEL_EXPORTER_OTLP_ENDPOINT
-          value: http://otel-opentelemetry-collector.otel.svc.cluster.local:4318
-        - name: FEEDBACK_URL
-          value: ""
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: server-service
+  name: agent-service
   namespace: ltc
 spec:
   selector:
-    app: server 
+    app: agent 
   ports:
   - protocol: TCP
     port: 80 
-    targetPort: 8080
-  type: ClusterIP
----
+    targetPort: 8000
+  type: LoadBalancer
 
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  name: server-route
-  namespace: ltc
-spec:
-  parentRefs:
-    - name: ltc-gateway
-      namespace: ltc
-  rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: "/server"
-      filters:
-        - type: URLRewrite
-          urlRewrite:
-            path:
-              type: ReplacePrefixMatch
-              replacePrefixMatch: "/"
-      backendRefs:
-        - name: server-service
-          port: 80

@@ -1,4 +1,3 @@
-# main.py - A multi-turn conversational agent using Google's Agent Development Kit (ADK), FastAPI, and Cloud Run.
 from .config import Config
 from .prompts import return_instructions_lyla
 from google.adk.agents import Agent
