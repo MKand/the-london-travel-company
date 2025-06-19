@@ -25,7 +25,6 @@ logger = logging.getLogger(__name__)
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "TRUE"
 os.environ["GOOGLE_CLOUD_PROJECT"] = "o11y-movie-guru"
 os.environ["GOOGLE_CLOUD_LOCATION"] = "us-central1"
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=".key.json"
 
 project = os.getenv("PROJECT_ID")
 location = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")

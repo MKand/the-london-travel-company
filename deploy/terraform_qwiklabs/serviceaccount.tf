@@ -1,7 +1,7 @@
 
 resource "google_service_account" "default" {
-  account_id   = "movie-guru-sre"
-  display_name = "movie-guru-sre"
+  account_id   = "lta-sa"
+  display_name = "lta"
   project      = var.gcp_project_id
 }
 

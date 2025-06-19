@@ -1,12 +1,13 @@
 variable "gcp_project_id" {
   type        = string
   description = "GCP Project ID"
+  default = "o11y-movie-guru"
 }
 
 variable "repo_prefix" {
   type        = string
   description = "Docker/Artifact registry prefix"
-  default     = "us-central1-docker.pkg.dev/o11y-movie-guru/movie-guru"
+  default     = "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency"
 }
 
 variable "image_tag" {
@@ -33,28 +34,10 @@ variable "vertexAI_model_location" {
   default     = "us-central1"
 }
 
-variable "locust_py_file" {
-  type        = string
-  description = "URL of the locustfile"
-  default     = "https://raw.githubusercontent.com/MKand/movie-guru/refs/heads/main/labs/observability-challenges/locust/locustfile.py"
-}
-
-variable "sql_file" {
-  type        = string
-  description = "URL of the sql file"
-  default     = "https://raw.githubusercontent.com/MKand/movie-guru/refs/heads/main/utils/pgvector/init.sql"
-}
-
-variable "otel_file" {
-  type        = string
-  description = "URL of the otel config"
-  default     = "https://raw.githubusercontent.com/MKand/movie-guru/refs/heads/main/utils/metrics/otel.values.yaml"
-}
-
 variable "helm_chart" {
   type        = string
   description = "URL of the movie guru helm char without version"
-  default     = "oci://us-central1-docker.pkg.dev/o11y-movie-guru/movie-guru/movie-guru-observability-lab"
+  default     = "oci://us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/ltc-observability-lab"
 }
 
 variable "helm_chart_version" {

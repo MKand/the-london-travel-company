@@ -39,57 +39,29 @@ resource "google_endpoints_service" "openapi_service" {
     x-google-endpoints = [
       {
         name   = "lta.endpoints.${var.gcp_project_id}.cloud.goog"
-        target = google_compute_global_address.movieguru-address.address
+        target = google_compute_global_address.lta-address.address
       },
     ]
   })
 }
 
-data "http" "locust_py_file" {
-  url = var.locust_py_file
-}
-
-data "http" "sql_file" {
-  url = var.sql_file
-}
-
-data "http" "otel_file" {
-  url = var.otel_file
-}
-
-resource "helm_release" "otel" {
-  name             = "otel"
-  repository       = "https://open-telemetry.github.io/opentelemetry-helm-charts"
-  chart            = "opentelemetry-collector"
-  namespace        = "otel"
-  create_namespace = true
-
-  set = [{
-    name  = "image.repository"
-    value = "otel/opentelemetry-collector-contrib"
-    },
-    {
-      name  = "mode"
-      value = "deployment"
-  }]
-
-  values = [
-    data.http.otel_file.response_body
-  ]
-}
 
 resource "helm_release" "lta" {
-  name             = "lta"
+  name             = "london-travel-company-app"
   chart            = var.helm_chart
-  namespace        = "lta"
+  namespace        = "ltc"
   version          = var.helm_chart_version
-  wait             = true
+  wait             = false
   create_namespace = true
 
   set = [
     {
       name  = "Config.Image.Repository"
       value = var.repo_prefix
+    },
+    {
+      name ="Config.AgentIP"
+      value = google_compute_global_address.lta-address.address
     },
     {
       name  = "Config.Image.Tag"
@@ -103,61 +75,4 @@ resource "helm_release" "lta" {
       name  = "Config.geminiApiLocation"
       value = var.vertexAI_model_location
   }]
-}
-
-resource "kubernetes_config_map" "loadtest_locustfile" {
-  metadata {
-    name = "loadtest-locustfile"
-  }
-  data = {
-    "locustfile.py" = (
-      data.http.locust_py_file.response_body
-    )
-  }
-
-}
-
-resource "helm_release" "locust" {
-  name             = "locust"
-  chart            = "oci://ghcr.io/deliveryhero/helm-charts/locust"
-  namespace        = "default"
-  version          = "0.31.6"
-  create_namespace = true
-  depends_on       = [kubernetes_config_map.loadtest_locustfile]
-  wait             = true
-  atomic           = true
-  set = [
-    {
-      name  = "loadtest.name"
-      value = "lta-loadtest"
-    },
-    {
-      name  = "loadtest.locust_locustfile_configmap"
-      value = "loadtest-locustfile"
-    },
-    {
-      name  = "loadtest.locust_locustfile"
-      value = "locustfile.py"
-    },
-    {
-      name  = "loadtest.locust_host"
-      value = "http://lta.endpoints.${var.gcp_project_id}.cloud.goog"
-    },
-    {
-      name  = "service.type"
-      value = "LoadBalancer"
-    },
-    {
-      name  = "worker.replicas"
-      value = "3"
-    }
-  ]
-}
-
-data "kubernetes_service" "locust" {
-  metadata {
-    name      = "locust"
-    namespace = "default"
-  }
-  depends_on = [helm_release.locust]
 }
