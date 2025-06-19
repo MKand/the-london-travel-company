@@ -2,6 +2,6 @@
 
 terraform {
   backend "gcs" {
-    prefix = "tfstate/obs-lab/ar"
+    prefix = "tfstate/obs-lab/lta/ar"
   }
 }

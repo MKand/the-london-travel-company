@@ -14,7 +14,7 @@
 
 
 resource "google_service_account" "cloudbuild" {
-  account_id   = "london-travel-agent-cloudbuild-${var.app_name}"
+  account_id   = "lta-cloudbuild-${var.app_name}"
   display_name = "London Travel Agent Cloud Build Service Account"
   project      = var.gcp_project_id
 }

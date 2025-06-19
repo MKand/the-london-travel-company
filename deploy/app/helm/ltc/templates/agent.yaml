@@ -1,43 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: server
-  namespace: movieguru
+  name: agent
+  namespace: ltc
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: server
+      app: agent
   template:
     metadata:
       labels:
-        app: server
+        app: agent
     spec:
       containers:
-      - name: server
-        image: "{{ .Values.Config.Image.Repository }}/chatserver:{{ .Values.Config.Image.Tag }}"
+      - name: agent
+        image: "{{ .Values.Config.Image.Repository }}/agent:{{ .Values.Config.Image.Tag }}"
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
         env:
         - name: POSTGRES_HOST
-          value: "db-service.movieguru.svc.cluster.local"
+          value: "db-service.ltc.svc.cluster.local"
         - name: PROJECT_ID
           value: {{ .Values.Config.projectID }}
         - name: POSTGRES_DB_USER_PASSWORD
-          value: "minimal"
+          value: "main"
         - name: POSTGRES_DB_USER
-          value: "minimal-user"
+          value: "main"
         - name: POSTGRES_DB_NAME
-          value: "fake-movies-db"
+          value: "london-db"
         - name: TABLE_NAME
           value: "movies"
         - name: REDIS_PORT
           value: "6379"
         - name: REDIS_HOST
-          value: "cache-service.movieguru.svc.cluster.local"
+          value: "cache-service.ltc.svc.cluster.local"
         - name: FLOWS_URL
-          value: "http://flows-service.movieguru.svc.cluster.local:3400"
+          value: "http://flows-service.ltc.svc.cluster.local:3400"
         - name: LOCATION
           value: {{ .Values.Config.geminiApiLocation }}
         - name: ENABLE_METRICS
@@ -53,7 +53,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: server-service
-  namespace: movieguru
+  namespace: ltc
 spec:
   selector:
     app: server 
@@ -68,11 +68,11 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: server-route
-  namespace: movieguru
+  namespace: ltc
 spec:
   parentRefs:
-    - name: movieguru-gateway
-      namespace: movieguru
+    - name: ltc-gateway
+      namespace: ltc
   rules:
     - matches:
         - path:
