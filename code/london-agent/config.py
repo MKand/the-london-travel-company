@@ -30,7 +30,7 @@ DB_NAME = os.getenv('PG_DB_NAME', 'london-db')
 DB_USER = os.getenv('PG_USER', 'main')
 MAX_NUM_ROWS = os.getenv('MAX_NUM_ROWS', 20)
 DB_PASSWORD = os.getenv('PG_PASSWORD', 'main')
-EMBEDDING_MODEL_NAME = "text-embedding-004"
+embedding_model_name = os.getenv("EMBEDDING_MODEL_NAME", 'text-embedding-005')
 EMBEDDING_DIMENSION = 768
 DEBUG_STATE = os.getenv("DEBUG_STATE", "false").lower() in ('true', '1', 't', 'yes', 'y')
 
@@ -57,7 +57,7 @@ class Config(BaseSettings):
     db_name: str = DB_NAME
     db_user: str = DB_USER
     db_pwd: str = DB_PASSWORD
-    embedding_model_name: str = EMBEDDING_MODEL_NAME
+    embedding_model_name: str = embedding_model_name
     max_rows: int = MAX_NUM_ROWS
     debug_state:bool = DEBUG_STATE
     project: str = os.getenv("GOOGLE_CLOUD_PROJECT")

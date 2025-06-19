@@ -4,4 +4,5 @@ Config:
     Tag: obslab-v1
     
   geminiApiLocation: us-central1
-
+  useVertexAI: "TRUE"
+  printHealthStatus: "False"

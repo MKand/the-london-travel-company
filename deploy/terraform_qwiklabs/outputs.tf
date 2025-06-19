@@ -7,7 +7,6 @@ output "ltc_ip" {
   value = google_compute_address.lta-address.address
 }
 
-
 output "ltc_address" {
   value = "http://ltc.endpoints.${var.gcp_project_id}.cloud.goog"
 }

@@ -57,10 +57,6 @@ resource "helm_release" "lta" {
 
   set = [
     {
-      name  = "Config.Image.Repository"
-      value = var.repo_prefix
-    },
-    {
       name ="Config.AgentIP"
       value = google_compute_address.lta-address.address
     },
@@ -72,7 +68,6 @@ resource "helm_release" "lta" {
       name  = "Config.projectID"
       value = var.gcp_project_id
     },
-    
     {
       name  = "Config.geminiApiLocation"
       value = var.vertexAI_model_location

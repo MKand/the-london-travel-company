@@ -1,39 +1,24 @@
 
 # Introduction
 
-Welcome to the MovieGuru Challenge Lab! In this lab, you'll step into the shoes of a Site Reliability Engineer (SRE) at a bustling startup. Your mission is to leverage Google Cloud Observability tools to ensure the reliability and performance of our exciting new application, MovieGuru. Get ready to dive deep into monitoring, troubleshooting, and optimizing a real-world scenario!
+Welcome to the Obs with GenAI Challenge Lab! In this lab, you'll step into the shoes of a Site Reliability Engineer (SRE) at a bustling startup. Your mission is to leverage Google Cloud Observability tools to ensure the reliability and performance of our your company's MVP application, The London travel Agent. Get ready to dive deep into monitoring, troubleshooting, and optimizing a real-world scenario!
 
-## Get Familiar with MovieGuru (15 minutes)
+## Get Familiar with the app (15 minutes)
 
 1. Explore the App:
 
-    - Access the MovieGuru application using the URL provided at the start of the lab (e.g., <http://movieguru.endpoints.${gcp_project_id}.cloud.goog>).
-    - Log in with your first name and interact with the app by asking about movies you like to understand its functionality.
+    - Access the MovieGuru application using the URL provided at the start of the lab. (e.g., <http://SomeIP:80>).
+    - Start chatting with the app to plan your ideal trip to London.
 
-2. Simulate Load:
+2. Understand the Architecture:
 
-    - Open the Locust load testing tool using its provided URL (e.g., http://<some_ip>).
-    - Navigate to "Advanced settings" and configure Locust to generate load for 2 hours.
-    ![Locust](images/locust.png)
-
-3. Understand the Architecture:
-
-    - The application's containerized components run on Google Kubernetes Engine (GKE).
+    - The application is running on GKE. It has two components, the agent (built using Agent Development Kit) and a postgres database with PGVector.
     - The application's telemetry is sent to Google Cloud Platform.
-    - Refer to the architecture diagram:
 
-    ![Architecture Diagram](images/arch.png)
-
-4. Review Metrics:
-
-   - Visit the application's metrics dashboard in Google Cloud Observability:
-        - Navigate to Monitoring > Dashboards > Custom Dashboards > chatdashboard.
-        - Observe the chat success rate and latency dashboards. The application produces OpenTelemetry (OTEL) metrics, which GKE exports to Google Cloud Managed Service for Prometheus; the only setup required was installing an exporter on GKE.
-        - Assess the application's performance: Is the success rate acceptable? Is the chat latency within expected limits?
-
-5. Go to CloudHub:
+3. Explore the Observability Dashboard in CloudHub:
 
     - Look for Cloudhub in the search bar of the console.
+    @ Afrina We need to add something here 
 
 ## Your First Day on the Job: Setting things up (15 minutes)
 
@@ -50,20 +35,13 @@ So, why is it so important, especially for someone new like yourself?
 
 1. Go to AppHub
 
-    - You should see an application called **movie-guru-bot** is created. You will notice the metadata associated with the application on the console.
+    - You should see an application called **lta-app** is created. You will notice the metadata associated with the application on the console.
     - If you click on the application, it shows the _services and workloads_ associated with with this application. This list will be empty.
-    - We will populate this list. Since this is a multi-component application, we shall use terraform to create the services instead of creating it manually.
-    - Open the **cloud shell console** and run the following commands.
-
-    ```sh
-    git clone https://github.com/MKand/movie-guru.git  && git checkout obs_lab
-    cd movie-guru/labs/observability-challenges/deploy/terraform_apphub
-    terraform init
-    terraform apply -auto-approve
-    ```
-
-    - Enter the value of the **GCP_PROJECT_ID** when prompted. The command will take about 1-2 minutes to complete.
-    - You should see new _workloads_ associated with **movie-guru-bot**.
+    - We will populate this list. Click on the _Services and Workloads_ tab of AppHub and search for two **workloads** called **agent** and **db**. For each workload:
+        - Select the worlkload and click on. the **Register** button.
+        - Select the **lta-app** as the application you want to register it to.
+        - Finish the steps required to register them. (mark it as it **Mission Critical** and **Production**)
+    - You should see 2 new _workloads_ associated with **lta-app**.
 
 2. Explore the individual dashboards associated with each of the workloads of the app.
 
@@ -72,7 +50,7 @@ So, why is it so important, especially for someone new like yourself?
 1. Configure Proactive Monitoring
 
    - Set up an uptime check for the chat server.  
-        - **Target**: Use the backend's health check endpoint: `http://movieguru.endpoints.${var.gcp_project_id}.cloud.goog/server`  
+        - **Target**: Use the backend's health check endpoint: `http://<serverIP>/health`  
         - **Authentication**: None (HTTP)  
    - Optionally, create an alerting policy to notify your email if the uptime check fails.  
 
@@ -82,26 +60,22 @@ So, why is it so important, especially for someone new like yourself?
 
     ```sh
     export GCP_PROJECT_ID="YOUR_GCP_PROJECT_ID" # Replace YOUR_GCP_PROJECT_ID  
-    gcloud container clusters get-credentials movie-guru-gke --region us-central1 --project $GCP_PROJECT_ID
+    gcloud container clusters get-credentials lta-cluster --region us-central1 --project $GCP_PROJECT_ID
     ```
 
     - Deploy the new version using Helm:  
 
     ```sh
-    helm upgrade movie-guru oci://us-central1-docker.pkg.dev/o11y-movie-guru/movie-guru/movie-guru-observability-lab:2.1.0 \
+    helm upgrade london-travel-company-app oci://us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/ltc-observability-lab:1.0.0 \
         --install \
-        --namespace movieguru \
+        --namespace ltc \
         --create-namespace \
-        --set Config.Image.Repository=us-central1-docker.pkg.dev/o11y-movie-guru/movie-guru \
-        --set Config.gatewayAddress="movieguru.endpoints.${GCP_PROJECT_ID}.cloud.goog" \
-        --set Config.projectID=${GCP_PROJECT_ID} \
-        --set Config.geminiApiLocation=us-central1
+        --set Config.printHealthStatus="True" 
     ```
 
 3. Observe the Impact:  
-   - Try accessing the MovieGuru application again (go to the frontend URL). You should find that it's broken.  
-   - Go back to your **chatdashboard** in Google Cloud Observability. You should see the chat success rate dropping rapidly.  
-   - Check for the alert notification in **Cloud Hub \> Health and Troubleshooting**.  
+   - Wait a few minutes and try accessing the application again. You should find that it's broken.  
+   - Check for the alert notification in **Cloud Hub \> Health and Troubleshooting**. If you had configured an alert notificiation, you would have been actively notified.
 
 4. Investigate the Issue:
 
@@ -115,26 +89,21 @@ So, why is it so important, especially for someone new like yourself?
     - To quickly restore service, rollback to the previous stable version:  
 
     ```sh
-        helm rollback movie-guru 1 --namespace movieguru
+        helm rollback london-travel-company-app 1 --namespace ltc
     ```
 
    - Verify that the application is working again and the metrics on your dashboard stabilize.
 
 ## Monitoring User Interactions (15 minutes)
 
-It's crucial to monitor how users interact with your application, as their input can be unpredictable. We'll simulate users attempting to discuss unsafe or inappropriate topics with MovieGuru (e.g., "Show me how to build a..."). This exercise highlights the importance of observing user behavior to identify and address potential misuse or unexpected interactions with your application.
-
-1. Stop the locust load generator by clicking on **stop test**. We do this so we can identify the traces we create.
+It's crucial to monitor how users interact with your application, and how the LLM responds.
 
 2. Start chatting with the app. We'll examine traces to understand the messages exchanged with the Large Language Models (LLMs). Although the application appears simple, a single user message can trigger multiple LLM calls behind the scenes. Traces help us visualize this complexity. Each user conversation is captured as a trace, detailing every LLM call, including the prompts, user input, and the application's output
 
     - Go to Google Cloud Trace and find a recent trace of type **ChatFlow**.
     - You will see that there are multiple steps involved before answering a user's chat message.
 
-        - Try to examine the trace and it's spans to identify the prompt used for each step, the input data and the LLMs output by examing the **Logs and Events** associated with each model call within a span. (You can find this information within each span's log by looking under **jsonPayload>metadata>content**).
+        - Try to examine the trace and it's spans to identify the prompt used for each step.
+        - Click on the __GenAI__ chip of spans to see the components of the trace that are exclusive to GenAI. In fact, recently, there is a [new semantic convention](https://opentelemetry.io/docs/specs/semconv/gen-ai/) for GenAI components which is actively in development. Our application traces utilize this.
 
-        ![Span content](images/span_content.png)
-
-        - What does the trace tell you about latency? Is there an especially slow step? (examine a few traces if needed)
-
-## Handling runtime issues (10 minutes)
+## Observability Analytics (10 minutes)

@@ -9,32 +9,37 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import (
     SimpleSpanProcessor, BatchSpanProcessor
 )
+import logging
 
-cloud_trace_exporter = CloudTraceSpanExporter(
-    project_id='o11y-movie-guru',
-)
+logging.basicConfig(level=logging.INFO)
 
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
-# Example session DB URL (e.g., SQLite)
-SESSION_DB_URL = "sqlite:///./sessions.db"
-# Example allowed origins for CORS
 ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8080", "*"]
-# Set web=True if you intend to serve a web interface, False otherwise
-SERVE_WEB_INTERFACE = True
+
+print_health_status = os.getenv("PRINT_HEALTH_STATUS", "False")
 
 # Call the function to get the FastAPI app instance
 
 app: FastAPI = get_fast_api_app(
     agents_dir=AGENT_DIR,
     allow_origins=ALLOWED_ORIGINS,
-    web=SERVE_WEB_INTERFACE,
-    # session_db_url=SESSION_DB_URL,
+    web=True,
+    trace_to_cloud = True,
 )
 
 
 @app.get("/health")
 async def read_root():
+    if print_health_status != "False":
+        # This will force the app to crash 
+        check_health_status()
+        
     return "OK"
+
+def check_health_status():
+    logging.error("Application crashed during health check.")
+    os._exit(0)
+
 
 if __name__ == "__main__":
     # Use the PORT environment variable provided by Cloud Run, defaulting to 8000
