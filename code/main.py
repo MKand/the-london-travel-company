@@ -9,14 +9,13 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import (
     SimpleSpanProcessor, BatchSpanProcessor
 )
+import logging
 
-cloud_trace_exporter = CloudTraceSpanExporter(
-    project_id='o11y-movie-guru',
-)
+logging.basicConfig(level=logging.INFO)
+
 
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8080", "*"]
-SERVE_WEB_INTERFACE = True
 
 print_health_status = os.getenv("PRINT_HEALTH_STATUS", "False")
 
@@ -25,7 +24,7 @@ print_health_status = os.getenv("PRINT_HEALTH_STATUS", "False")
 app: FastAPI = get_fast_api_app(
     agents_dir=AGENT_DIR,
     allow_origins=ALLOWED_ORIGINS,
-    web=SERVE_WEB_INTERFACE,
+    web=True,
     trace_to_cloud = True,
 )
 
@@ -33,9 +32,15 @@ app: FastAPI = get_fast_api_app(
 @app.get("/health")
 async def read_root():
     if print_health_status != "False":
-        # This will force the app to crash as print_health_status is spelt wrongly
-        print(f"Using variable: {print_healthstatus}")
+        # This will force the app to crash 
+        check_health_status()
+        
     return "OK"
+
+def check_health_status():
+    logging.error("Application crashed during health check.")
+    os._exit(0)
+
 
 if __name__ == "__main__":
     # Use the PORT environment variable provided by Cloud Run, defaulting to 8000
