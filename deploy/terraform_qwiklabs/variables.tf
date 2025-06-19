@@ -43,7 +43,7 @@ variable "helm_chart" {
 variable "helm_chart_version" {
   type        = string
   description = "version of the movie guru helm chart. Defaults to 1.0.0"
-  default     = "1.1.0"
+  default     = "1.0.0"
 }
 
 variable "branch_name" {

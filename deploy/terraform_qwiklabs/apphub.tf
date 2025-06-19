@@ -13,11 +13,11 @@
 # limitations under the License.
 
 
-# resource "google_apphub_service_project_attachment" "apphub-service-attachment" {
-#   service_project_attachment_id = var.gcp_project_id
-#   project                       = var.gcp_project_id
-#   depends_on                    = [google_project_service.enable_apis]
-# }
+resource "google_apphub_service_project_attachment" "apphub-service-attachment" {
+  service_project_attachment_id = var.gcp_project_id
+  project                       = var.gcp_project_id
+  depends_on                    = [google_project_service.enable_apis]
+}
 
 resource "google_apphub_application" "apphub-app" {
   location       = "global"
