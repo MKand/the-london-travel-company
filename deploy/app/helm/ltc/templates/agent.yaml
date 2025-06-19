@@ -20,16 +20,24 @@ spec:
         ports:
         - containerPort: 8000
         env:
-        - name: POSTGRES_HOST
+        - name: PG_HOST
           value: "db-service.ltc.svc.cluster.local"
         - name: PROJECT_ID
           value: {{ .Values.Config.projectID }}
-        - name: POSTGRES_DB_USER_PASSWORD
+        - name: PG_PASSWORD
           value: "main"
-        - name: POSTGRES_DB_USER
+        - name: PG_USER
           value: "main"
-        - name: POSTGRES_DB_NAME
+        - name: PG_DB_NAME
           value: "london-db"
+        - name: GOOGLE_CLOUD_PROJECT
+          value: {{ .Values.Config.projectID }}
+        - name: GOOGLE_CLOUD_LOCATION
+          value: {{ .Values.Config.geminiApiLocation }}
+        - name: GOOGLE_GENAI_USE_VERTEXAI
+          value: "TRUE"
+        - name: PORT
+          value: "8000"
 ---
 apiVersion: v1
 kind: Service

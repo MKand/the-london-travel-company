@@ -7,3 +7,4 @@ gunicorn
 deprecated
 psycopg2
 pgvector
+vertexai

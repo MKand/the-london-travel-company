@@ -7,6 +7,7 @@ from .sub_agents.search_agent.tools import (
 )
 from .tools.tools import call_db_agent
 from google.genai import types
+from vertexai.preview.reasoning_engines import AdkApp
 
 APP_NAME="LYLA"
 configs = Config()
@@ -42,3 +43,7 @@ root_agent = Agent(
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
 )
 
+app = AdkApp(
+      agent=root_agent,          # Required.
+      enable_tracing=True,  # Optional.
+)

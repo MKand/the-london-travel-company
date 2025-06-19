@@ -24,8 +24,10 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "TRUE"
 
-project = os.getenv("PROJECT_ID")
+project = os.getenv("GOOGLE_CLOUD_PROJECT")
 location = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
+
+os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "TRUE"
 DB_HOST = os.getenv('PG_HOST', 'localhost')
 DB_PORT = os.getenv('PG_PORT', '5432')
 DB_NAME = os.getenv('PG_DB_NAME', 'london-db')
