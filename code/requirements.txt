@@ -8,3 +8,4 @@ deprecated
 psycopg2
 pgvector
 vertexai
+opentelemetry-exporter-gcp-trace

@@ -3,8 +3,17 @@ import os
 import uvicorn
 from fastapi import FastAPI
 from google.adk.cli.fast_api import get_fast_api_app
+from opentelemetry import trace
+from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import (
+    SimpleSpanProcessor, BatchSpanProcessor
+)
 
-# Get the directory where main.py is located
+cloud_trace_exporter = CloudTraceSpanExporter(
+    project_id='o11y-movie-guru',
+)
+
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 # Example session DB URL (e.g., SQLite)
 SESSION_DB_URL = "sqlite:///./sessions.db"

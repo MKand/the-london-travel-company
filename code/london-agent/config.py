@@ -22,12 +22,8 @@ from google.adk.sessions import InMemorySessionService
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "TRUE"
 
-project = os.getenv("GOOGLE_CLOUD_PROJECT")
-location = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 
-os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "TRUE"
 DB_HOST = os.getenv('PG_HOST', 'localhost')
 DB_PORT = os.getenv('PG_PORT', '5432')
 DB_NAME = os.getenv('PG_DB_NAME', 'london-db')
@@ -64,8 +60,8 @@ class Config(BaseSettings):
     embedding_model_name: str = EMBEDDING_MODEL_NAME
     max_rows: int = MAX_NUM_ROWS
     debug_state:bool = DEBUG_STATE
-    project: str = project
-    location:str = location
+    project: str = os.getenv("GOOGLE_CLOUD_PROJECT")
+    location:str = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
     app_name: str = "LYLA"
     agent_settings: AgentModel = Field(default_factory=AgentModel) 
     GENAI_USE_VERTEXAI: str = Field(default="1") 

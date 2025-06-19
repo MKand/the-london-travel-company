@@ -31,13 +31,14 @@ services:
   agent:
     build:
       context: code
-      dockerfile: Dockerfile.gke
+      dockerfile: Dockerfile
     ports:
       - "8001:8000"
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: .key.json
       PG_HOST: db
-      PROJECT_ID: o11y-movie-guru
-      GOOGLE_GENAI_USE_VERTEXAI: true
+      GOOGLE_CLOUD_PROJECT: o11y-movie-guru
+      GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
+      GOOGLE_CLOUD_LOCATION: "us-central1"
     volumes:
       - .key.json:/app/.key.json:ro
