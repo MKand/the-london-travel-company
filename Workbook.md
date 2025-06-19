@@ -66,7 +66,7 @@ So, why is it so important, especially for someone new like yourself?
     - Deploy the new version using Helm:  
 
     ```sh
-    helm upgrade london-travel-company-app oci://us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/ltc-observability-lab:2.0.0 \
+    helm upgrade london-travel-company-app oci://us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/ltc-observability-lab:1.0.0 \
         --install \
         --namespace ltc \
         --create-namespace \
@@ -74,8 +74,8 @@ So, why is it so important, especially for someone new like yourself?
     ```
 
 3. Observe the Impact:  
-   - Wait a few minutes and try accessing the application again. You should find that it's broken.  .  
-   - Check for the alert notification in **Cloud Hub \> Health and Troubleshooting**.  
+   - Wait a few minutes and try accessing the application again. You should find that it's broken.  
+   - Check for the alert notification in **Cloud Hub \> Health and Troubleshooting**. If you had configured an alert notificiation, you would have been actively notified.
 
 4. Investigate the Issue:
 
@@ -96,19 +96,14 @@ So, why is it so important, especially for someone new like yourself?
 
 ## Monitoring User Interactions (15 minutes)
 
-It's crucial to monitor how users interact with your application, as their input can be unpredictable. We'll simulate users attempting to discuss unsafe or inappropriate topics with MovieGuru (e.g., "Show me how to build a..."). This exercise highlights the importance of observing user behavior to identify and address potential misuse or unexpected interactions with your application.
-
-1. Stop the locust load generator by clicking on **stop test**. We do this so we can identify the traces we create.
+It's crucial to monitor how users interact with your application, and how the LLM responds.
 
 2. Start chatting with the app. We'll examine traces to understand the messages exchanged with the Large Language Models (LLMs). Although the application appears simple, a single user message can trigger multiple LLM calls behind the scenes. Traces help us visualize this complexity. Each user conversation is captured as a trace, detailing every LLM call, including the prompts, user input, and the application's output
 
     - Go to Google Cloud Trace and find a recent trace of type **ChatFlow**.
     - You will see that there are multiple steps involved before answering a user's chat message.
 
-        - Try to examine the trace and it's spans to identify the prompt used for each step, the input data and the LLMs output by examing the **Logs and Events** associated with each model call within a span. (You can find this information within each span's log by looking under **jsonPayload>metadata>content**).
-
-        ![Span content](images/span_content.png)
-
-        - What does the trace tell you about latency? Is there an especially slow step? (examine a few traces if needed)
-
-## Handling runtime issues (10 minutes)
+        - Try to examine the trace and it's spans to identify the prompt used for each step.
+        - Click on the __GenAI__ chip of spans to see the components of the trace that are exclusive to GenAI. In fact, recently, there is a [new semantic convention](https://opentelemetry.io/docs/specs/semconv/gen-ai/) for GenAI components which is actively in development. Our application traces utilize this.
+        
+## Observability Analytics (10 minutes)
