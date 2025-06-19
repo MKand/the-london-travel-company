@@ -40,5 +40,6 @@ services:
       GOOGLE_CLOUD_PROJECT: o11y-movie-guru
       GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
       GOOGLE_CLOUD_LOCATION: "us-central1"
+      PRINT_HEALTH_STATUS: "True"
     volumes:
       - .key.json:/app/.key.json:ro

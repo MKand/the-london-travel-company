@@ -22,6 +22,8 @@ ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8080", "*"]
 # Set web=True if you intend to serve a web interface, False otherwise
 SERVE_WEB_INTERFACE = True
 
+print_health_status = os.getenv("PRINT_HEALTH_STATUS", "False")
+
 # Call the function to get the FastAPI app instance
 
 app: FastAPI = get_fast_api_app(
@@ -34,6 +36,9 @@ app: FastAPI = get_fast_api_app(
 
 @app.get("/health")
 async def read_root():
+    if print_health_status == "True":
+        # This will force the app to crash as print_health_status is spelt wrongly
+        print(f"Using variable: {print_healthstatus}")
     return "OK"
 
 if __name__ == "__main__":

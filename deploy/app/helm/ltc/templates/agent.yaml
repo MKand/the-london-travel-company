@@ -22,20 +22,14 @@ spec:
         env:
         - name: PG_HOST
           value: "db-service.ltc.svc.cluster.local"
-        - name: PROJECT_ID
-          value: {{ .Values.Config.projectID }}
-        - name: PG_PASSWORD
-          value: "main"
-        - name: PG_USER
-          value: "main"
-        - name: PG_DB_NAME
-          value: "london-db"
         - name: GOOGLE_CLOUD_PROJECT
           value: {{ .Values.Config.projectID }}
         - name: GOOGLE_CLOUD_LOCATION
           value: {{ .Values.Config.geminiApiLocation }}
-        - name: GOOGLE_GENAI_USE_VERTEXAI
+        - name:  GOOGLE_GENAI_USE_VERTEXAI
           value: "TRUE"
+        - name: PRINT_HEALTH_STATUS
+          value: {{ .Values.Config.printHealthStatus }}
         - name: PORT
           value: "8000"
 ---

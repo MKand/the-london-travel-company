@@ -50,7 +50,7 @@ So, why is it so important, especially for someone new like yourself?
 1. Configure Proactive Monitoring
 
    - Set up an uptime check for the chat server.  
-        - **Target**: Use the backend's health check endpoint: `http://movieguru.endpoints.${var.gcp_project_id}.cloud.goog/server`  
+        - **Target**: Use the backend's health check endpoint: `http://<serverIP>/health`  
         - **Authentication**: None (HTTP)  
    - Optionally, create an alerting policy to notify your email if the uptime check fails.  
 
@@ -60,25 +60,21 @@ So, why is it so important, especially for someone new like yourself?
 
     ```sh
     export GCP_PROJECT_ID="YOUR_GCP_PROJECT_ID" # Replace YOUR_GCP_PROJECT_ID  
-    gcloud container clusters get-credentials movie-guru-gke --region us-central1 --project $GCP_PROJECT_ID
+    gcloud container clusters get-credentials lta-cluster --region us-central1 --project $GCP_PROJECT_ID
     ```
 
     - Deploy the new version using Helm:  
 
     ```sh
-    helm upgrade movie-guru oci://us-central1-docker.pkg.dev/o11y-movie-guru/movie-guru/movie-guru-observability-lab:2.1.0 \
+    helm upgrade london-travel-company-app oci://us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/ltc-observability-lab:2.0.0 \
         --install \
-        --namespace movieguru \
+        --namespace ltc \
         --create-namespace \
-        --set Config.Image.Repository=us-central1-docker.pkg.dev/o11y-movie-guru/movie-guru \
-        --set Config.gatewayAddress="movieguru.endpoints.${GCP_PROJECT_ID}.cloud.goog" \
-        --set Config.projectID=${GCP_PROJECT_ID} \
-        --set Config.geminiApiLocation=us-central1
+        --set config.printHealthStatus="True" 
     ```
 
 3. Observe the Impact:  
-   - Try accessing the MovieGuru application again (go to the frontend URL). You should find that it's broken.  
-   - Go back to your **chatdashboard** in Google Cloud Observability. You should see the chat success rate dropping rapidly.  
+   - Wait a few minutes and try accessing the application again. You should find that it's broken.  .  
    - Check for the alert notification in **Cloud Hub \> Health and Troubleshooting**.  
 
 4. Investigate the Issue:
@@ -93,7 +89,7 @@ So, why is it so important, especially for someone new like yourself?
     - To quickly restore service, rollback to the previous stable version:  
 
     ```sh
-        helm rollback movie-guru 1 --namespace movieguru
+        helm rollback london-travel-company-app 1 --namespace ltc
     ```
 
    - Verify that the application is working again and the metrics on your dashboard stabilize.
