@@ -1,0 +1,614 @@
+[
+  {
+    "sight_id": "LON-001",
+    "name": "The British Museum",
+    "category": "Museum",
+    "description": "A world-famous museum showcasing two million years of human history and culture, featuring iconic artifacts like the Rosetta Stone."
+  },
+  {
+    "sight_id": "LON-002",
+    "name": "Tower of London",
+    "category": "Historic Landmark",
+    "description": "A historic castle on the River Thames, home to the Crown Jewels, legendary Yeoman Warders, and tales of royal intrigue."
+  },
+  {
+    "sight_id": "LON-003",
+    "name": "The London Eye",
+    "category": "Modern Attraction",
+    "description": "A giant cantilevered observation wheel on the South Bank, offering breathtaking 360-degree views of the city."
+  },
+  {
+    "sight_id": "LON-004",
+    "name": "Buckingham Palace",
+    "category": "Royal Palace",
+    "description": "The official residence and administrative headquarters of the monarch of the United Kingdom."
+  },
+  {
+    "sight_id": "LON-005",
+    "name": "Hyde Park",
+    "category": "Royal Park",
+    "description": "One of London's largest and most famous parks, home to the Serpentine Lake, Speaker's Corner, and seasonal events."
+  },
+  {
+    "sight_id": "LON-006",
+    "name": "Westminster Abbey",
+    "category": "Historic Landmark",
+    "description": "A magnificent Gothic abbey church that has been the site of every royal coronation since 1066."
+  },
+  {
+    "sight_id": "LON-007",
+    "name": "Houses of Parliament",
+    "category": "Government Building",
+    "description": "The seat of the UK Parliament, an iconic neo-Gothic building featuring the famous clock tower, Big Ben."
+  },
+  {
+    "sight_id": "LON-008",
+    "name": "Tate Modern",
+    "category": "Art Gallery",
+    "description": "Britain's national gallery of international modern art, housed in the former Bankside Power Station."
+  },
+  {
+    "sight_id": "LON-009",
+    "name": "St. Paul's Cathedral",
+    "category": "Historic Landmark",
+    "description": "An Anglican cathedral with a world-famous dome that has dominated the London skyline for 300 years."
+  },
+  {
+    "sight_id": "LON-010",
+    "name": "Natural History Museum",
+    "category": "Museum",
+    "description": "A leading science research centre and museum exhibiting a vast range of specimens, including its famous dinosaur skeletons."
+  },
+  {
+    "sight_id": "LON-011",
+    "name": "Victoria and Albert Museum (V&A)",
+    "category": "Museum",
+    "description": "The world's leading museum of art, design, and performance, housing a permanent collection of over 2.3 million objects."
+  },
+  {
+    "sight_id": "LON-012",
+    "name": "Science Museum",
+    "category": "Museum",
+    "description": "A major museum on Exhibition Road showcasing world-changing scientific and technological advancements."
+  },
+  {
+    "sight_id": "LON-013",
+    "name": "The National Gallery",
+    "category": "Art Gallery",
+    "description": "Located in Trafalgar Square, this gallery houses a rich collection of over 2,300 paintings dating from the mid-13th century to 1900."
+  },
+  {
+    "sight_id": "LON-014",
+    "name": "Tower Bridge",
+    "category": "Historic Landmark",
+    "description": "An iconic combined bascule and suspension bridge, famous for its glass walkway and engine rooms."
+  },
+  {
+    "sight_id": "LON-015",
+    "name": "Shakespeare's Globe",
+    "category": "Theatre",
+    "description": "A realistic reconstruction of the Globe Theatre, an Elizabethan playhouse for which William Shakespeare wrote his plays."
+  },
+  {
+    "sight_id": "LON-016",
+    "name": "The Shard",
+    "category": "Modern Attraction",
+    "description": "Western Europe's tallest building, offering stunning panoramic views from its observation deck, 'The View from The Shard'."
+  },
+  {
+    "sight_id": "LON-017",
+    "name": "Borough Market",
+    "category": "Market",
+    "description": "London's oldest and most renowned food market, offering a vibrant mix of fresh produce and gourmet street food."
+  },
+  {
+    "sight_id": "LON-018",
+    "name": "Covent Garden",
+    "category": "Neighborhood",
+    "description": "A vibrant shopping and entertainment hub in London's West End, famous for its street performers and upscale boutiques."
+  },
+  {
+    "sight_id": "LON-019",
+    "name": "Kensington Palace",
+    "category": "Royal Palace",
+    "description": "A royal residence set in Kensington Gardens, and the birthplace of Queen Victoria."
+  },
+  {
+    "sight_id": "LON-020",
+    "name": "Regent's Park",
+    "category": "Royal Park",
+    "description": "A beautiful park featuring formal gardens, a boating lake, and home to London Zoo and an Open Air Theatre."
+  },
+  {
+    "sight_id": "LON-021",
+    "name": "Camden Market",
+    "category": "Market",
+    "description": "An eclectic and diverse market known for its alternative fashion, global street food, and unique crafts."
+  },
+  {
+    "sight_id": "LON-022",
+    "name": "Greenwich Park",
+    "category": "Royal Park",
+    "description": "A former hunting park offering stunning views of the city, home to the Prime Meridian Line and the Royal Observatory."
+  },
+  {
+    "sight_id": "LON-023",
+    "name": "Royal Observatory Greenwich",
+    "category": "Museum",
+    "description": "The home of Greenwich Mean Time (GMT), where visitors can stand on the historic Prime Meridian of the world."
+  },
+  {
+    "sight_id": "LON-024",
+    "name": "Cutty Sark",
+    "category": "Historic Landmark",
+    "description": "The world's sole surviving tea clipper, now an award-winning museum ship in Greenwich."
+  },
+  {
+    "sight_id": "LON-025",
+    "name": "Trafalgar Square",
+    "category": "Landmark",
+    "description": "A famous public square featuring Nelson's Column, iconic lion statues, and the National Gallery."
+  },
+  {
+    "sight_id": "LON-026",
+    "name": "Piccadilly Circus",
+    "category": "Landmark",
+    "description": "A famous road junction and public space, known for its huge video displays and neon signs."
+  },
+  {
+    "sight_id": "LON-027",
+    "name": "Churchill War Rooms",
+    "category": "Museum",
+    "description": "The secret underground headquarters where Winston Churchill and his government directed WWII."
+  },
+  {
+    "sight_id": "LON-028",
+    "name": "Hampton Court Palace",
+    "category": "Royal Palace",
+    "description": "A magnificent Tudor palace once home to Henry VIII, featuring a famous maze and beautiful gardens."
+  },
+  {
+    "sight_id": "LON-029",
+    "name": "Kew Gardens",
+    "category": "Garden",
+    "description": "The Royal Botanic Gardens, a UNESCO World Heritage site with vast landscapes and iconic Victorian glasshouses."
+  },
+  {
+    "sight_id": "LON-030",
+    "name": "London Zoo",
+    "category": "Attraction",
+    "description": "The world's oldest scientific zoo, located in Regent's Park, housing thousands of animals."
+  },
+  {
+    "sight_id": "LON-031",
+    "name": "The National Portrait Gallery",
+    "category": "Art Gallery",
+    "description": "Houses a collection of portraits of historically important and famous British people."
+  },
+  {
+    "sight_id": "LON-032",
+    "name": "Imperial War Museum London",
+    "category": "Museum",
+    "description": "A museum that tells the story of people's experiences of modern war from WWI to conflicts today."
+  },
+  {
+    "sight_id": "LON-033",
+    "name": "The Wallace Collection",
+    "category": "Art Gallery",
+    "description": "A national museum in a historic London townhouse displaying fine and decorative arts from the 15th to the 19th centuries."
+  },
+  {
+    "sight_id": "LON-034",
+    "name": "Sir John Soane's Museum",
+    "category": "Museum",
+    "description": "The extraordinary house of the neo-classical architect Sir John Soane, left as it was at the time of his death."
+  },
+  {
+    "sight_id": "LON-035",
+    "name": "Harrods",
+    "category": "Shopping",
+    "description": "One of the world's most famous luxury department stores, known for its opulent food halls and high-end fashion."
+  },
+  {
+    "sight_id": "LON-036",
+    "name": "The Globe Theatre Tour & Exhibition",
+    "category": "Tour",
+    "description": "An expertly guided tour exploring the story of the iconic Globe Theatre and the London of Shakespeare's time."
+  },
+  {
+    "sight_id": "LON-037",
+    "name": "Tate Britain",
+    "category": "Art Gallery",
+    "description": "The home of British art from 1500 to the present day, featuring works by Turner, Constable, and Hockney."
+  },
+  {
+    "sight_id": "LON-038",
+    "name": "Southbank Centre",
+    "category": "Arts Venue",
+    "description": "A complex of artistic venues on the South Bank, including the Royal Festival Hall, Queen Elizabeth Hall, and Hayward Gallery."
+  },
+  {
+    "sight_id": "LON-039",
+    "name": "SEA LIFE London Aquarium",
+    "category": "Attraction",
+    "description": "Home to one of Europe's largest collections of global marine life, located on the South Bank."
+  },
+  {
+    "sight_id": "LON-040",
+    "name": "The London Dungeon",
+    "category": "Attraction",
+    "description": "A thrilling attraction that walks you through 1000 years of London's darkest history with live actors and rides."
+  },
+  {
+    "sight_id": "LON-041",
+    "name": "Madame Tussauds London",
+    "category": "Attraction",
+    "description": "A world-famous wax museum featuring lifelike figures of celebrities, historical icons, and royalty."
+  },
+  {
+    "sight_id": "LON-042",
+    "name": "St. James's Park",
+    "category": "Royal Park",
+    "description": "A tranquil park in the heart of ceremonial London, famous for its pelicans and views of Buckingham Palace."
+  },
+  {
+    "sight_id": "LON-043",
+    "name": "The Monument",
+    "category": "Historic Landmark",
+    "description": "A 202-foot column designed by Sir Christopher Wren to commemorate the Great Fire of London."
+  },
+  {
+    "sight_id": "LON-044",
+    "name": "Notting Hill",
+    "category": "Neighborhood",
+    "description": "A vibrant and affluent district known for its colourful terraced houses and the famous Portobello Road Market."
+  },
+  {
+    "sight_id": "LON-045",
+    "name": "Portobello Road Market",
+    "category": "Market",
+    "description": "The world's largest antiques market, also featuring fashion, food, and second-hand goods."
+  },
+  {
+    "sight_id": "LON-046",
+    "name": "Royal Albert Hall",
+    "category": "Music Venue",
+    "description": "A prestigious concert hall, best known for holding the annual Proms concerts."
+  },
+  {
+    "sight_id": "LON-047",
+    "name": "Kensington Gardens",
+    "category": "Royal Park",
+    "description": "A beautiful park adjoining Hyde Park, home to Kensington Palace, the Albert Memorial, and the Serpentine Galleries."
+  },
+  {
+    "sight_id": "LON-048",
+    "name": "Design Museum",
+    "category": "Museum",
+    "description": "A museum devoted to contemporary design in every form, from architecture and fashion to graphics and product design."
+  },
+  {
+    "sight_id": "LON-049",
+    "name": "The Old Vic",
+    "category": "Theatre",
+    "description": "A 200-year-old independent, not-for-profit theatre in Waterloo."
+  },
+  {
+    "sight_id": "LON-050",
+    "name": "Saatchi Gallery",
+    "category": "Art Gallery",
+    "description": "A contemporary art gallery in Chelsea, known for showcasing work by young and emerging artists."
+  },
+  {
+    "sight_id": "LON-051",
+    "name": "Brick Lane",
+    "category": "Neighborhood",
+    "description": "Famous for its curry houses, vintage shops, vibrant street art, and bustling Sunday market."
+  },
+  {
+    "sight_id": "LON-052",
+    "name": "Shoreditch",
+    "category": "Neighborhood",
+    "description": "A trendy and creative hub known for its street art, independent boutiques, and vibrant nightlife."
+  },
+  {
+    "sight_id": "LON-053",
+    "name": "The Barbican Centre",
+    "category": "Arts Venue",
+    "description": "A world-class performing arts centre in a notable example of Brutalist architecture, featuring a concert hall, theatres, and a conservatory."
+  },
+  {
+    "sight_id": "LON-054",
+    "name": "Museum of London",
+    "category": "Museum",
+    "description": "Tells the story of the capital from its first settlers to modern times."
+  },
+  {
+    "sight_id": "LON-055",
+    "name": "Somerset House",
+    "category": "Arts Venue",
+    "description": "A major arts and cultural centre with a spectacular neoclassical courtyard, hosting exhibitions, concerts, and an ice rink in winter."
+  },
+  {
+    "sight_id": "LON-056",
+    "name": "Royal Academy of Arts",
+    "category": "Art Gallery",
+    "description": "An independent, privately funded institution led by eminent artists and architects, hosting major exhibitions."
+  },
+  {
+    "sight_id": "LON-057",
+    "name": "Liberty London",
+    "category": "Shopping",
+    "description": "A luxury department store in a beautiful Tudor-revival building, famous for its floral and graphic prints."
+  },
+  {
+    "sight_id": "LON-058",
+    "name": "Carnaby Street",
+    "category": "Shopping",
+    "description": "A famous pedestrianised shopping street in Soho, known as the birthplace of fashion and cultural revolutions in the 1960s."
+  },
+  {
+    "sight_id": "LON-059",
+    "name": "Abbey Road Studios",
+    "category": "Landmark",
+    "description": "The most famous recording studio in the world, known for its association with The Beatles. The zebra crossing outside is an iconic photo spot."
+  },
+  {
+    "sight_id": "LON-060",
+    "name": "Canary Wharf",
+    "category": "Neighborhood",
+    "description": "A major business district in East London, known for its modern skyscrapers, public art, and extensive shopping centre."
+  },
+  {
+    "sight_id": "LON-061",
+    "name": "Emirates Air Line Cable Car",
+    "category": "Attraction",
+    "description": "A cable car link across the River Thames, providing unique aerial views of the Docklands and Greenwich Peninsula."
+  },
+  {
+    "sight_id": "LON-062",
+    "name": "The O2",
+    "category": "Music Venue",
+    "description": "A massive entertainment district inside the former Millennium Dome, including an arena, cinema, restaurants, and an urban mountaineering experience."
+  },
+  {
+    "sight_id": "LON-063",
+    "name": "Hampstead Heath",
+    "category": "Park",
+    "description": "A large, ancient parkland with swimming ponds, woodlands, and one of the highest points in London at Parliament Hill."
+  },
+  {
+    "sight_id": "LON-064",
+    "name": "Wembley Stadium",
+    "category": "Sports Venue",
+    "description": "The iconic national stadium of England, hosting major football matches and music concerts."
+  },
+  {
+    "sight_id": "LON-065",
+    "name": "Twickenham Stadium",
+    "category": "Sports Venue",
+    "description": "The home of England Rugby, the largest dedicated rugby union venue in the world."
+  },
+  {
+    "sight_id": "LON-066",
+    "name": "Wimbledon Lawn Tennis Museum",
+    "category": "Museum",
+    "description": "Explore the history of 'The Championships' at the home of tennis, with access to Centre Court."
+  },
+  {
+    "sight_id": "LON-067",
+    "name": "London Transport Museum",
+    "category": "Museum",
+    "description": "Located in Covent Garden, this museum explores the link between transport and the growth of modern London."
+  },
+  {
+    "sight_id": "LON-068",
+    "name": "Downing Street",
+    "category": "Government Building",
+    "description": "The famous street containing the official residence and office of the Prime Minister of the United Kingdom at Number 10."
+  },
+  {
+    "sight_id": "LON-069",
+    "name": "The Cenotaph",
+    "category": "Historic Landmark",
+    "description": "The United Kingdom's primary national war memorial, located on Whitehall."
+  },
+  {
+    "sight_id": "LON-070",
+    "name": "Horse Guards Parade",
+    "category": "Landmark",
+    "description": "A large parade ground off Whitehall, which is the site of the annual Trooping the Colour ceremony."
+  },
+  {
+    "sight_id": "LON-071",
+    "name": "The Gherkin (30 St Mary Axe)",
+    "category": "Modern Attraction",
+    "description": "One of London's most recognizable contemporary skyscrapers in the financial district."
+  },
+  {
+    "sight_id": "LON-072",
+    "name": "Leadenhall Market",
+    "category": "Market",
+    "description": "A beautiful covered Victorian market, famous for its ornate architecture and as a filming location for Harry Potter."
+  },
+  {
+    "sight_id": "LON-073",
+    "name": "Sky Garden",
+    "category": "Modern Attraction",
+    "description": "London's highest public garden, offering panoramic views and lush greenery from the top of the 'Walkie Talkie' building."
+  },
+  {
+    "sight_id": "LON-074",
+    "name": "Millennium Bridge",
+    "category": "Landmark",
+    "description": "A steel suspension bridge for pedestrians crossing the River Thames, linking the Tate Modern with St. Paul's Cathedral."
+  },
+  {
+    "sight_id": "LON-075",
+    "name": "Little Venice",
+    "category": "Neighborhood",
+    "description": "A picturesque canal area where the Grand Union and Regent's Canals meet, known for its colourful narrowboats and waterside cafes."
+  },
+  {
+    "sight_id": "LON-076",
+    "name": "King's Cross Station",
+    "category": "Landmark",
+    "description": "A major railway terminus famous for its beautifully restored Victorian architecture and the fictional Platform 9¾ from Harry Potter."
+  },
+  {
+    "sight_id": "LON-077",
+    "name": "Wellcome Collection",
+    "category": "Museum",
+    "description": "A free museum and library that explores health and human experience through science, art, and medicine."
+  },
+  {
+    "sight_id": "LON-078",
+    "name": "The British Library",
+    "category": "Library",
+    "description": "The national library of the United Kingdom and one of the world's greatest, holding treasures like the Magna Carta and original Beatles lyrics."
+  },
+  {
+    "sight_id": "LON-079",
+    "name": "Soho",
+    "category": "Neighborhood",
+    "description": "A vibrant area in the West End, packed with theatres, restaurants, pubs, and a lively nightlife."
+  },
+  {
+    "sight_id": "LON-080",
+    "name": "Chinatown",
+    "category": "Neighborhood",
+    "description": "A bustling neighborhood with ornate gates, traditional Chinese restaurants, bakeries, and supermarkets."
+  },
+  {
+    "sight_id": "LON-081",
+    "name": "The Royal Mews",
+    "category": "Museum",
+    "description": "A working royal stables responsible for all road travel arrangements for The King, housing the magnificent Gold State Coach."
+  },
+  {
+    "sight_id": "LON-082",
+    "name": "The Queen's Gallery",
+    "category": "Art Gallery",
+    "description": "A public art gallery at Buckingham Palace, exhibiting works of art from the Royal Collection on a rotating basis."
+  },
+  {
+    "sight_id": "LON-083",
+    "name": "Apsley House",
+    "category": "Museum",
+    "description": "The London townhouse of the Dukes of Wellington, also known as 'Number 1, London', featuring a stunning art collection."
+  },
+  {
+    "sight_id": "LON-084",
+    "name": "HMS Belfast",
+    "category": "Museum",
+    "description": "A historic Royal Navy light cruiser, now a museum ship permanently moored on the River Thames."
+  },
+  {
+    "sight_id": "LON-085",
+    "name": "Old Royal Naval College",
+    "category": "Historic Landmark",
+    "description": "A stunning architectural centrepiece of Maritime Greenwich, designed by Sir Christopher Wren, featuring the Painted Hall."
+  },
+  {
+    "sight_id": "LON-086",
+    "name": "National Maritime Museum",
+    "category": "Museum",
+    "description": "The world's largest maritime museum, filled with inspirational stories of discovery and adventure at sea."
+  },
+  {
+    "sight_id": "LON-087",
+    "name": "ArcelorMittal Orbit",
+    "category": "Modern Attraction",
+    "description": "The UK's tallest sculpture, located in Queen Elizabeth Olympic Park, featuring the world's longest and tallest tunnel slide."
+  },
+  {
+    "sight_id": "LON-088",
+    "name": "Queen Elizabeth Olympic Park",
+    "category": "Park",
+    "description": "A sporting complex and public park built for the 2012 Summer Olympics, featuring iconic venues and parklands."
+  },
+  {
+    "sight_id": "LON-089",
+    "name": "Richmond Park",
+    "category": "Royal Park",
+    "description": "The largest of London's Royal Parks, famous for its wide-open spaces, ancient trees, and herds of red and fallow deer."
+  },
+  {
+    "sight_id": "LON-090",
+    "name": "Columbia Road Flower Market",
+    "category": "Market",
+    "description": "A vibrant and fragrant street market in East London, transforming a Victorian street into an oasis of foliage and flowers every Sunday."
+  },
+  {
+    "sight_id": "LON-091",
+    "name": "The Garden at 120",
+    "category": "Garden",
+    "description": "A free public rooftop space and garden in the City of London, offering exceptional views of the surrounding skyscrapers."
+  },
+  {
+    "sight_id": "LON-092",
+    "name": "Postman's Park",
+    "category": "Park",
+    "description": "A quiet park home to the Memorial to Heroic Self-Sacrifice, a moving wall of plaques to ordinary people who died saving others."
+  },
+  {
+    "sight_id": "LON-093",
+    "name": "Leighton House Museum",
+    "category": "Museum",
+    "description": "The former home and studio of the Victorian artist Frederic, Lord Leighton, famous for its opulent Arab Hall."
+  },
+  {
+    "sight_id": "LON-094",
+    "name": "Chelsea Physic Garden",
+    "category": "Garden",
+    "description": "London's oldest botanic garden, a hidden green oasis housing a unique collection of medicinal and useful plants."
+  },
+  {
+    "sight_id": "LON-095",
+    "name": "The Courtauld Gallery",
+    "category": "Art Gallery",
+    "description": "Houses the art collection of the Courtauld Institute of Art, best known for its collection of Impressionist and Post-Impressionist paintings."
+  },
+  {
+    "sight_id": "LON-096",
+    "name": "Southwark Cathedral",
+    "category": "Historic Landmark",
+    "description": "London's oldest Gothic church, located at the southern end of London Bridge, with a history stretching back over 1,000 years."
+  },
+  {
+    "sight_id": "LON-097",
+    "name": "The Roundhouse",
+    "category": "Music Venue",
+    "description": "A legendary performing arts and concert venue in Camden Town, housed in a former railway engine shed."
+  },
+  {
+    "sight_id": "LON-098",
+    "name": "Ronnie Scott's Jazz Club",
+    "category": "Music Venue",
+    "description": "One of the world's most famous jazz clubs, located in the heart of Soho, hosting legendary musicians since 1959."
+  },
+  {
+    "sight_id": "LON-099",
+    "name": "The Faraday Museum",
+    "category": "Museum",
+    "description": "Located at the Royal Institution, this museum showcases the history of science and the groundbreaking experiments of Michael Faraday."
+  },
+  {
+    "sight_id": "LON-100",
+    "name": "Dennis Severs' House",
+    "category": "Museum",
+    "description": "A unique 'still-life drama' in a Spitalfields townhouse, offering an intimate and atmospheric time capsule of life from the 18th to the early 20th century."
+  },
+  {
+    "sight_id": "LON-101",
+    "name": "Highgate Cemetery",
+    "category": "Historic Landmark",
+    "description": "A historic cemetery known for its elaborate Gothic tombs, winding paths, and as the final resting place of Karl Marx."
+  },
+  {
+    "sight_id": "LON-102",
+    "name": "Epping Forest",
+    "category": "Park",
+    "description": "A vast area of ancient woodland on the edge of London, offering miles of walking and cycling trails."
+  }
+]

@@ -1,0 +1,61 @@
+Architecture for The London Travel Company (GCP Edition)This architecture is designed for rapid development and scalability using a pure Google Cloud stack. The core principle is to leverage managed, serverless services to eliminate infrastructure overhead, allowing you to focus on application logic and user experience with your preferred Vue.js frontend.Core PrinciplesServerless-First: No virtual machines to manage. The backend is composed of functions that run on demand.Fully Managed on GCP: Utilize Google Cloud services for hosting, CI/CD, database, authentication, and backend functions.Monorepo (Optional but Recommended): Keep your Vue frontend and backend Cloud Functions code in a single repository to streamline development and deployment.Technology Stack at a GlanceComponentTechnologyWhy?FrontendVue.js (with Vite)A progressive, high-performance framework. Vite provides an extremely fast development server.StylingTailwind CSSUtility-first CSS for building beautiful, custom designs rapidly without writing custom CSS files.CI/CD & HostingCloud Build & Firebase HostingCloud Build automatically builds and deploys your Vue app to Firebase Hosting's global CDN on every git push.AuthenticationFirebase AuthenticationComplete, secure auth solution (email/pass, Google, etc.) with a very simple SDK that integrates seamlessly with GCP.Backend APIGoogle Cloud FunctionsServerless functions (Node.js/Python) to house your core logic and orchestrate the AI agent.DatabaseFirestore (Firebase)A NoSQL, real-time document database. Incredibly easy to use, schema-less, and perfect for rapid development.AI AgentGoogle Gemini APIPowerful generative model with excellent function-calling capabilities needed for the agent.Agent Kit(Your preferred library)Your Agent Development Kit can be used within Cloud Functions to structure the interaction with the Gemini API.Architectural Diagram (All-GCP)This diagram shows how the GCP services interact.graph TD
+    A[User's Browser] --> B{Firebase Hosting};
+    B --> C[Vue.js SPA];
+
+    subgraph "Frontend (Hosted on Firebase)"
+        C;
+    end
+
+    C -->|HTTP API Calls| D[Google Cloud Functions API];
+    C -->|Auth Flow| E[Firebase Authentication];
+    C -->|Real-time data| F[Firestore Database];
+
+    subgraph "Backend (Google Cloud)"
+        D -->|AI Logic| G[Google Gemini API];
+        D -->|Data Access| F;
+        E;
+        F;
+        G;
+    end
+    
+    H[GitHub/Cloud Source Repositories] -->|git push| I[Cloud Build];
+    I -- "Builds & Deploys" --> B;
+    I -- "Deploys Functions" --> D;
+
+
+    D -- "Manages user trips" --> F;
+    E -- "Provides User ID" --> D;
+    G -- "Function Calling" --> D;
+Component Breakdown1. Frontend (The User Interface)Framework: Vue.js with Vite. You'll build the chat interface and itinerary display as Vue components. The experience will be a Single Page Application (SPA).State Management: Pinia is the official state management library for Vue and is perfect for this use case. It's lightweight, intuitive, and powerful.Styling: Tailwind CSS. This remains critical for speed.Deployment: Your Vue app will be deployed via a CI/CD pipeline.You push code to your Git repository.Google Cloud Build is triggered by the push. It runs npm run build to compile your Vue app.Cloud Build then deploys the static output (HTML, JS, CSS) to Firebase Hosting, which serves it on a global CDN.2. AuthenticationThis remains the same: Use Firebase Authentication. It's the native identity solution for GCP/Firebase and works seamlessly with Vue and Cloud Functions.The flow is identical: User logs in on the client, gets a JWT, and sends it with every API call. Your Cloud Functions validate the token.3. Backend (The Brains)This also remains unchanged. A collection of Google Cloud Functions is the ideal serverless choice here.Primary Function: chatWithLylaAn HTTP-triggered function that orchestrates the agent interaction. It doesn't care if the frontend is React or Vue; it just speaks JSON over HTTP.4. DatabaseFirestore is still the perfect choice. Its integration with Cloud Functions is native and requires zero setup. The data model described previously remains valid.5. The AI Agent: "Lyla" (The Magic)The orchestration flow within your chatWithLyla function is the same. This is where your chosen Agent Development Kit comes into play.Agent Development Kit Integration:Your kit is a library you'll use inside the chatWithLyla Cloud Function.It will simplify the "Orchestration Flow" by providing helper functions to:Define the tools (getActivities, etc.) in a structured way.Manage the conversation history.Abstract the loop of calling Gemini, checking for a function call, executing the function, and sending the result back.This kit acts as a framework for your agent's logic, running within the serverless Cloud Function environment.2-Day Development Plan (Vue Edition)Day 1: Foundation & Core UIGoal: A working UI where a user can log in, and the core Vue components are built and displayed with static data.Frontend:Set up a new Vue + Vite project with Tailwind CSS and Pinia.Build the main page layouts and Vue components (chat window, itinerary card, login screen).Integrate Firebase Authentication into your Vue app.Backend & GCP Setup:Set up your Google Cloud/Firebase project.Populate a londonSights collection in Firestore with your activity data.Set up Cloud Build triggers connected to your Git repository for deploying the Vue app to Firebase Hosting. By the end of the day, your basic UI should be live.Day 2: AI Integration & Backend LogicGoal: Bring the agent to life and connect the frontend to the backend.Backend:Write the chatWithLyla Google Cloud Function.Inside the function, integrate your Agent Development Kit to manage the tool definitions and the conversation loop with the Gemini API.Write the internal logic for the tools (e.g., the function that actually queries Firestore).Deploy the function using Cloud Build.Frontend:Connect the chat component to the deployed chatWithLyla endpoint.When the user sends a message, make a fetch call to the Cloud Function, sending the message and history.Update the chat and itinerary displays with the data received from the agent.Test the end-to-end flow.
+
+curl -X POST "http://127.0.0.1:8000/chat" -H "Content-Type: application/json" -d '{
+   "latest_message":"I am in a hurry. I will be in london for 4 days, plan some activities. I want to do fun things.",
+  "session_id": "",
+  "user_id": "a"
+}'
+
+
+curl -X POST "http://127.0.0.1:8000/chat" -H "Content-Type: application/json" -d '{
+  "latest_message": "Hello Lyla, I am travellin alone for a day and want to do a lot of things",
+  "session_id": "abc",
+  "user_id": "a"
+}'
+
+curl -X POST http://localhost:8000/apps/agent/users/u_123/sessions/s_123 \
+  -H "Content-Type: application/json" 
+
+curl -X POST http://localhost:8000/run \
+-H "Content-Type: application/json" \
+-d '{
+"appName": "agent",
+"userId": "u_123",
+"sessionId": "s_123",
+"newMessage": {
+    "role": "user",
+    "parts": [{
+    "text": "I am in a hurry. I will be in london for 4 days, plan some activities. I want to do fun things.",
+    }]
+}
+}'
+
+//https://github.com/google/adk-samples/tree/main/python/agents/RAG

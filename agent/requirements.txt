@@ -1,0 +1,8 @@
+google-adk
+fastapi
+uvicorn[standard]
+pydantic
+gunicorn
+deprecated
+psycopg2
+pgvector

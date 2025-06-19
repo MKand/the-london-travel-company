@@ -1,0 +1,1712 @@
+[
+  {
+    "sight_id": "LON-001",
+    "activities": [
+      {
+        "activity_id": "LON-001-A1",
+        "name": "General Highlights Exploration",
+        "duration_range_mins": [120, 240],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Wander through the vast collection at your own pace, ensuring you see iconic artifacts like the Rosetta Stone, the Parthenon Marbles, and the Egyptian mummies."
+      },
+      {
+        "activity_id": "LON-001-A2",
+        "name": "Expert-Led 'Around the World in 90 Minutes' Tour",
+        "duration_range_mins": [90, 90],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 15,
+        "description": "Join an official museum guide for a fast-paced tour of the museum's most famous and significant artifacts from across the globe."
+      },
+      {
+        "activity_id": "LON-001-A3",
+        "name": "Family Fun: Museum Mission",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Pick up a free family trail from the information desk and turn your visit into an exciting treasure hunt through history."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-002",
+    "activities": [
+      {
+        "activity_id": "LON-002-A1",
+        "name": "Full Tower Exploration & Crown Jewels",
+        "duration_range_mins": [180, 240],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 34,
+        "description": "Explore the entire historic fortress, see the magnificent Crown Jewels, walk the ancient walls, and visit the White Tower."
+      },
+      {
+        "activity_id": "LON-002-A2",
+        "name": "Yeoman Warder 'Beefeater' Tour",
+        "duration_range_mins": [60, 60],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Be entertained by the captivating and often gruesome tales of the Tower's history on this highly engaging guided tour. Included with admission."
+      },
+      {
+        "activity_id": "LON-002-A3",
+        "name": "Ceremony of the Keys",
+        "duration_range_mins": [35, 35],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 5,
+        "description": "Witness the ancient nightly gate-locking ritual. This is a ticketed event that must be booked months in advance."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-003",
+    "activities": [
+      {
+        "activity_id": "LON-003-A1",
+        "name": "Standard London Eye Rotation",
+        "duration_range_mins": [30, 45],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 30,
+        "description": "Take a 30-minute rotation in one of the iconic glass pods for stunning 360-degree views of London. Total experience time is longer."
+      },
+      {
+        "activity_id": "LON-003-A2",
+        "name": "London Eye: Fast Track",
+        "duration_range_mins": [30, 45],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 45,
+        "description": "Beat the queues with a pre-booked fast track ticket, giving you more time to enjoy the rest of the city."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-004",
+    "activities": [
+      {
+        "activity_id": "LON-004-A1",
+        "name": "Witness the Changing of the Guard",
+        "duration_range_mins": [45, 60],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Experience the world-famous display of British pageantry outside the palace gates. Arrive at least 30-45 minutes early for a good view. (Exterior only)"
+      },
+      {
+        "activity_id": "LON-004-A2",
+        "name": "Summer Opening: State Rooms Tour",
+        "duration_range_mins": [120, 150],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 35,
+        "description": "Gain rare access to the lavishly furnished State Rooms used by The King for official events. (Available for a limited period in summer)"
+      },
+      {
+        "activity_id": "LON-004-A3",
+        "name": "Palace Exterior Photo Opportunity",
+        "duration_range_mins": [15, 20],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Take iconic photos in front of the famous palace gates and the Victoria Memorial."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-005",
+    "activities": [
+      {
+        "activity_id": "LON-005-A1",
+        "name": "Leisurely Park Stroll & Picnic",
+        "duration_range_mins": [60, 180],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Enjoy a walk or picnic, visit the Serpentine Lake and Princess Diana Memorial Fountain, and relax in this vast green oasis."
+      },
+      {
+        "activity_id": "LON-005-A2",
+        "name": "Boating on the Serpentine Lake",
+        "duration_range_mins": [30, 60],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 12,
+        "description": "Rent a paddle boat or rowing boat for a fun and relaxing time on the famous lake. (Seasonal)"
+      },
+      {
+        "activity_id": "LON-005-A3",
+        "name": "Visit Speaker's Corner",
+        "duration_range_mins": [20, 40],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 0,
+        "description": "Witness the home of free speech, where people from all walks of life share their views on a Sunday morning."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-006",
+    "activities": [
+      {
+        "activity_id": "LON-006-A1",
+        "name": "Westminster Abbey Entry with Audio Guide",
+        "duration_range_mins": [90, 120],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 27,
+        "description": "Explore this stunning Gothic church, the site of royal coronations, weddings, and the resting place of many historical figures."
+      },
+      {
+        "activity_id": "LON-006-A2",
+        "name": "Attend Evensong Service",
+        "duration_range_mins": [45, 60],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Experience the Abbey's magnificent acoustics by attending a beautiful, traditional choral Evensong service. (Donations welcome)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-007",
+    "activities": [
+      {
+        "activity_id": "LON-007-A1",
+        "name": "Photo Stop at Big Ben & Parliament",
+        "duration_range_mins": [15, 30],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Admire and photograph the iconic exterior of the Houses of Parliament and the Elizabeth Tower (Big Ben) from Parliament Square or across the river."
+      },
+      {
+        "activity_id": "LON-007-A2",
+        "name": "Guided Tour of the Houses of Parliament",
+        "duration_range_mins": [90, 90],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 29,
+        "description": "Discover the heart of UK politics with a tour through the House of Commons, House of Lords, and historic Westminster Hall. (Booking essential)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-008",
+    "activities": [
+      {
+        "activity_id": "LON-008-A1",
+        "name": "Explore Tate Modern's Free Collection",
+        "duration_range_mins": [120, 180],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Discover international modern and contemporary art, from Picasso to Warhol, in the spectacular Turbine Hall and gallery spaces."
+      },
+      {
+        "activity_id": "LON-008-A2",
+        "name": "View from the Blavatnik Building",
+        "duration_range_mins": [20, 30],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Take the lift to the viewing level of the Blavatnik Building for a fantastic free panoramic view of the London skyline."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-009",
+    "activities": [
+      {
+        "activity_id": "LON-009-A1",
+        "name": "Cathedral Entry, Dome Climb & Crypt",
+        "duration_range_mins": [90, 150],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 25,
+        "description": "Explore Wren's masterpiece, whisper in the Whispering Gallery, climb to the Golden Gallery for spectacular views, and visit the crypt."
+      },
+      {
+        "activity_id": "LON-009-A2",
+        "name": "Experience a Choral Service",
+        "duration_range_mins": [50, 60],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Listen to the world-renowned choir during a service for a truly moving and atmospheric experience. (Donations welcome)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-010",
+    "activities": [
+      {
+        "activity_id": "LON-010-A1",
+        "name": "Dinosaur & Earth Hall Encounter",
+        "duration_range_mins": [150, 240],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Marvel at the giant dinosaur skeletons, feel the earth shake in the earthquake simulator, and explore the vast collection of natural wonders."
+      },
+      {
+        "activity_id": "LON-010-A2",
+        "name": "Visit a Ticketed Exhibition",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 16,
+        "description": "Explore one of the museum's world-class temporary exhibitions, often focusing on wildlife photography or specific scientific topics."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-011",
+    "activities": [
+      {
+        "activity_id": "LON-011-A1",
+        "name": "V&A General Visit",
+        "duration_range_mins": [120, 240],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Explore the world's leading museum of art and design, with treasures from fashion and jewellery to furniture and sculpture."
+      },
+      {
+        "activity_id": "LON-011-A2",
+        "name": "Focus on Fashion and Jewellery",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Dedicate your time to the V&A's world-renowned fashion collection and the stunning William and Judith Bollinger Jewellery Gallery."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-012",
+    "activities": [
+      {
+        "activity_id": "LON-012-A1",
+        "name": "General Science Exploration",
+        "duration_range_mins": [120, 180],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Discover world-changing inventions, from Stephenson's Rocket to the Apollo 10 command module, across multiple floors of exhibits."
+      },
+      {
+        "activity_id": "LON-012-A2",
+        "name": "Wonderlab: The Equinor Gallery",
+        "duration_range_mins": [90, 120],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 12,
+        "description": "Get hands-on with real scientific phenomena through interactive exhibits, shows, and demonstrations. (Ticketed)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-013",
+    "activities": [
+      {
+        "activity_id": "LON-013-A1",
+        "name": "Masterpieces of Western Art",
+        "duration_range_mins": [90, 150],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "See world-famous works by Van Gogh (Sunflowers), da Vinci, Botticelli, Turner, and many others in this world-class art gallery."
+      },
+      {
+        "activity_id": "LON-013-A2",
+        "name": "Free 'Art in the Making' Tour",
+        "duration_range_mins": [60, 60],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Join a free daily talk to learn more about the techniques and stories behind some of the collection's greatest paintings."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-014",
+    "activities": [
+      {
+        "activity_id": "LON-014-A1",
+        "name": "Tower Bridge Exhibition",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 12.30,
+        "description": "Walk across the high-level glass walkway, see the Victorian Engine Rooms, and learn about the bridge's history and engineering."
+      },
+      {
+        "activity_id": "LON-014-A2",
+        "name": "Watch a Bridge Lift",
+        "duration_range_mins": [15, 20],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Check the lift times online and watch the iconic bascules raise to allow a tall ship to pass through. A fantastic free spectacle."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-015",
+    "activities": [
+      {
+        "activity_id": "LON-015-A1",
+        "name": "Watch a Play as a 'Groundling'",
+        "duration_range_mins": [150, 210],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 5,
+        "description": "Experience a play as an Elizabethan would have, standing in the open-air yard for an authentic and immersive theatrical experience."
+      },
+      {
+        "activity_id": "LON-015-A2",
+        "name": "Shakespeare's Globe Theatre Tour",
+        "duration_range_mins": [50, 50],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 17,
+        "description": "Take an expertly guided tour of this faithful reconstruction of Shakespeare's iconic 'wooden O' theatre. (Separate from play tickets)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-016",
+    "activities": [
+      {
+        "activity_id": "LON-016-A1",
+        "name": "The View from The Shard",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 32,
+        "description": "Ascend to the top of Western Europe's tallest building for breathtaking 360-degree views from the indoor and open-air viewing platforms."
+      },
+      {
+        "activity_id": "LON-016-A2",
+        "name": "Cocktails at Aqua Shard",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 1,
+        "cost_gbp": 20,
+        "description": "Enjoy a sophisticated cocktail with stunning views from the atrium bar on level 31. (Cost is for one cocktail)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-017",
+    "activities": [
+      {
+        "activity_id": "LON-017-A1",
+        "name": "Gourmet Street Food Lunch",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 15,
+        "description": "Explore the vibrant stalls and choose from a huge variety of delicious street food options for lunch."
+      },
+      {
+        "activity_id": "LON-017-A2",
+        "name": "Artisan Produce Shopping",
+        "duration_range_mins": [45, 60],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 25,
+        "description": "Browse and buy from a huge range of high-quality produce, including artisan cheeses, cured meats, fresh bread, and olives."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-018",
+    "activities": [
+      {
+        "activity_id": "LON-018-A1",
+        "name": "Watch Street Performers in the Piazza",
+        "duration_range_mins": [30, 60],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Find a spot on the steps and enjoy the free, high-quality street entertainment, from opera singers to magicians."
+      },
+      {
+        "activity_id": "LON-018-A2",
+        "name": "Explore the Apple Market",
+        "duration_range_mins": [45, 75],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 10,
+        "description": "Browse the stalls in the covered market for unique handmade crafts, jewellery, and antiques. (Cost is an estimate for a small purchase)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-019",
+    "activities": [
+      {
+        "activity_id": "LON-019-A1",
+        "name": "Kensington Palace Admission",
+        "duration_range_mins": [120, 180],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 25,
+        "description": "Explore the birthplace of Queen Victoria and home to young royals for centuries. See the King's and Queen's State Apartments."
+      },
+      {
+        "activity_id": "LON-019-A2",
+        "name": "Walk through the Palace Gardens",
+        "duration_range_mins": [30, 45],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Enjoy a stroll through the beautiful and serene formal gardens adjacent to the palace, a peaceful escape from the city."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-020",
+    "activities": [
+      {
+        "activity_id": "LON-020-A1",
+        "name": "Stroll Queen Mary's Gardens",
+        "duration_range_mins": [45, 60],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Visit one of London's most beautiful formal gardens, especially in early summer when the 12,000 roses are in bloom."
+      },
+      {
+        "activity_id": "LON-020-A2",
+        "name": "Pedalo Boating on Regent's Park Lake",
+        "duration_range_mins": [30, 60],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 10,
+        "description": "Hire a pedalo and enjoy a fun trip around the picturesque boating lake. (Seasonal)"
+      },
+      {
+        "activity_id": "LON-020-A3",
+        "name": "Visit the Open Air Theatre",
+        "duration_range_mins": [120, 180],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 40,
+        "description": "Catch a play or musical in a magical setting during the summer season. A unique London experience."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-021",
+    "activities": [
+      {
+        "activity_id": "LON-021-A1",
+        "name": "Explore Camden Market",
+        "duration_range_mins": [120, 240],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 20,
+        "description": "Get lost in the labyrinth of stalls selling alternative fashion, unique gifts, and crafts. (Cost is estimate for purchase)"
+      },
+      {
+        "activity_id": "LON-021-A2",
+        "name": "Global Street Food Feast",
+        "duration_range_mins": [45, 75],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 12,
+        "description": "Sample delicious food from around the world from the extensive street food section by the canal."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-022",
+    "activities": [
+      {
+        "activity_id": "LON-022-A1",
+        "name": "Walk to the General Wolfe Statue Viewpoint",
+        "duration_range_mins": [45, 90],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Hike to the top of the hill for one of London's most iconic and protected views, overlooking the Queen's House and the skyscrapers of Canary Wharf."
+      },
+      {
+        "activity_id": "LON-022-A2",
+        "name": "Relax by the Flower Garden and Pond",
+        "duration_range_mins": [30, 60],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Find the tranquil enclosed garden area for a peaceful rest among beautiful flowerbeds and a duck pond."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-023",
+    "activities": [
+      {
+        "activity_id": "LON-023-A1",
+        "name": "Stand on the Prime Meridian Line",
+        "duration_range_mins": [60, 120],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 16,
+        "description": "Visit the home of Greenwich Mean Time (GMT), straddle the Prime Meridian with one foot in each hemisphere, and explore the historic observatory."
+      },
+      {
+        "activity_id": "LON-023-A2",
+        "name": "Attend a Planetarium Show",
+        "duration_range_mins": [45, 60],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 10,
+        "description": "Journey through space in a stunning show at the Peter Harrison Planetarium. (Can be booked with or without observatory entry)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-024",
+    "activities": [
+      {
+        "activity_id": "LON-024-A1",
+        "name": "Explore the Cutty Sark",
+        "duration_range_mins": [90, 120],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 16,
+        "description": "Climb aboard the world's sole surviving tea clipper, walk beneath its gleaming copper hull, and discover life at sea."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-025",
+    "activities": [
+      {
+        "activity_id": "LON-025-A1",
+        "name": "Trafalgar Square Photo Stop",
+        "duration_range_mins": [20, 40],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Visit the famous square, take photos with Nelson's Column and the iconic lion statues, and see the fountains."
+      },
+      {
+        "activity_id": "LON-025-A2",
+        "name": "See the Fourth Plinth Artwork",
+        "duration_range_mins": [10, 15],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Check out the latest contemporary art installation on the famous 'Fourth Plinth' in the north-west corner of the square."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-026",
+    "activities": [
+      {
+        "activity_id": "LON-026-A1",
+        "name": "Experience the Piccadilly Lights",
+        "duration_range_mins": [15, 30],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Soak in the atmosphere of London's 'Times Square', with its huge video displays and the statue of Eros. Best experienced at dusk."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-027",
+    "activities": [
+      {
+        "activity_id": "LON-027-A1",
+        "name": "Churchill War Rooms & Museum Tour",
+        "duration_range_mins": [120, 150],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 27,
+        "description": "Explore the secret underground headquarters where Churchill directed WWII and learn about his life in the interactive museum."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-028",
+    "activities": [
+      {
+        "activity_id": "LON-028-A1",
+        "name": "Hampton Court Palace, Gardens & Maze",
+        "duration_range_mins": [240, 360],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 26,
+        "description": "Discover the magnificent Tudor palace of Henry VIII, explore the stunning gardens, and get lost in the world-famous maze."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-029",
+    "activities": [
+      {
+        "activity_id": "LON-029-A1",
+        "name": "Full Day at Kew Gardens",
+        "duration_range_mins": [240, 420],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 20,
+        "description": "Spend a day exploring the vast botanical gardens, iconic Victorian glasshouses (the Palm House and Temperate House), and treetop walkway."
+      },
+      {
+        "activity_id": "LON-029-A2",
+        "name": "Visit The Hive and Great Pagoda",
+        "duration_range_mins": [90, 120],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 20,
+        "description": "Focus your visit on the multi-sensory Hive installation and climb the newly restored Great Pagoda for fantastic views. (Included in entry)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-030",
+    "activities": [
+      {
+        "activity_id": "LON-030-A1",
+        "name": "ZSL London Zoo Adventure",
+        "duration_range_mins": [240, 360],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 33,
+        "description": "Spend a day discovering thousands of animals at the world's oldest scientific zoo, seeing exhibits like Land of the Lions and Gorilla Kingdom."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-031",
+    "activities": [
+      {
+        "activity_id": "LON-031-A1",
+        "name": "Explore The National Portrait Gallery",
+        "duration_range_mins": [90, 150],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Discover portraits of famous and influential Britons from the Tudors to today, following a major refurbishment."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-032",
+    "activities": [
+      {
+        "activity_id": "LON-032-A1",
+        "name": "Imperial War Museum London Visit",
+        "duration_range_mins": [150, 210],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Explore powerful exhibits on modern conflict, from the immersive WWI galleries to the thought-provoking Holocaust exhibition."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-033",
+    "activities": [
+      {
+        "activity_id": "LON-033-A1",
+        "name": "Discover The Wallace Collection",
+        "duration_range_mins": [90, 120],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Step into a historic London townhouse and discover a treasure trove of fine art, furniture, and armour, including Hals' 'The Laughing Cavalier'."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-034",
+    "activities": [
+      {
+        "activity_id": "LON-034-A1",
+        "name": "Explore Sir John Soane's Museum",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 0,
+        "description": "Explore the eccentric and atmospheric house-museum, packed with art, antiquities, and curiosities. A truly unique experience."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-035",
+    "activities": [
+      {
+        "activity_id": "LON-035-A1",
+        "name": "Luxury Window Shopping",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Experience the opulence and stunning window displays of one of the world's most famous department stores."
+      },
+      {
+        "activity_id": "LON-035-A2",
+        "name": "Explore the Food Halls",
+        "duration_range_mins": [45, 75],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 25,
+        "description": "Marvel at the spectacular displays in the ornate Food Halls and perhaps buy a luxury treat. (Cost is an estimate for purchase)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-036",
+    "activities": [
+      {
+        "activity_id": "LON-036-A1",
+        "name": "The Globe Theatre Tour & Exhibition",
+        "duration_range_mins": [50, 50],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 17,
+        "description": "An expertly guided tour exploring the story of the iconic Globe Theatre and the London of Shakespeare's time."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-037",
+    "activities": [
+      {
+        "activity_id": "LON-037-A1",
+        "name": "Explore Tate Britain",
+        "duration_range_mins": [120, 180],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Walk through the home of British art from 1500 to the present day, with dedicated galleries for artists like J.M.W. Turner."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-038",
+    "activities": [
+      {
+        "activity_id": "LON-038-A1",
+        "name": "Southbank Centre Book Market",
+        "duration_range_mins": [20, 40],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Browse for second-hand books at the bustling market under Waterloo Bridge, open daily."
+      },
+      {
+        "activity_id": "LON-038-A2",
+        "name": "Attend a Free Foyer Performance",
+        "duration_range_mins": [30, 60],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Check the schedule for free music, workshops, and performances in the foyer of the Royal Festival Hall."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-039",
+    "activities": [
+      {
+        "activity_id": "LON-039-A1",
+        "name": "SEA LIFE London Aquarium Visit",
+        "duration_range_mins": [120, 150],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 30,
+        "description": "Discover a huge collection of global marine life, walk through the shark tunnel, and see penguins and jellyfish."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-040",
+    "activities": [
+      {
+        "activity_id": "LON-040-A1",
+        "name": "The London Dungeon Experience",
+        "duration_range_mins": [90, 110],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 29.50,
+        "description": "A thrilling and scary attraction that walks you through London's darkest history with live actors and rides. (Not for the faint-hearted)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-041",
+    "activities": [
+      {
+        "activity_id": "LON-041-A1",
+        "name": "Meet the Stars at Madame Tussauds",
+        "duration_range_mins": [120, 180],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 36,
+        "description": "Pose with wax figures of your favourite celebrities, historical icons, royalty, and superheroes."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-042",
+    "activities": [
+      {
+        "activity_id": "LON-042-A1",
+        "name": "Feed the Pelicans",
+        "duration_range_mins": [30, 45],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Stroll through this beautiful park and see the famous pelicans being fed daily between 2:30 PM and 3:00 PM."
+      },
+      {
+        "activity_id": "LON-042-A2",
+        "name": "View of Buckingham Palace from the Blue Bridge",
+        "duration_range_mins": [15, 20],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Walk to the middle of the Blue Bridge over the lake for a classic, picture-perfect view of Buckingham Palace."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-043",
+    "activities": [
+      {
+        "activity_id": "LON-043-A1",
+        "name": "Climb The Monument",
+        "duration_range_mins": [45, 60],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 5.80,
+        "description": "Climb the 311 spiral steps to the top of Sir Christopher Wren's column for panoramic views and receive a certificate upon completion."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-044",
+    "activities": [
+      {
+        "activity_id": "LON-044-A1",
+        "name": "Walk and Photograph Colourful Houses",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Wander the charming streets and mews of Notting Hill to see and photograph the iconic pastel-coloured terraced houses."
+      },
+      {
+        "activity_id": "LON-044-A2",
+        "name": "Notting Hill Film Locations Tour",
+        "duration_range_mins": [45, 60],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Take a self-guided walk to find famous locations from the film 'Notting Hill', including the blue door and the travel bookshop."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-045",
+    "activities": [
+      {
+        "activity_id": "LON-045-A1",
+        "name": "Antique Hunting on Portobello Road",
+        "duration_range_mins": [120, 180],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 20,
+        "description": "Explore the world's largest antiques market on a Saturday, browsing for unique treasures and vintage finds. (Cost is estimate for purchase)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-046",
+    "activities": [
+      {
+        "activity_id": "LON-046-A1",
+        "name": "Royal Albert Hall Guided Tour",
+        "duration_range_mins": [60, 75],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 16.50,
+        "description": "Take a fascinating tour of this iconic concert hall, see the auditorium, and maybe even hear musicians rehearsing."
+      },
+      {
+        "activity_id": "LON-046-A2",
+        "name": "Attend a Concert or Event",
+        "duration_range_mins": [120, 180],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 50,
+        "description": "Experience a live performance, from classical proms to rock concerts, in this legendary venue. (Cost varies wildly)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-047",
+    "activities": [
+      {
+        "activity_id": "LON-047-A1",
+        "name": "Visit the Albert Memorial and Serpentine Galleries",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Admire the ornate Albert Memorial, then visit the two Serpentine Galleries for contemporary art exhibitions."
+      },
+      {
+        "activity_id": "LON-047-A2",
+        "name": "Diana Memorial Playground",
+        "duration_range_mins": [60, 120],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Let the kids play in this huge, magical playground inspired by Peter Pan, featuring a giant pirate ship."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-048",
+    "activities": [
+      {
+        "activity_id": "LON-048-A1",
+        "name": "Explore the Design Museum",
+        "duration_range_mins": [90, 150],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 12,
+        "description": "Discover the world of contemporary design, from architecture and fashion to graphics and digital design. (Cost for paid exhibition)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-049",
+    "activities": [
+      {
+        "activity_id": "LON-049-A1",
+        "name": "See a Play at The Old Vic",
+        "duration_range_mins": [150, 180],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 35,
+        "description": "Experience world-class theatre at this iconic, independent London playhouse. (Cost is an estimate for a mid-range seat)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-050",
+    "activities": [
+      {
+        "activity_id": "LON-050-A1",
+        "name": "Visit Saatchi Gallery",
+        "duration_range_mins": [60, 120],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Discover cutting-edge contemporary art by emerging and international artists in a beautiful gallery space. (Some exhibitions may be ticketed)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-051",
+    "activities": [
+      {
+        "activity_id": "LON-051-A1",
+        "name": "Enjoy a Brick Lane Curry",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 20,
+        "description": "Experience London's famous 'curry mile' by having a meal at one of the many Bangladeshi restaurants."
+      },
+      {
+        "activity_id": "LON-051-A2",
+        "name": "Explore Vintage Shops and Street Art",
+        "duration_range_mins": [90, 120],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Hunt for vintage clothing bargains and spot vibrant street art and graffiti down the side streets."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-052",
+    "activities": [
+      {
+        "activity_id": "LON-052-A1",
+        "name": "Street Art Walking Tour",
+        "duration_range_mins": [90, 120],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Take a self-guided tour of Shoreditch's streets to discover an ever-changing outdoor gallery of work by artists from around the world."
+      },
+      {
+        "activity_id": "LON-052-A2",
+        "name": "Browse Independent Boutiques",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 0,
+        "description": "Explore the unique and trendy independent shops and boutiques that define Shoreditch's creative character."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-053",
+    "activities": [
+      {
+        "activity_id": "LON-053-A1",
+        "name": "Explore the Barbican Conservatory",
+        "duration_range_mins": [45, 60],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Visit the hidden tropical oasis on the Barbican's roof, the second biggest conservatory in London. (Open on select days, booking required)"
+      },
+      {
+        "activity_id": "LON-053-A2",
+        "name": "Architecture Walk",
+        "duration_range_mins": [30, 45],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 0,
+        "description": "Walk the highwalks and admire the unique and controversial Brutalist architecture of the Barbican Estate."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-054",
+    "activities": [
+      {
+        "activity_id": "LON-054-A1",
+        "name": "Journey Through London's History",
+        "duration_range_mins": [120, 180],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Discover the story of the capital from Roman times to the present day, with reconstructed streets and immersive galleries."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-055",
+    "activities": [
+      {
+        "activity_id": "LON-055-A1",
+        "name": "Winter Ice Skating",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 17,
+        "description": "Go ice skating in one of London's most beautiful settings, the neoclassical courtyard of Somerset House. (Seasonal)"
+      },
+      {
+        "activity_id": "LON-055-A2",
+        "name": "Summer Series Concert",
+        "duration_range_mins": [120, 240],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 45,
+        "description": "Attend an open-air concert in the spectacular courtyard during the annual Summer Series. (Seasonal)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-056",
+    "activities": [
+      {
+        "activity_id": "LON-056-A1",
+        "name": "Visit the Summer Exhibition",
+        "duration_range_mins": [90, 150],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 22,
+        "description": "Visit the world's largest open-submission art show, a fixture of the London summer since 1769."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-057",
+    "activities": [
+      {
+        "activity_id": "LON-057-A1",
+        "name": "Shop for Liberty Fabrics",
+        "duration_range_mins": [45, 75],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 30,
+        "description": "Explore the iconic Tudor-revival building and browse its world-famous collection of floral and graphic print fabrics. (Cost estimate for 1m fabric)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-058",
+    "activities": [
+      {
+        "activity_id": "LON-058-A1",
+        "name": "Explore Carnaby Street",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Walk down the famous pedestrianised street, browse the flagship stores and independent boutiques, and see the unique art installations."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-059",
+    "activities": [
+      {
+        "activity_id": "LON-059-A1",
+        "name": "Recreate the Abbey Road Album Cover",
+        "duration_range_mins": [20, 40],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Join fans from around the world to take your photo on the iconic zebra crossing outside the studios. Be careful of traffic!"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-060",
+    "activities": [
+      {
+        "activity_id": "LON-060-A1",
+        "name": "Modern Architecture & Public Art Walk",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Explore the Canary Wharf estate, admire the modern skyscrapers, and discover over 75 works of public art."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-061",
+    "activities": [
+      {
+        "activity_id": "LON-061-A1",
+        "name": "Ride the Emirates Air Line Cable Car",
+        "duration_range_mins": [20, 30],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 5,
+        "description": "Take a one-way trip across the River Thames for unique aerial views of the Docklands, The O2, and Greenwich Peninsula."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-062",
+    "activities": [
+      {
+        "activity_id": "LON-062-A1",
+        "name": "Up at The O2 - Climb the Dome",
+        "duration_range_mins": [90, 90],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 35,
+        "description": "Take an exhilarating guided climb over the roof of The O2 for incredible views of the city. (Ages 8+)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-063",
+    "activities": [
+      {
+        "activity_id": "LON-063-A1",
+        "name": "Walk to Parliament Hill Viewpoint",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Enjoy a walk through the wild parkland of Hampstead Heath and climb Parliament Hill for a famous, protected view of the London skyline."
+      },
+      {
+        "activity_id": "LON-063-A2",
+        "name": "Swim in the Hampstead Ponds",
+        "duration_range_mins": [60, 120],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 4.50,
+        "description": "Take a dip in one of the famous open-air swimming ponds for a bracing and uniquely London experience. (Seasonal, for strong swimmers)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-064",
+    "activities": [
+      {
+        "activity_id": "LON-064-A1",
+        "name": "Wembley Stadium Tour",
+        "duration_range_mins": [75, 90],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 24,
+        "description": "Go behind the scenes at the home of English football, visit the changing rooms, and walk through the players' tunnel."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-065",
+    "activities": [
+      {
+        "activity_id": "LON-065-A1",
+        "name": "Twickenham Stadium Tour & World Rugby Museum",
+        "duration_range_mins": [120, 150],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 27,
+        "description": "Visit the home of England Rugby, see the pitch from the Royal Box, and explore the ultimate collection of rugby memorabilia."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-066",
+    "activities": [
+      {
+        "activity_id": "LON-066-A1",
+        "name": "Wimbledon Lawn Tennis Museum Visit",
+        "duration_range_mins": [90, 120],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 15,
+        "description": "Explore the history of tennis from its origins to the present day and get a peek at the famous Centre Court."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-067",
+    "activities": [
+      {
+        "activity_id": "LON-067-A1",
+        "name": "Explore the London Transport Museum",
+        "duration_range_mins": [120, 180],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 24,
+        "description": "Climb aboard historic buses and trains, and explore the link between transport and the growth of modern London. Great for families."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-068",
+    "activities": [
+      {
+        "activity_id": "LON-068-A1",
+        "name": "View of Downing Street",
+        "duration_range_mins": [10, 20],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Look through the security gates on Whitehall to catch a glimpse of the famous black door of Number 10, the Prime Minister's residence."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-069",
+    "activities": [
+      {
+        "activity_id": "LON-069-A1",
+        "name": "Pay Respects at The Cenotaph",
+        "duration_range_mins": [5, 15],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Take a moment to view the United Kingdom's primary national war memorial on the route between Parliament and Trafalgar Square."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-070",
+    "activities": [
+      {
+        "activity_id": "LON-070-A1",
+        "name": "Watch the Changing of the King's Life Guard",
+        "duration_range_mins": [30, 45],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "See the household cavalry change guard in a daily ceremony that is smaller but just as impressive as the one at Buckingham Palace."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-071",
+    "activities": [
+      {
+        "activity_id": "LON-071-A1",
+        "name": "Admire The Gherkin from the outside",
+        "duration_range_mins": [10, 20],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Take a walk around the base of one of London's most recognizable contemporary skyscrapers and appreciate its unique design."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-072",
+    "activities": [
+      {
+        "activity_id": "LON-072-A1",
+        "name": "Explore Leadenhall Market",
+        "duration_range_mins": [30, 60],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Wander through the ornate and beautiful covered Victorian market, admiring the architecture and browsing the boutique shops."
+      },
+      {
+        "activity_id": "LON-072-A2",
+        "name": "Find Harry Potter's Diagon Alley Entrance",
+        "duration_range_mins": [10, 15],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Seek out the blue door in the market that was used as the entrance to the Leaky Cauldron in the first Harry Potter film."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-073",
+    "activities": [
+      {
+        "activity_id": "LON-073-A1",
+        "name": "Relax in the Sky Garden",
+        "duration_range_mins": [45, 90],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Enjoy panoramic city views from London's highest public garden. Booking a free ticket in advance is essential."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-074",
+    "activities": [
+      {
+        "activity_id": "LON-074-A1",
+        "name": "Walk Across the Millennium Bridge",
+        "duration_range_mins": [15, 25],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Stroll across the pedestrian bridge for fantastic, direct views of St. Paul's Cathedral at one end and Tate Modern at the other."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-075",
+    "activities": [
+      {
+        "activity_id": "LON-075-A1",
+        "name": "Canal Boat Trip to Camden",
+        "duration_range_mins": [50, 60],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 14,
+        "description": "Take a scenic waterbus ride along Regent's Canal from the picturesque Little Venice to the lively Camden Lock."
+      },
+      {
+        "activity_id": "LON-075-A2",
+        "name": "Waterside Cafe Stop",
+        "duration_range_mins": [30, 45],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 8,
+        "description": "Relax at one of the charming cafes overlooking the canal junction and watch the narrowboats go by."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-076",
+    "activities": [
+      {
+        "activity_id": "LON-076-A1",
+        "name": "Platform 9¾ Photo Op",
+        "duration_range_mins": [20, 60],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Visit the Harry Potter photo opportunity spot with a luggage trolley disappearing into the wall. Be prepared for long queues."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-077",
+    "activities": [
+      {
+        "activity_id": "LON-077-A1",
+        "name": "Explore the Wellcome Collection",
+        "duration_range_mins": [90, 120],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Visit the 'free destination for the incurably curious' and explore fascinating exhibitions on health, life, and our place in the world."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-078",
+    "activities": [
+      {
+        "activity_id": "LON-078-A1",
+        "name": "See the Treasures of the British Library",
+        "duration_range_mins": [45, 75],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Visit the Sir John Ritblat Gallery to see world-famous items like the Magna Carta, Shakespeare's First Folio, and original Beatles lyrics."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-079",
+    "activities": [
+      {
+        "activity_id": "LON-079-A1",
+        "name": "Pre-Theatre Dinner in Soho",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 30,
+        "description": "Soak up the vibrant atmosphere and grab a meal from one of the hundreds of diverse restaurants before a West End show."
+      },
+      {
+        "activity_id": "LON-079-A2",
+        "name": "Explore Soho's Hidden Alleys",
+        "duration_range_mins": [45, 60],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 0,
+        "description": "Wander through the narrow streets and passages of Soho to discover its history, quirky shops, and unique character."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-080",
+    "activities": [
+      {
+        "activity_id": "LON-080-A1",
+        "name": "Authentic Dim Sum Lunch",
+        "duration_range_mins": [60, 75],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 20,
+        "description": "Explore the bustling streets of Chinatown and enjoy a traditional dim sum meal at one of the many popular restaurants."
+      },
+      {
+        "activity_id": "LON-080-A2",
+        "name": "Browse for Treats at a Chinese Bakery",
+        "duration_range_mins": [15, 20],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 5,
+        "description": "Step into one of the local bakeries and try a delicious and authentic treat like a custard bun or a sweet pastry."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-081",
+    "activities": [
+      {
+        "activity_id": "LON-081-A1",
+        "name": "Visit The Royal Mews",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 15,
+        "description": "See the spectacular Gold State Coach and other royal carriages in one of the finest working stables in existence."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-082",
+    "activities": [
+      {
+        "activity_id": "LON-082-A1",
+        "name": "Visit The Queen's Gallery Exhibition",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 17,
+        "description": "View a changing selection of magnificent paintings, drawings, and treasures from the Royal Collection."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-083",
+    "activities": [
+      {
+        "activity_id": "LON-083-A1",
+        "name": "Explore Apsley House",
+        "duration_range_mins": [90, 120],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 12.50,
+        "description": "Visit 'Number 1, London', the home of the first Duke of Wellington, and see his stunning collection of art and treasures."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-084",
+    "activities": [
+      {
+        "activity_id": "LON-084-A1",
+        "name": "Explore all nine decks of HMS Belfast",
+        "duration_range_mins": [120, 180],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 25,
+        "description": "Climb aboard the historic Royal Navy warship and discover what life was like at sea, from the engine rooms to the flag deck."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-085",
+    "activities": [
+      {
+        "activity_id": "LON-085-A1",
+        "name": "Visit the Painted Hall",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 13.50,
+        "description": "Marvel at 'Britain's Sistine Chapel', the spectacular baroque Painted Hall at the heart of the Maritime Greenwich UNESCO World Heritage Site."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-086",
+    "activities": [
+      {
+        "activity_id": "LON-086-A1",
+        "name": "National Maritime Museum Visit",
+        "duration_range_mins": [120, 180],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Explore Britain's epic relationship with the sea, see Nelson's coat from the Battle of Trafalgar, and let kids run wild in the AHOY! gallery."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-087",
+    "activities": [
+      {
+        "activity_id": "LON-087-A1",
+        "name": "Ride The Slide at the ArcelorMittal Orbit",
+        "duration_range_mins": [30, 45],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 16.75,
+        "description": "Take in the views from the top of the UK's tallest sculpture before riding the world's longest and tallest tunnel slide. (Height/age restrictions apply)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-088",
+    "activities": [
+      {
+        "activity_id": "LON-088-A1",
+        "name": "Explore Queen Elizabeth Olympic Park",
+        "duration_range_mins": [90, 180],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Walk or cycle through the parklands, see the iconic 2012 Olympic venues, and enjoy the playgrounds and fountains."
+      },
+      {
+        "activity_id": "LON-088-A2",
+        "name": "Swim at the London Aquatics Centre",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 6,
+        "description": "Take a swim in the spectacular Zaha Hadid-designed pool that hosted the 2012 Olympic swimming events."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-089",
+    "activities": [
+      {
+        "activity_id": "LON-089-A1",
+        "name": "Deer Spotting in Richmond Park",
+        "duration_range_mins": [120, 240],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Go for a long walk or cycle in London's largest Royal Park and look for the herds of wild red and fallow deer. Keep a respectful distance."
+      },
+      {
+        "activity_id": "LON-089-A2",
+        "name": "Visit Isabella Plantation",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Explore the stunning 40-acre woodland garden, especially in late spring when the azaleas and rhododendrons are in full bloom."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-090",
+    "activities": [
+      {
+        "activity_id": "LON-090-A1",
+        "name": "Sunday Morning Flower Market",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 15,
+        "description": "Experience the vibrant sights, sounds, and smells of this bustling flower market. Arrive early to avoid the biggest crowds. (Cost is estimate for purchase)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-091",
+    "activities": [
+      {
+        "activity_id": "LON-091-A1",
+        "name": "Visit The Garden at 120",
+        "duration_range_mins": [30, 45],
+        "kid_friendliness_score": 4,
+        "cost_gbp": 0,
+        "description": "Enjoy exceptional free views of the surrounding skyscrapers from this public rooftop garden in the heart of the City. No booking required."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-092",
+    "activities": [
+      {
+        "activity_id": "LON-092-A1",
+        "name": "Visit the Memorial to Heroic Self-Sacrifice",
+        "duration_range_mins": [15, 30],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Take a quiet moment in this peaceful park to read the moving memorial plaques dedicated to ordinary people who died saving others."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-093",
+    "activities": [
+      {
+        "activity_id": "LON-093-A1",
+        "name": "Explore Leighton House Museum",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 11,
+        "description": "Visit the opulent former home and studio of Victorian artist Frederic, Lord Leighton, and marvel at its stunning Arab Hall."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-094",
+    "activities": [
+      {
+        "activity_id": "LON-094-A1",
+        "name": "Visit Chelsea Physic Garden",
+        "duration_range_mins": [90, 120],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 13.50,
+        "description": "Discover a tranquil, hidden oasis on the edge of the Thames, home to London's oldest botanic garden and around 5,000 medicinal plants."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-095",
+    "activities": [
+      {
+        "activity_id": "LON-095-A1",
+        "name": "The Courtauld Gallery Visit",
+        "duration_range_mins": [60, 90],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 9,
+        "description": "See a magnificent collection of art, including world-famous Impressionist and Post-Impressionist masterpieces by Manet, Van Gogh, and Cézanne."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-096",
+    "activities": [
+      {
+        "activity_id": "LON-096-A1",
+        "name": "Explore Southwark Cathedral",
+        "duration_range_mins": [30, 60],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Visit London's oldest Gothic church, which has links to Shakespeare and Charles Dickens. (Donations encouraged)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-097",
+    "activities": [
+      {
+        "activity_id": "LON-097-A1",
+        "name": "Attend a Gig at The Roundhouse",
+        "duration_range_mins": [180, 240],
+        "kid_friendliness_score": 1,
+        "cost_gbp": 40,
+        "description": "See a concert at this legendary circular venue in Camden, known for its incredible atmosphere and diverse line-up of artists. (Cost varies)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-098",
+    "activities": [
+      {
+        "activity_id": "LON-098-A1",
+        "name": "Late Show at Ronnie Scott's",
+        "duration_range_mins": [90, 120],
+        "kid_friendliness_score": 1,
+        "cost_gbp": 15,
+        "description": "Experience the intimate atmosphere of one of the world's most famous jazz clubs for their renowned late late show."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-099",
+    "activities": [
+      {
+        "activity_id": "LON-099-A1",
+        "name": "Visit The Faraday Museum",
+        "duration_range_mins": [45, 60],
+        "kid_friendliness_score": 3,
+        "cost_gbp": 0,
+        "description": "Explore Michael Faraday's magnetic laboratory and discover 200 years of science history at the Royal Institution. (Open weekdays)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-100",
+    "activities": [
+      {
+        "activity_id": "LON-100-A1",
+        "name": "Dennis Severs' House 'Still-life Drama' Tour",
+        "duration_range_mins": [50, 60],
+        "kid_friendliness_score": 1,
+        "cost_gbp": 20,
+        "description": "Take a unique, silent tour through an atmospheric time capsule of Spitalfields life, designed to be experienced by your senses. (Booking essential)"
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-101",
+    "activities": [
+      {
+        "activity_id": "LON-101-A1",
+        "name": "Highgate Cemetery West Guided Tour",
+        "duration_range_mins": [70, 70],
+        "kid_friendliness_score": 1,
+        "cost_gbp": 15,
+        "description": "Take a guided tour of the atmospheric West Cemetery to see the Egyptian Avenue, Circle of Lebanon, and elaborate Gothic tombs. (Booking essential)"
+      },
+      {
+        "activity_id": "LON-101-A2",
+        "name": "Highgate Cemetery East Self-Guided Visit",
+        "duration_range_mins": [45, 90],
+        "kid_friendliness_score": 2,
+        "cost_gbp": 4.50,
+        "description": "Explore the East Cemetery at your own pace and find the graves of famous residents, including Karl Marx and George Eliot."
+      }
+    ]
+  },
+  {
+    "sight_id": "LON-102",
+    "activities": [
+      {
+        "activity_id": "LON-102-A1",
+        "name": "Walk in Epping Forest",
+        "duration_range_mins": [120, 240],
+        "kid_friendliness_score": 5,
+        "cost_gbp": 0,
+        "description": "Escape the city and enjoy a long walk or cycle through the ancient woodland, following one of the many marked trails."
+      }
+    ]
+  }
+]

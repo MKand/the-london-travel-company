@@ -1,0 +1,142 @@
+[
+  {
+    "location_id": "LOC-001",
+    "name": "Arkham",
+    "type": "Town",
+    "risk_level": "Moderate",
+    "description": "A quiet, brooding town in Massachusetts, home to the infamous Miskatonic University. Visitors are advised to avoid the Restricted Collection in the Orne Library."
+  },
+  {
+    "location_id": "LOC-002",
+    "name": "Innsmouth",
+    "type": "Town",
+    "risk_level": "High",
+    "description": "A decaying seaport known for its unsettling locals and the pervasive, fishy odor that hangs in the air. The Gilman House hotel offers lodging, though sleep is seldom restful."
+  },
+  {
+    "location_id": "LOC-003",
+    "name": "Dunwich",
+    "type": "Village",
+    "risk_level": "High",
+    "description": "A destitute and remote village in the hills, haunted by a history of strange occurrences. The locals are insular, and the whippoorwills' calls at night are said to capture the souls of the dying."
+  },
+  {
+    "location_id": "LOC-004",
+    "name": "The Sunken City of R'lyeh",
+    "type": "Ruin",
+    "risk_level": "Extreme",
+    "description": "A cyclopean, non-Euclidean metropolis that briefly surfaces from the Pacific depths when the stars are right. Its green, slimy monoliths are not meant for mortal eyes."
+  },
+  {
+    "location_id": "LOC-005",
+    "name": "The Plateau of Leng",
+    "type": "Natural Wonder",
+    "risk_level": "Extreme",
+    "description": "A cold, desolate plateau in Central Asia, said to be inhabited by inhuman entities. Time and space are known to warp in this forsaken region."
+  },
+  {
+    "location_id": "LOC-006",
+    "name": "The Forbidden Lands",
+    "type": "Region",
+    "risk_level": "High",
+    "description": "A vast, uncharted territory beyond the Sentinel Peaks, where twisted, ancient forests conceal secrets best left undisturbed."
+  },
+  {
+    "location_id": "LOC-007",
+    "name": "Miskatonic University",
+    "type": "Institution",
+    "risk_level": "Moderate",
+    "description": "The academic heart of Arkham. While the public-facing campus is quaint, the true knowledge lies in its hidden archives, which hold forbidden tomes like the Necronomicon."
+  },
+  {
+    "location_id": "LOC-008",
+    "name": "The Witch House of Salem",
+    "type": "Landmark",
+    "risk_level": "Low",
+    "description": "The actual historic house of witch trials judge Jonathan Corwin, now a museum. It is rumored that certain artifacts within whisper secrets on moonless nights."
+  },
+  {
+    "location_id": "LOC-009",
+    "name": "The Nameless City",
+    "type": "Ruin",
+    "risk_level": "High",
+    "description": "A ruin buried by the sands of the Arabian desert, far older than mankind. Low, moaning winds are said to be the voices of its long-dead reptilian inhabitants."
+  },
+  {
+    "location_id": "LOC-010",
+    "name": "Ulthar",
+    "type": "Town",
+    "risk_level": "Low",
+    "description": "A quaint town across the river Skai where, by ancient law, no man may harm a cat. The feline population is unusually intelligent and watchful."
+  },
+  {
+    "location_id": "LOC-011",
+    "name": "The Mountains of Madness",
+    "type": "Natural Wonder",
+    "risk_level": "Extreme",
+    "description": "The highest mountain range on Earth, located in Antarctica. Its peaks hide the ruins of a pre-human civilization and the shapeless horrors that destroyed it."
+  },
+  {
+    "location_id": "LOC-012",
+    "name": "The Dreamlands",
+    "type": "Dimension",
+    "risk_level": "Variable",
+    "description": "A vast, alternate dimension accessible only through slumber. Seasoned dreamers can visit wondrous cities or fall prey to unspeakable Night-gaunts."
+  },
+  {
+    "location_id": "LOC-013",
+    "name": "Y'ha-nthlei",
+    "type": "Ruin",
+    "risk_level": "High",
+    "description": "An undersea city inhabited by the Deep Ones, located off the coast of Innsmouth. Accessible only to those who have undergone a... transformation."
+  },
+  {
+    "location_id": "LOC-014",
+    "name": "The Well of Whispers",
+    "type": "Landmark",
+    "risk_level": "Moderate",
+    "description": "An ancient, moss-covered well in the heart of the Arkham woods. Those who listen closely can hear fragmented prophecies, at the cost of their own pleasant dreams."
+  },
+  {
+    "location_id": "LOC-015",
+    "name": "The Shadowed Reef",
+    "type": "Natural Wonder",
+    "risk_level": "High",
+    "description": "A jagged coral reef near Innsmouth, marked by an unnatural, oily iridescence. It is the focal point of the town's unsettling rituals."
+  },
+  {
+    "location_id": "LOC-016",
+    "name": "Celephaïs",
+    "type": "City",
+    "risk_level": "Low",
+    "description": "A breathtaking city in the Dreamlands with turquoise temples and galbanum-scented gardens, ruled by the dreamer Kuranes. A rare point of beauty."
+  },
+  {
+    "location_id": "LOC-017",
+    "name": "The Unseen University of Arkham",
+    "type": "Institution",
+    "risk_level": "High",
+    "description": "A clandestine offshoot of Miskatonic, focused on the practical application of esoteric arts. Its curriculum is dangerous and its faculty, unnerving."
+  },
+  {
+    "location_id": "LOC-018",
+    "name": "The Black Goat's Glade",
+    "type": "Landmark",
+    "risk_level": "Extreme",
+    "description": "A clearing deep within the Arkham woods where dark rituals are held under the new moon. Marked by a single, ominous black monolith."
+  },
+  {
+    "location_id": "LOC-019",
+    "name": "The Isle of the Damned",
+    "type": "Region",
+    "risk_level": "High",
+    "description": "A remote island perpetually shrouded in fog. Its shores are littered with shipwrecks, and strange, fluting music can be heard from its interior."
+  },
+  {
+    "location_id": "LOC-020",
+    "name": "Kingsport",
+    "type": "Town",
+    "risk_level": "Low",
+    "description": "An ancient seaport town in Massachusetts known for its misty cliffs and colonial architecture. It holds a strange festival around the winter solstice."
+  }
+]

@@ -1,0 +1,19 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: main
+    volumes:
+      - ./pgvector/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8082:8080
+    environment:
+      # Optional: Pre-fill the server host for Adminer.
+      # 'db' is the service name of the PostgreSQL container within the Docker network.
+      ADMINER_DEFAULT_SERVER: db
