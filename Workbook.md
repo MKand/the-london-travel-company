@@ -1,39 +1,24 @@
 
 # Introduction
 
-Welcome to the MovieGuru Challenge Lab! In this lab, you'll step into the shoes of a Site Reliability Engineer (SRE) at a bustling startup. Your mission is to leverage Google Cloud Observability tools to ensure the reliability and performance of our exciting new application, MovieGuru. Get ready to dive deep into monitoring, troubleshooting, and optimizing a real-world scenario!
+Welcome to the Obs with GenAI Challenge Lab! In this lab, you'll step into the shoes of a Site Reliability Engineer (SRE) at a bustling startup. Your mission is to leverage Google Cloud Observability tools to ensure the reliability and performance of our your company's MVP application, The London travel Agent. Get ready to dive deep into monitoring, troubleshooting, and optimizing a real-world scenario!
 
-## Get Familiar with MovieGuru (15 minutes)
+## Get Familiar with the app (15 minutes)
 
 1. Explore the App:
 
-    - Access the MovieGuru application using the URL provided at the start of the lab (e.g., <http://movieguru.endpoints.${gcp_project_id}.cloud.goog>).
-    - Log in with your first name and interact with the app by asking about movies you like to understand its functionality.
+    - Access the MovieGuru application using the URL provided at the start of the lab. (e.g., <http://SomeIP:80>).
+    - Start chatting with the app to plan your ideal trip to London.
 
-2. Simulate Load:
+2. Understand the Architecture:
 
-    - Open the Locust load testing tool using its provided URL (e.g., http://<some_ip>).
-    - Navigate to "Advanced settings" and configure Locust to generate load for 2 hours.
-    ![Locust](images/locust.png)
-
-3. Understand the Architecture:
-
-    - The application's containerized components run on Google Kubernetes Engine (GKE).
+    - The application is running on GKE. It has two components, the agent (built using Agent Development Kit) and a postgres database with PGVector.
     - The application's telemetry is sent to Google Cloud Platform.
-    - Refer to the architecture diagram:
 
-    ![Architecture Diagram](images/arch.png)
-
-4. Review Metrics:
-
-   - Visit the application's metrics dashboard in Google Cloud Observability:
-        - Navigate to Monitoring > Dashboards > Custom Dashboards > chatdashboard.
-        - Observe the chat success rate and latency dashboards. The application produces OpenTelemetry (OTEL) metrics, which GKE exports to Google Cloud Managed Service for Prometheus; the only setup required was installing an exporter on GKE.
-        - Assess the application's performance: Is the success rate acceptable? Is the chat latency within expected limits?
-
-5. Go to CloudHub:
+3. Explore the Observability Dashboard in CloudHub:
 
     - Look for Cloudhub in the search bar of the console.
+    @ Afrina We need to add something here 
 
 ## Your First Day on the Job: Setting things up (15 minutes)
 
@@ -50,20 +35,13 @@ So, why is it so important, especially for someone new like yourself?
 
 1. Go to AppHub
 
-    - You should see an application called **movie-guru-bot** is created. You will notice the metadata associated with the application on the console.
+    - You should see an application called **lta-app** is created. You will notice the metadata associated with the application on the console.
     - If you click on the application, it shows the _services and workloads_ associated with with this application. This list will be empty.
-    - We will populate this list. Since this is a multi-component application, we shall use terraform to create the services instead of creating it manually.
-    - Open the **cloud shell console** and run the following commands.
-
-    ```sh
-    git clone https://github.com/MKand/movie-guru.git  && git checkout obs_lab
-    cd movie-guru/labs/observability-challenges/deploy/terraform_apphub
-    terraform init
-    terraform apply -auto-approve
-    ```
-
-    - Enter the value of the **GCP_PROJECT_ID** when prompted. The command will take about 1-2 minutes to complete.
-    - You should see new _workloads_ associated with **movie-guru-bot**.
+    - We will populate this list. Click on the _Services and Workloads_ tab of AppHub and search for two **workloads** called **agent** and **db**. For each workload:
+        - Select the worlkload and click on. the **Register** button.
+        - Select the **lta-app** as the application you want to register it to.
+        - Finish the steps required to register them. (mark it as it **Mission Critical** and **Production**)
+    - You should see 2 new _workloads_ associated with **lta-app**.
 
 2. Explore the individual dashboards associated with each of the workloads of the app.
 
