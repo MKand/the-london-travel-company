@@ -19,16 +19,16 @@ tags:
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   id: "build-db-image"
-  dir: './utils/pgvector'
+  dir: './pgvector'
   entrypoint: "sh"
   args:
     - -xe 
     - -c
     - |
       docker build \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/db:obslab-${SHORT_SHA}" \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/db:obslab-v1" \
-         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/db:obslab-${SHORT_SHA}" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-${SHORT_SHA}" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-v1" \
+         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-${SHORT_SHA}" \
          -f Dockerfile \
          .
 - name: 'gcr.io/cloud-builders/docker'
@@ -39,156 +39,33 @@ steps:
     - -xe 
     - -c
     - |
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/db:obslab-${SHORT_SHA}' && \
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/db:obslab-v1'
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-${SHORT_SHA}' && \
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-v1'
+
 - name: 'gcr.io/cloud-builders/docker'
-  id: "build-db-init-image"
-  dir: './utils/pgvector'
+  id: "build-agent-image"
+  waitFor: ['-']
+  dir: './code'
   entrypoint: "sh"
   args:
     - -xe 
     - -c
     - |
       docker build \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/db-init:obslab-${SHORT_SHA}" \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/db-init:obslab-v1" \
-         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/db-init:obslab-${SHORT_SHA}" \
-         -f Dockerfile.init \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-${SHORT_SHA}" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v1" \
+         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v1" \
          .
 - name: 'gcr.io/cloud-builders/docker'
-  id: "push-db-init-image"
-  waitFor: [build-db-init-image]
+  id: "push-agent-image"
+  waitFor: [build-agent-image]
   entrypoint: "sh"
   args:
     - -xe 
     - -c
     - |
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/db-init:obslab-${SHORT_SHA}' && \
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/db-init:obslab-v1'
-
-- name: "gcr.io/cloud-builders/docker"
-  id: "build-frontend"
-  waitFor: ['-']
-  dir: './code/frontend'
-  entrypoint: "bash"
-  args:
-    - "-c"
-    - |
-      docker build \
-        -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/frontend:obslab-${SHORT_SHA}" \
-        -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/frontend:obslab-v1" \
-        --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/frontend:obslab-${SHORT_SHA}" \
-        -f Dockerfile.dev \
-        .
-
-- name: 'gcr.io/cloud-builders/docker'
-  id: "push-frontend-image"
-  waitFor: [build-frontend]
-  entrypoint: "sh"
-  args:
-    - -xe 
-    - -c
-    - |
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/frontend:obslab-${SHORT_SHA}' && \
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/frontend:obslab-v1'
-
-- name: 'gcr.io/cloud-builders/docker'
-  id: "build-server-image"
-  waitFor: ['-']
-  dir: './code/webserver'
-  entrypoint: "sh"
-  args:
-    - -xe 
-    - -c
-    - |
-      docker build \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/chatserver:obslab-${SHORT_SHA}" \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/chatserver:obslab-v1" \
-         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/chatserver:obslab-v1" \
-         .
-- name: 'gcr.io/cloud-builders/docker'
-  id: "push-server-image"
-  waitFor: [build-server-image]
-  entrypoint: "sh"
-  args:
-    - -xe 
-    - -c
-    - |
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/chatserver:obslab-${SHORT_SHA}' && \
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/chatserver:obslab-v1'
-
-- name: 'gcr.io/cloud-builders/docker'
-  id: "build-server-image-oom"
-  waitFor: ['-']
-  dir: './labs/observability-challenges/code/webserver'
-  entrypoint: "sh"
-  args:
-    - -xe 
-    - -c
-    - |
-      docker build \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/chatserver:obslab-oom" \
-         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/chatserver:obslab-oom" \
-         .
-- name: 'gcr.io/cloud-builders/docker'
-  id: "push-server-image-oom"
-  waitFor: [build-server-image-oom]
-  entrypoint: "sh"
-  args:
-    - -xe 
-    - -c
-    - |
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/chatserver:obslab-oom'
-
-- name: 'gcr.io/cloud-builders/docker'
-  id: "build-flows-image"
-  waitFor: ['-']
-  dir: './code/genkitFlows'
-  entrypoint: "sh"
-  args:
-    - -xe 
-    - -c
-    - |
-      docker build \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/flows:obslab-${SHORT_SHA}" \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/flows:obslab-v1" \
-         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/flows:obslab-v1" \
-         .
-- name: 'gcr.io/cloud-builders/docker'
-  id: "push-flows-image"
-  waitFor: [build-flows-image]
-  entrypoint: "sh"
-  args:
-    - -xe 
-    - -c
-    - |
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/flows:obslab-${SHORT_SHA}' && \
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/flows:obslab-v1'
-- name: 'gcr.io/cloud-builders/docker'
-  id: "build-mock-image"
-  waitFor: ['-']
-  dir: './code/mock-user'
-  entrypoint: "sh"
-  args:
-    - -xe 
-    - -c
-    - |
-      docker build \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/mockuser:obslab-${SHORT_SHA}" \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/mockuser:obslab-v1" \
-         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/mockuser:obslab-v1" \
-         .
-- name: 'gcr.io/cloud-builders/docker'
-  id: "push-mock-image"
-  waitFor: [build-mock-image]
-  entrypoint: "sh"
-  args:
-    - -xe 
-    - -c
-    - |
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/mockuser:obslab-${SHORT_SHA}' && \
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/movie-guru/mockuser:obslab-v1'
-
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-${SHORT_SHA}' && \
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v1'
 
 options:
   logging: CLOUD_LOGGING_ONLY
