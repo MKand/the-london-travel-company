@@ -23,8 +23,6 @@ from google.adk.sessions import InMemorySessionService
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "TRUE"
-os.environ["GOOGLE_CLOUD_PROJECT"] = "o11y-movie-guru"
-os.environ["GOOGLE_CLOUD_LOCATION"] = "us-central1"
 
 project = os.getenv("PROJECT_ID")
 location = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
