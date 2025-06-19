@@ -58,7 +58,7 @@ resource "google_cloudbuild_trigger" "github-trigger" {
     _REGION     = var.region
   }
 
-  filename = "labs/observability-challenges/deploy/ci/ci.yaml"
+  filename = "deploy/ci/ci.yaml"
 
   included_files = ["/pgvector/**", "/agent/**",]
 
