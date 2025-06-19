@@ -32,6 +32,8 @@ spec:
           value: "{{ .Values.Config.printHealthStatus }}"
         - name: PORT
           value: "8000"
+        - name: OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT
+          value: "true"
 ---
 apiVersion: v1
 kind: Service

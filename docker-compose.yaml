@@ -27,8 +27,9 @@ services:
       GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
       PG_HOST: db
       GOOGLE_CLOUD_PROJECT: "o11y-movie-guru"
-      GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
       GOOGLE_CLOUD_LOCATION: "us-central1"
+      GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
       PRINT_HEALTH_STATUS: "False"
+      OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT: "true"
     volumes:
       - .key.json:/app/.key.json:ro

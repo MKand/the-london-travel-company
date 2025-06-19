@@ -13,7 +13,6 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8080", "*"]
 
