@@ -17,3 +17,9 @@ services:
       # Optional: Pre-fill the server host for Adminer.
       # 'db' is the service name of the PostgreSQL container within the Docker network.
       ADMINER_DEFAULT_SERVER: db
+  agent:
+    build:
+      context: ./agent
+      dockerfile: Dockerfile.adk
+    ports:
+      - "8000:8000"
