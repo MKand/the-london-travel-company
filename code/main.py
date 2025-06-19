@@ -36,7 +36,7 @@ app: FastAPI = get_fast_api_app(
 
 @app.get("/health")
 async def read_root():
-    if print_health_status == "True":
+    if print_health_status == "True" || print_health_status == "true":
         # This will force the app to crash as print_health_status is spelt wrongly
         print(f"Using variable: {print_healthstatus}")
     return "OK"

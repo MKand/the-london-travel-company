@@ -70,7 +70,7 @@ So, why is it so important, especially for someone new like yourself?
         --install \
         --namespace ltc \
         --create-namespace \
-        --set config.printHealthStatus="True" 
+        --set Config.printHealthStatus="True" 
     ```
 
 3. Observe the Impact:  
@@ -105,5 +105,5 @@ It's crucial to monitor how users interact with your application, and how the LL
 
         - Try to examine the trace and it's spans to identify the prompt used for each step.
         - Click on the __GenAI__ chip of spans to see the components of the trace that are exclusive to GenAI. In fact, recently, there is a [new semantic convention](https://opentelemetry.io/docs/specs/semconv/gen-ai/) for GenAI components which is actively in development. Our application traces utilize this.
-        
+
 ## Observability Analytics (10 minutes)
