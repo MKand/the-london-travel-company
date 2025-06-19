@@ -19,7 +19,12 @@ services:
       ADMINER_DEFAULT_SERVER: db
   agent:
     build:
-      context: ./agent
       dockerfile: Dockerfile.adk
     ports:
       - "8000:8000"
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: .key.json
+      PG_HOST: db
+      PROJECT_ID: o11y-movie-guru
+    volumes:
+      - .key.json:/app/.key.json:ro

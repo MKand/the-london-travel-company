@@ -2,6 +2,7 @@ google-adk
 fastapi
 uvicorn[standard]
 pydantic
+pydantic_settings
 gunicorn
 deprecated
 psycopg2
