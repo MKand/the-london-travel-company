@@ -6,7 +6,7 @@ resource "google_firebase_project" "firebase_project" {
 
 resource "google_firebase_web_app" "movieguru-web" {
   project      = var.gcp_project_id
-  display_name = "Movie Guru Frontend App"
+  display_name = "LTA Frontend App"
 
   deletion_policy = "DELETE"
 

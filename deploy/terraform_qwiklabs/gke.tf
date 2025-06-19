@@ -1,7 +1,7 @@
 
 
 resource "google_container_cluster" "primary" {
-  name               = "movie-guru-gke"
+  name               = "lta-cluster"
   location           = var.gcp_region
   project            = var.gcp_project_id
   initial_node_count = 1
@@ -30,7 +30,7 @@ resource "google_container_cluster" "primary" {
 }
 
 resource "google_compute_ssl_policy" "prod-ssl-policy" {
-  name            = "movieguru-ssl-policy"
+  name            = "lta-ssl-policy"
   profile         = "MODERN"
   min_tls_version = "TLS_1_2"
 }

@@ -18,27 +18,27 @@ provider "helm" {
   }
 }
 
-resource "google_compute_global_address" "movieguru-address" {
-  name         = "movieguru-address"
+resource "google_compute_global_address" "lta-address" {
+  name         = "lta-address"
   address_type = "EXTERNAL"
   project      = var.gcp_project_id
 }
 
 resource "google_endpoints_service" "openapi_service" {
-  service_name = "movieguru.endpoints.${var.gcp_project_id}.cloud.goog"
+  service_name = "lta.endpoints.${var.gcp_project_id}.cloud.goog"
   project      = var.gcp_project_id
   openapi_config = yamlencode({
     swagger = "2.0"
     info = {
       description = "Cloud Endpoints service for MovieGuru"
-      title       = "MovieGuru"
+      title       = "The London Travel Company"
       version     = "1.0.0"
     }
     paths = {}
-    host  = "movieguru.endpoints.${var.gcp_project_id}.cloud.goog"
+    host  = "lta.endpoints.${var.gcp_project_id}.cloud.goog"
     x-google-endpoints = [
       {
-        name   = "movieguru.endpoints.${var.gcp_project_id}.cloud.goog"
+        name   = "lta.endpoints.${var.gcp_project_id}.cloud.goog"
         target = google_compute_global_address.movieguru-address.address
       },
     ]
@@ -78,10 +78,10 @@ resource "helm_release" "otel" {
   ]
 }
 
-resource "helm_release" "movie_guru" {
-  name             = "movie-guru"
+resource "helm_release" "lta" {
+  name             = "lta"
   chart            = var.helm_chart
-  namespace        = "movieguru"
+  namespace        = "lta"
   version          = var.helm_chart_version
   wait             = true
   create_namespace = true
@@ -96,14 +96,6 @@ resource "helm_release" "movie_guru" {
       value = var.image_tag
     },
     {
-      name  = "Config.gatewayAddress"
-      value = "movieguru.endpoints.${var.gcp_project_id}.cloud.goog"
-    },
-    {
-      name  = "Config.projectID"
-      value = var.gcp_project_id
-    },
-        {
       name  = "Config.projectID"
       value = var.gcp_project_id
     },
@@ -137,7 +129,7 @@ resource "helm_release" "locust" {
   set = [
     {
       name  = "loadtest.name"
-      value = "movieguru-loadtest"
+      value = "lta-loadtest"
     },
     {
       name  = "loadtest.locust_locustfile_configmap"
@@ -149,7 +141,7 @@ resource "helm_release" "locust" {
     },
     {
       name  = "loadtest.locust_host"
-      value = "http://movieguru.endpoints.${var.gcp_project_id}.cloud.goog/server"
+      value = "http://lta.endpoints.${var.gcp_project_id}.cloud.goog"
     },
     {
       name  = "service.type"

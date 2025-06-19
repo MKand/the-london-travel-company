@@ -22,12 +22,12 @@ resource "google_apphub_service_project_attachment" "apphub-service-attachment" 
 resource "google_apphub_application" "apphub-app" {
   location       = "global"
   project        = var.gcp_project_id
-  application_id = "movie-guru-bot"
-  display_name   = "Application For Movie Guru"
+  application_id = "lta-app"
+  display_name   = "Application For The London Travel Company"
   scope {
     type = "GLOBAL"
   }
-  description = "Application for Movieguru"
+  description = "Application for The London Travel Company"
   attributes {
     environment {
       type = "STAGING"

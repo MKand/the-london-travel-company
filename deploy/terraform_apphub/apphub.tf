@@ -13,14 +13,7 @@
 # limitations under the License.
 locals {
   global_location = "global"
-  services = [
-    "//container.googleapis.com/projects/${var.gcp_project_id}/locations/${var.gcp_region}/clusters/movie-guru-gke/k8s/namespaces/movieguru/services/server-service",
-    "//container.googleapis.com/projects/${var.gcp_project_id}/locations/${var.gcp_region}/clusters/movie-guru-gke/k8s/namespaces/movieguru/services/frontend-service",
-    "//container.googleapis.com/projects/${var.gcp_project_id}/locations/${var.gcp_region}/clusters/movie-guru-gke/k8s/namespaces/movieguru/services/flows-service",
-  ]
   workloads = [
-    "//container.googleapis.com/projects/${var.gcp_project_id}/locations/${var.gcp_region}/clusters/movie-guru-gke/k8s/namespaces/movieguru/apps/deployments/server",
-    "//container.googleapis.com/projects/${var.gcp_project_id}/locations/${var.gcp_region}/clusters/movie-guru-gke/k8s/namespaces/movieguru/apps/deployments/frontend",
   "//container.googleapis.com/projects/${var.gcp_project_id}/locations/${var.gcp_region}/clusters/movie-guru-gke/k8s/namespaces/movieguru/apps/deployments/flows"]
 }
 
