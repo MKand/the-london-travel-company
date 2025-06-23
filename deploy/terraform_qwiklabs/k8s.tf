@@ -25,28 +25,6 @@ resource "google_compute_address" "lta-address" {
   region = var.gcp_region
 }
 
-resource "google_endpoints_service" "openapi_service" {
-  service_name = "lta.endpoints.${var.gcp_project_id}.cloud.goog"
-  project      = var.gcp_project_id
-  openapi_config = yamlencode({
-    swagger = "2.0"
-    info = {
-      description = "Cloud Endpoints service for MovieGuru"
-      title       = "The London Travel Company"
-      version     = "1.0.0"
-    }
-    paths = {}
-    host  = "lta.endpoints.${var.gcp_project_id}.cloud.goog"
-    x-google-endpoints = [
-      {
-        name   = "lta.endpoints.${var.gcp_project_id}.cloud.goog"
-        target = google_compute_address.lta-address.address
-      },
-    ]
-  })
-}
-
-
 resource "helm_release" "lta" {
   name             = "london-travel-company-app"
   chart            = var.helm_chart
