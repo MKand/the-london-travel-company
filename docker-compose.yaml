@@ -31,5 +31,6 @@ services:
       GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
       PRINT_HEALTH_STATUS: "False"
       OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT: "true"
+      OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED: "true"
     volumes:
       - .key.json:/app/.key.json:ro

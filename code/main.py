@@ -27,7 +27,7 @@ from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.instrumentation.google_genai import GoogleGenAiSdkInstrumentor
-
+import london_agent # doing to make errors importing the agent appear explicity
 
 logging.basicConfig(level=logging.INFO)
 
@@ -66,7 +66,7 @@ def setup_opentelemetry() -> None:
         attributes={
             SERVICE_NAME: "adk-sql-agent",
             # The project to send spans to
-            "gcp.project_id": project_id,
+            "gcp.project_id": os.getenv("GOOGLE_CLOUD_PROJECT"),
         }
     )
 
@@ -111,7 +111,6 @@ def setup_opentelemetry() -> None:
     GoogleGenAiSdkInstrumentor().instrument()
 
 if __name__ == "__main__":
-    OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true
-    OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true
+    
     setup_opentelemetry()
     uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
