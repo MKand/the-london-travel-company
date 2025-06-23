@@ -34,3 +34,9 @@ resource "google_project_iam_member" "log-writer" {
   role    = "roles/logging.logWriter"
   member  = "serviceAccount:${google_service_account.default.email}"
 }
+
+resource "google_project_iam_member" "telemetry-writer" {
+  project = var.gcp_project_id
+  role    = "roles/telemetry.writer"
+  member  = "serviceAccount:${google_service_account.default.email}"
+}

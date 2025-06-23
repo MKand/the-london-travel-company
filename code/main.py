@@ -37,24 +37,6 @@ SESSION_DB_URL = "sqlite:///./sessions.db"
 
 print_health_status = os.getenv("PRINT_HEALTH_STATUS", "False")
 
-# Call the function to get the FastAPI app instance
-
-app: FastAPI = get_fast_api_app(
-    agents_dir=AGENT_DIR,
-    allow_origins=ALLOWED_ORIGINS,
-    web=True,
-    trace_to_cloud = True,
-)
-
-
-@app.get("/health")
-async def read_root():
-    if print_health_status != "False":
-        # This will force the app to crash 
-        check_health_status()
-        
-    return "OK"
-
 def check_health_status():
     logging.error("Application crashed during health check.")
     os._exit(0)
@@ -65,14 +47,13 @@ def setup_opentelemetry() -> None:
     resource = Resource.create(
         attributes={
             SERVICE_NAME: "adk-sql-agent",
-            # The project to send spans to
-            "gcp.project_id": os.getenv("GOOGLE_CLOUD_PROJECT"),
+            "gcp.project_id": project_id,
         }
     )
-
     # Set up OTLP auth
     request = google.auth.transport.requests.Request()
     auth_metadata_plugin = AuthMetadataPlugin(credentials=credentials, request=request)
+    
     channel_creds = grpc.composite_channel_credentials(
         grpc.ssl_channel_credentials(),
         grpc.metadata_call_credentials(auth_metadata_plugin),
@@ -107,10 +88,25 @@ def setup_opentelemetry() -> None:
     # Load instrumentors
     # TODO: if this is too chatty because of ADK's use of SQL for session management, the
     # connection used in tools.py can be instrumented to cut ADK spans out
-    SQLite3Instrumentor().instrument()
     GoogleGenAiSdkInstrumentor().instrument()
+    return
+
+setup_opentelemetry()
+
+# Call the function to get the FastAPI app instance
+app: FastAPI = get_fast_api_app(
+    agents_dir=AGENT_DIR,
+    allow_origins=ALLOWED_ORIGINS,
+    web=True,
+)
+
+@app.get("/health")
+async def read_root():
+    if print_health_status != "False":
+        # This will force the app to crash 
+        check_health_status()
+        
+    return "OK"
 
 if __name__ == "__main__":
-    
-    setup_opentelemetry()
-    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+   uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
