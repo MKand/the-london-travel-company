@@ -34,6 +34,8 @@ spec:
           value: "8000"
         - name: OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT
           value: "true"
+        - name: OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED
+          value: "true"
 ---
 apiVersion: v1
 kind: Service

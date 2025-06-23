@@ -16,10 +16,10 @@
 
 import logging
 import re
-from pydantic import BaseModel
 import requests 
 import json
 import psycopg2
+from pydantic import BaseModel
 from pgvector.psycopg2 import register_vector
 from google import genai
 from google.adk.tools import ToolContext

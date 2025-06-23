@@ -27,7 +27,7 @@ from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.instrumentation.google_genai import GoogleGenAiSdkInstrumentor
-
+import london_agent # doing to make errors importing the agent appear explicity
 
 logging.basicConfig(level=logging.INFO)
 
@@ -37,42 +37,29 @@ SESSION_DB_URL = "sqlite:///./sessions.db"
 
 print_health_status = os.getenv("PRINT_HEALTH_STATUS", "False")
 
-# Call the function to get the FastAPI app instance
-
-app: FastAPI = get_fast_api_app(
-    agents_dir=AGENT_DIR,
-    allow_origins=ALLOWED_ORIGINS,
-    web=True,
-    trace_to_cloud = True,
-)
-
-
-@app.get("/health")
-async def read_root():
-    if print_health_status != "False":
-        # This will force the app to crash 
-        check_health_status()
-        
-    return "OK"
-
 def check_health_status():
     logging.error("Application crashed during health check.")
     os._exit(0)
 
+GCP_SCOPES = [
+    "https://www.googleapis.com/auth/trace.append",       # For Cloud Trace
+    "https://www.googleapis.com/auth/logging.write",      # For Cloud Logging
+    "https://www.googleapis.com/auth/monitoring.write",   # For Cloud Monitoring
+    "https://www.googleapis.com/auth/cloud-platform",     # Broad scope for other Google ADK/AI Platform needs
+   ]
 
 def setup_opentelemetry() -> None:
-    credentials, project_id = google.auth.default()
+    credentials, project_id = google.auth.default(scopes=GCP_SCOPES)
     resource = Resource.create(
         attributes={
-            SERVICE_NAME: "adk-sql-agent",
-            # The project to send spans to
+            SERVICE_NAME: "lta-sa",
             "gcp.project_id": project_id,
         }
     )
-
     # Set up OTLP auth
     request = google.auth.transport.requests.Request()
     auth_metadata_plugin = AuthMetadataPlugin(credentials=credentials, request=request)
+
     channel_creds = grpc.composite_channel_credentials(
         grpc.ssl_channel_credentials(),
         grpc.metadata_call_credentials(auth_metadata_plugin),
@@ -107,11 +94,25 @@ def setup_opentelemetry() -> None:
     # Load instrumentors
     # TODO: if this is too chatty because of ADK's use of SQL for session management, the
     # connection used in tools.py can be instrumented to cut ADK spans out
-    SQLite3Instrumentor().instrument()
     GoogleGenAiSdkInstrumentor().instrument()
+    return
+
+setup_opentelemetry()
+
+# Call the function to get the FastAPI app instance
+app: FastAPI = get_fast_api_app(
+    agents_dir=AGENT_DIR,
+    allow_origins=ALLOWED_ORIGINS,
+    web=True,
+)
+
+@app.get("/health")
+async def read_root():
+    if print_health_status != "False":
+        # This will force the app to crash 
+        check_health_status()
+        
+    return "OK"
 
 if __name__ == "__main__":
-    OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true
-    OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true
-    setup_opentelemetry()
-    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+   uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))

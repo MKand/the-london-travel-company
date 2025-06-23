@@ -27,8 +27,8 @@ steps:
     - |
       docker build \
          -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-${SHORT_SHA}" \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-v1" \
-         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-${SHORT_SHA}" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-v2" \
+         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-v2" \
          -f Dockerfile \
          .
 - name: 'gcr.io/cloud-builders/docker'
@@ -40,7 +40,7 @@ steps:
     - -c
     - |
       docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-${SHORT_SHA}' && \
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-v1'
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-v2'
 
 - name: 'gcr.io/cloud-builders/docker'
   id: "build-agent-image"
@@ -53,8 +53,8 @@ steps:
     - |
       docker build \
          -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-${SHORT_SHA}" \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v1" \
-         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v1" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v2" \
+         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v2" \
          .
 - name: 'gcr.io/cloud-builders/docker'
   id: "push-agent-image"
@@ -65,7 +65,7 @@ steps:
     - -c
     - |
       docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-${SHORT_SHA}' && \
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v1'
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v2'
 
 options:
   logging: CLOUD_LOGGING_ONLY

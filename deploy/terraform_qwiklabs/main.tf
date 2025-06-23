@@ -25,6 +25,10 @@ resource "google_project_service" "enable_apis" {
     "container.googleapis.com",
     "secretmanager.googleapis.com",
     "apphub.googleapis.com",
+    "logging.googleapis.com",
+    "telemetry.googleapis.com",
+    "monitoring.googleapis.com",
+    "cloudtrace.googleapis.com"
   ])
 
   service = each.key

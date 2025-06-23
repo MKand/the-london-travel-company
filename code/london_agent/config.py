@@ -45,13 +45,6 @@ class AgentModel(BaseModel):
 class Config(BaseSettings):
     """Configuration settings for the london holiday agent."""
 
-    model_config = SettingsConfigDict(
-        env_file=os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), "../.env"
-        ),
-        case_sensitive=True,
-        extra='ignore'  # Ignore extra fields from .env rather than erroring
-    )
     db_host: str = DB_HOST
     db_port: str = DB_PORT
     db_name: str = DB_NAME
