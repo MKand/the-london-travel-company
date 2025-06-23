@@ -28,7 +28,7 @@ resource "google_project_service" "enable_apis" {
     "logging.googleapis.com",
     "telemetry.googleapis.com",
     "monitoring.googleapis.com",
-    "cloudtrace.googleapis.com"
+    "cloudtrace.googleapis.com",
   ])
 
   service = each.key
