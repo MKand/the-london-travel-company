@@ -9,3 +9,10 @@ psycopg2
 pgvector
 vertexai
 opentelemetry-exporter-gcp-trace
+opentelemetry-instrumentation-google-genai
+opentelemetry-exporter-gcp-logging
+opentelemetry-exporter-gcp-monitoring
+opentelemetry-exporter-otlp-proto-grpc
+opentelemetry-instrumentation-httpx
+opentelemetry-instrumentation-requests
+opentelemetry-instrumentation-sqlite3
