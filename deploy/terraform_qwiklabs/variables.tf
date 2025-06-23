@@ -12,7 +12,7 @@ variable "repo_prefix" {
 
 variable "image_tag" {
   description = "TAG of the movie guru docker images"
-  default     = "obslab-v1"
+  default     = "obslab-v2"
 }
 
 variable "gcp_region" {
@@ -42,8 +42,8 @@ variable "helm_chart" {
 
 variable "helm_chart_version" {
   type        = string
-  description = "version of the movie guru helm chart. Defaults to 1.0.0"
-  default     = "1.0.0"
+  description = "version of the movie guru helm chart. Defaults to 2.0.0"
+  default     = "2.0.0"
 }
 
 variable "branch_name" {
