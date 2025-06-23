@@ -41,19 +41,25 @@ def check_health_status():
     logging.error("Application crashed during health check.")
     os._exit(0)
 
+GCP_SCOPES = [
+    "https://www.googleapis.com/auth/trace.append",       # For Cloud Trace
+    "https://www.googleapis.com/auth/logging.write",      # For Cloud Logging
+    "https://www.googleapis.com/auth/monitoring.write",   # For Cloud Monitoring
+    "https://www.googleapis.com/auth/cloud-platform",     # Broad scope for other Google ADK/AI Platform needs
+   ]
 
 def setup_opentelemetry() -> None:
-    credentials, project_id = google.auth.default()
+    credentials, project_id = google.auth.default(scopes=GCP_SCOPES)
     resource = Resource.create(
         attributes={
-            SERVICE_NAME: "adk-sql-agent",
+            SERVICE_NAME: "lta-sa",
             "gcp.project_id": project_id,
         }
     )
     # Set up OTLP auth
     request = google.auth.transport.requests.Request()
     auth_metadata_plugin = AuthMetadataPlugin(credentials=credentials, request=request)
-    
+
     channel_creds = grpc.composite_channel_credentials(
         grpc.ssl_channel_credentials(),
         grpc.metadata_call_credentials(auth_metadata_plugin),
