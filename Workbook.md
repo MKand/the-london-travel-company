@@ -18,7 +18,6 @@ Welcome to the Obs with GenAI Challenge Lab! In this lab, you'll step into the s
 3. Explore the Observability Dashboard in CloudHub:
 
     - Look for Cloudhub in the search bar of the console.
-    @ Afrina We need to add something here 
 
 ## Your First Day on the Job: Setting things up (15 minutes)
 

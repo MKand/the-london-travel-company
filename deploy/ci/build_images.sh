@@ -93,5 +93,5 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} --member serviceAccount:${P
 # Start Cloud Build
 echo -e "\e[95mStarting Cloud Build to CREATE infrastructure using Terraform...\e[0m"
 
-gcloud builds submit --config=deploy/ci/setup-infra.yaml --region=${REGION} --async --ignore-file=.gcloudignore --substitutions=_PROJECT_ID="${PROJECT_ID}",\
+gcloud builds submit --config=deploy/ci/ci.yaml --region=${REGION} --async --ignore-file=.gcloudignore --substitutions=_PROJECT_ID="${PROJECT_ID}",\
 _REGION="${REGION}" --project=${PROJECT_ID}

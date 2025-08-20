@@ -1,6 +1,6 @@
-# Pushing Movie Guru Helm Chart
+# Pushing The London Travel Agency Helm Chart
 
-This guide describes how to package the `movie-guru` Helm chart (from the `movie-guru-observability-challenge` directory), push it to Google Artifact Registry, and set up an OpenTelemetry collector.
+This guide describes how to package the `london-travel-agency` Helm chart (from the `movie-guru-observability-challenge` directory), push it to Google Artifact Registry, and set up an OpenTelemetry collector.
 
 ## Prerequisites
 

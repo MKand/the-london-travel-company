@@ -1,0 +1,72 @@
+# The London Travel Company
+
+The London Travel Company is a generative AI-powered travel assistant that helps users plan their trips to London. It provides information about attractions, activities, and other points of interest.
+
+## Architecture
+
+The application consists of the following components:
+
+* **Frontend:** (Not yet started) A Vue.js frontend with Tailwind CSS.
+* **Backend:** A Python backend built with FastAPI. The backend uses a generative AI agent to process user queries.
+* **Database:** A PostgreSQL database with the pgvector extension for storing and querying vector embeddings.
+
+The backend and database are deployed to Google Kubernetes Engine (GKE).
+
+## Getting Started
+
+### Prerequisites
+
+* Docker
+* docker-compose
+
+### Running Locally
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/GoogleCloudPlatform/the-london-travel-company.git
+cd the-london-travel-company
+```
+
+1. **Start the application:**
+
+    ```bash
+    docker-compose up -d
+    ```
+
+1. **Access the application:**
+    The backend will be available at [http://localhost:8001](http://localhost:8001).
+
+## Deployment to Cloud
+
+The application can be deployed to GKE using the provided Helm charts and Terraform scripts.
+
+### Deploying with Helm to an existing cluster
+
+1. **Navigate to the Helm chart directory:**
+
+    ```bash
+    cd deploy/app/helm/ltc
+    ```
+
+2. **Install the Helm chart:**
+
+    ```bash
+    helm install ltc .
+    ```
+
+### Deploying app infra with Terraform in a NEW project
+
+The Terraform scripts in the `deploy/terraform_qwiklabs` directory can be used to provision the necessary infrastructure on GCP for running the application. This will create a GKE cluster, and all the necessary APIs and service accounts.
+
+Before running the Terraform scripts, you need to update the `backend.tf` with your GCS bucket information and `variables.tf` with your GCP project ID and other variables.
+
+## Workbook
+
+For a more detailed explanation of the infrastructure and architecture, please refer to the [Workbook.md](Workbook.md) file.
+
+## [For Repo Maintainers] Creating a host project to host the artifacts required for this app
+
+The `deploy/terraform` directory is only needed to bootstrap a host project where the Helm charts and Docker images are stored (currently o11y-movie-guru). This central host project is where all other application projects get their images and artifacts. Run the Terraform scripts in `deploy/terraform` to create the infrastructure in the base project. The CI pipeline is described in more detail in the `Helm.md` file.
+
+The Docker images can be created or updated by running the `build_images.sh` script, which triggers a build pipeline.
