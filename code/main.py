@@ -1,22 +1,16 @@
 import os
-
 import uvicorn
-from fastapi import FastAPI
-from google.adk.cli.fast_api import get_fast_api_app
 import logging
 import google.auth
 import google.auth.transport.requests
 import grpc
 from google.auth.transport.grpc import AuthMetadataPlugin
-from opentelemetry import _events as events
-from opentelemetry import _logs as logs
-from opentelemetry import metrics, trace
+from opentelemetry import _events as events, _logs as logs, metrics, trace
 from opentelemetry.exporter.cloud_logging import CloudLoggingExporter
 from opentelemetry.exporter.cloud_monitoring import CloudMonitoringMetricsExporter
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (
     OTLPSpanExporter,
 )
-from opentelemetry.instrumentation.sqlite3 import SQLite3Instrumentor
 from opentelemetry.instrumentation.google_genai import GoogleGenAiSdkInstrumentor
 from opentelemetry.sdk._events import EventLoggerProvider
 from opentelemetry.sdk._logs import LoggerProvider
@@ -27,6 +21,9 @@ from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.instrumentation.google_genai import GoogleGenAiSdkInstrumentor
+from google.adk.cli.fast_api import get_fast_api_app
+from fastapi import FastAPI
+
 import london_agent # doing to make errors importing the agent appear explicity
 
 logging.basicConfig(level=logging.INFO)

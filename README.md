@@ -39,7 +39,7 @@ Before running the Terraform scripts, you need to update the `backend.tf` with y
 
 ## Workbook
 
-For a more detailed explanation of the infrastructure and architecture, please refer to the [Workbook.md](Workbook.md) file.
+For a more detailed explanation of the infrastructure and architecture, please refer to the [Workbook doc]([Workbook.md](https://docs.google.com/document/d/10NkZJ-7KkRBjSxGRK9K8QohmDgEFzMdtj3-6QNiA2aU/edit?usp=sharing&resourcekey=0-32fAkFlRtWcoiF7S6-pIfQ)) and skip ahead to `Part 1`. This is readable only by Alphabet employees for now.
 
 ## [For Repo Maintainers] Creating a host project to host the artifacts required for this app
 
