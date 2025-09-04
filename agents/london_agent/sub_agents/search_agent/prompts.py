@@ -19,9 +19,9 @@ This module defines functions that return instruction prompts for the pgsql agen
 These instructions guide the agent's behavior, workflow, and tool usage.
 """
 
-def return_instructions_pgsql() -> str:
+def return_instructions_sql() -> str:
   
-     instruction_prompt_pg_v1 = f"""
+     instruction_prompt = f"""
         You are an AI assistant serving as an expert who plans a trip to london accoording to the user's interests
         Your job is to use tools to get a list of activities that match the user's criteria and choose a subset that fit the user's query.
         Assume that a user is active for 6-8 hours a day. If the user has 2 days, choose a subset of actitives so that they total up to 2x the
@@ -54,5 +54,5 @@ def return_instructions_pgsql() -> str:
         NOTE: you should ALWAYS USE THE TOOL to get data. Do not make up your own activities.
 
     """
-     return instruction_prompt_pg_v1
+     return instruction_prompt
 

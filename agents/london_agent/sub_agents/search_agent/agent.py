@@ -12,18 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Database Agent: get data from database (PGSQL) using NL2SQL."""
-
-import os
-
 from google.adk.agents import Agent
 from google.adk.agents.callback_context import CallbackContext
 from google.genai import types
-from agents.london_agent.config import Config
-from agents.london_agent.sub_agents.search_agent import tools
-from agents.london_agent.sub_agents.search_agent.prompts import return_instructions_pgsql
+from .tools import get_database_settings, get_activities_tool
+from .prompts import return_instructions_sql
+from ...config import Config
 
-NL2SQL_METHOD = os.getenv("NL2SQL_METHOD", "BASELINE")
 configs = Config()
 
 
@@ -32,15 +27,15 @@ def setup_before_agent_call(callback_context: CallbackContext) -> None:
 
     if "database_settings" not in callback_context.state:
         callback_context.state["database_settings"] = \
-            tools.get_database_settings()
+            get_database_settings()
 
 
 database_agent = Agent(
     model=configs.agent_settings.model,
     name="database_agent",
-    instruction=return_instructions_pgsql(),
+    instruction=return_instructions_sql(),
     tools=[
-        tools.get_activities_tool,
+        get_activities_tool,
     ],
     before_agent_callback=setup_before_agent_call,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),

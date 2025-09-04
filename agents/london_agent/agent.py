@@ -1,8 +1,8 @@
-from agents.london_agent.config import Config
-from agents.london_agent.prompts import return_instructions_lyla
+from .config import Config
+from .prompts import return_instructions_lyla
 from google.adk.agents import Agent
 from google.adk.agents.callback_context import CallbackContext
-from agents.london_agent.sub_agents.search_agent.tools import (
+from .sub_agents.search_agent.tools import (
     get_database_settings,
 )
 from .tools.tools import call_db_agent

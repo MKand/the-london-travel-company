@@ -20,8 +20,8 @@
 
 from google.adk.tools import ToolContext
 from google.adk.tools.agent_tool import AgentTool
-from agents.london_agent.sub_agents import db_agent
-from agents.london_agent.sub_agents.search_agent.tools import activity
+from ..sub_agents import db_agent
+from ..sub_agents.search_agent.tools import activity
 
 async def call_db_agent(
     question: str,

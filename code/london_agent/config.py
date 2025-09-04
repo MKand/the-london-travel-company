@@ -24,12 +24,8 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-DB_HOST = os.getenv('PG_HOST', 'localhost')
-DB_PORT = os.getenv('PG_PORT', '5432')
-DB_NAME = os.getenv('PG_DB_NAME', 'london-db')
-DB_USER = os.getenv('PG_USER', 'main')
+
 MAX_NUM_ROWS = os.getenv('MAX_NUM_ROWS', 20)
-DB_PASSWORD = os.getenv('PG_PASSWORD', 'main')
 embedding_model_name = os.getenv("EMBEDDING_MODEL_NAME", 'text-embedding-005')
 EMBEDDING_DIMENSION = 768
 DEBUG_STATE = os.getenv("DEBUG_STATE", "false").lower() in ('true', '1', 't', 'yes', 'y')
@@ -45,11 +41,6 @@ class AgentModel(BaseModel):
 class Config(BaseSettings):
     """Configuration settings for the london holiday agent."""
 
-    db_host: str = DB_HOST
-    db_port: str = DB_PORT
-    db_name: str = DB_NAME
-    db_user: str = DB_USER
-    db_pwd: str = DB_PASSWORD
     embedding_model_name: str = embedding_model_name
     max_rows: int = MAX_NUM_ROWS
     debug_state:bool = DEBUG_STATE

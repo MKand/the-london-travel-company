@@ -28,8 +28,8 @@ from google import genai
 from google.adk.tools import ToolContext
 from google.adk.agents.invocation_context import InvocationContext
 from google.genai import Client
-from agents.london_agent.config import Config
-from agents.london_agent.utils import write_to_tool_context
+from ...config import Config
+from ...utils import write_to_tool_context
 
 configs = Config()
 base_dir = os.path.dirname(os.path.abspath(__name__))
@@ -166,23 +166,21 @@ async def get_activities_tool(
 
     sql_query += "SELECT activity_id, name, description, cost, duration_min, duration_max, kid_friendliness_score, sight_id "
     if embedding:
-        sql_query+= f", vec_distance_cosine(embedding, vec_f32('{embedding}')) AS score"
+        sql_query+= f", vec_distance_cosine(embedding, vec_f32('{embedding}')) AS score "
         
-    if where_clause:
-        sql_query += f"WHERE {where_clause}"
     
     sql_query += f"""
     FROM activities 
-    ORDER BY score ASC 
+    """
+    if where_clause:
+        sql_query += f"""
+        WHERE {where_clause} 
+        """
+    
+    sql_query += f"""ORDER BY score ASC 
     LIMIT {configs.max_rows};
     """
 
-    # sql_query = f"""
-    #     SELECT activity_id, name, vec_distance_cosine(embedding, vec_f32('{embedding}')) AS score
-    #     FROM activities
-    #     ORDER BY score ASC
-    #     LIMIT 5;
-    #     """
     if configs.debug_state:
         write_to_tool_context("get_data_tool_sql_query", sql_query, tool_context)
 
@@ -377,4 +375,4 @@ if __name__ == "__main__":
         print("Test connection successful.")
     else:
         print("Test connection failed.")
-    asyncio.run(get_activities_tool("museums", "", None))
+    asyncio.run(get_activities_tool("museums", "less than 3 hours", None))
