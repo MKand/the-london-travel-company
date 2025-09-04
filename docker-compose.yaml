@@ -1,31 +1,13 @@
 services:
-  db:
-    image: pgvector/pgvector:pg17
-    ports:
-      - 5432:5432
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: main
-    volumes:
-      - ./pgvector/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8082:8080
-    environment:
-      # Optional: Pre-fill the server host for Adminer.
-      # 'db' is the service name of the PostgreSQL container within the Docker network.
-      ADMINER_DEFAULT_SERVER: db
   agent:
     build:
-      context: code
+      context: agents 
       dockerfile: Dockerfile
     ports:
       - "8001:8000"
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
-      PG_HOST: db
+      DB_PATH: "/app/data_london/"
       GOOGLE_CLOUD_PROJECT: $PROJECT_ID
       GOOGLE_CLOUD_LOCATION: $LOCATION
       GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
@@ -34,3 +16,4 @@ services:
       OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED: "true"
     volumes:
       - .key.json:/app/.key.json:ro
+      - ./data_london/london_travel.db:/app/data_london/london_travel.db
