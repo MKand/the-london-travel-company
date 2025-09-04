@@ -404,8 +404,6 @@ async def get_data_from_db_tool(
         else:
             tool_context.state["get_data_from_db_tool_error"] =  "Valid SQL. Query executed successfully (no results)."
 
-    except psycopg2.Error as e:
-        output.error_message = f"Invalid SQL: Database error (SQLSTATE {e.pgcode}) - {e.pgerror.strip()}"
     except ConnectionError as e:
         output.error_message = f"Database Connection Error: {e}"
     except Exception as e:

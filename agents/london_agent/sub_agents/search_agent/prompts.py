@@ -12,13 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-"""Module for storing and retrieving agent instructions.
-
-This module defines functions that return instruction prompts for the pgsql agent.
-These instructions guide the agent's behavior, workflow, and tool usage.
-"""
-
 def return_instructions_sql() -> str:
   
      instruction_prompt = f"""

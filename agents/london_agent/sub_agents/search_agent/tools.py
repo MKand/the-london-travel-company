@@ -22,11 +22,9 @@ import sqlite3
 import sqlite_vec
 import asyncio
 import os
-from sqlite_vec import serialize_float32
 from pydantic import BaseModel
 from google import genai
 from google.adk.tools import ToolContext
-from google.adk.agents.invocation_context import InvocationContext
 from google.genai import Client
 from ...config import Config
 from ...utils import write_to_tool_context
@@ -39,7 +37,6 @@ llm_client = Client(vertexai=True, project=configs.project, location=configs.loc
 # Global variables to store database settings and SQLite client connection
 database_settings = None
 _sqlite_conn = None  # Store the connection globally to reuse
-
 
 class activity(BaseModel):
     activity_id: str
@@ -71,11 +68,9 @@ def get_sqlite_client():
     global _sqlite_conn
     if _sqlite_conn is None:
         try:
-            if not os.path.exists(configs.db_name):
-                print(f"Database not found at {configs.db_name}. Copying from default.")
-                db_file_path = os.path.join(base_dir,"data_london", configs.db_name)
-
-            _sqlite_conn = sqlite3.connect(db_file_path)
+            if not os.path.exists(configs.db_file_path):
+                raise Exception(f"Database not found at {configs.db_file_path}")
+            _sqlite_conn = sqlite3.connect(configs.db_file_path)
             _sqlite_conn.enable_load_extension(True)
             sqlite_vec.load(_sqlite_conn)
             print("SQLite database connected successfully and sqlite-vec extension loaded.")

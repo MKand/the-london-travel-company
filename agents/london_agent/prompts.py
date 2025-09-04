@@ -12,13 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Module for storing and retrieving agent instructions.
-
-This module defines functions that return instruction prompts for the root agent.
-These instructions guide the agent's behavior, workflow, and tool usage.
-"""
-
-# The agent's persona and instructions.
 def return_instructions_lyla() -> str:
 
     LYLA_SYSTEM_PROMPT = """

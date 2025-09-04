@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Configuration module for the customer service agent."""
 
 import os
 import logging
@@ -19,19 +18,22 @@ from pydantic_settings import BaseSettings
 from pydantic import BaseModel, Field, ValidationError
 from google.adk.sessions import InMemorySessionService
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.WARN)
 logger = logging.getLogger(__name__)
 
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "TRUE"
 os.environ["GOOGLE_CLOUD_PROJECT"] = os.getenv("GOOGLE_CLOUD_PROJECT","o11y-movie-guru")
 os.environ["GOOGLE_CLOUD_LOCATION"] = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 
-DB_NAME = os.getenv('DB_NAME', 'london')
+DB_PATH = os.getenv('DB_PATH', "../data_london/")
+
 MAX_NUM_ROWS = os.getenv('MAX_NUM_ROWS', 20)
 embedding_model_name = os.getenv("EMBEDDING_MODEL_NAME", 'text-embedding-005')
 EMBEDDING_DIMENSION = 768
 DEBUG_STATE = os.getenv("DEBUG_STATE", "false").lower() in ('true', '1', 't', 'yes', 'y')
 
+logger.info(f"CWD {os.getcwd()}")
+logger.info(f"DB path {DB_PATH}")
 session_service = InMemorySessionService()
 
 class AgentModel(BaseModel):
@@ -43,12 +45,12 @@ class AgentModel(BaseModel):
 class Config(BaseSettings):
     """Configuration settings for the london holiday agent."""
 
-    db_name: str = DB_NAME
+    db_file_path: str = os.path.join(DB_PATH, "london_travel.db")
     embedding_model_name: str = embedding_model_name
     max_rows: int = MAX_NUM_ROWS
     debug_state:bool = DEBUG_STATE
-    project: str = os.getenv("GOOGLE_CLOUD_PROJECT","o11y-movie-guru")
-    location:str = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
+    project: str = os.getenv("GOOGLE_CLOUD_PROJECT")
+    location:str = os.getenv("GOOGLE_CLOUD_LOCATION")
     app_name: str = "LYLA"
     agent_settings: AgentModel = Field(default_factory=AgentModel) 
     GENAI_USE_VERTEXAI: str = Field(default="1") 

@@ -12,12 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Top level agent for data agent multi-agents.
-
--- it get data from database (e.g., BQ) using NL2SQL
--- then, it use NL2Py to do further data analysis as needed
-"""
-
 from google.adk.tools import ToolContext
 from google.adk.tools.agent_tool import AgentTool
 from ..sub_agents import db_agent

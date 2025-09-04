@@ -14,5 +14,4 @@
 
 from .search_agent.agent import database_agent as db_agent
 
-
 __all__ = ["db_agent"]
