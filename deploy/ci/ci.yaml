@@ -18,34 +18,9 @@ tags:
 
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  id: "build-db-image"
-  dir: './pgvector'
-  entrypoint: "sh"
-  args:
-    - -xe 
-    - -c
-    - |
-      docker build \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-${SHORT_SHA}" \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-v2" \
-         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-v2" \
-         -f Dockerfile \
-         .
-- name: 'gcr.io/cloud-builders/docker'
-  id: "push-db-image"
-  waitFor: [build-db-image]
-  entrypoint: "sh"
-  args:
-    - -xe 
-    - -c
-    - |
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-${SHORT_SHA}' && \
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/db:obslab-v2'
-
-- name: 'gcr.io/cloud-builders/docker'
   id: "build-agent-image"
   waitFor: ['-']
-  dir: './code'
+  dir: './agents'
   entrypoint: "sh"
   args:
     - -xe 
@@ -53,8 +28,8 @@ steps:
     - |
       docker build \
          -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-${SHORT_SHA}" \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v2" \
-         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v2" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v3" \
+         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v3" \
          .
 - name: 'gcr.io/cloud-builders/docker'
   id: "push-agent-image"
