@@ -29,10 +29,6 @@ EMBEDDING_DIMENSION = 768
 LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", 'gemini-2.0-flash-001')
 PROJECT_ID= os.getenv("GOOGLE_CLOUD_PROJECT")
 LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION")
-GOOGLE_APPLICATION_CREDENTIALS_PATH=os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "")
-
-if not os.path.exists(GOOGLE_APPLICATION_CREDENTIALS_PATH):
-    print("path not found")
 
 session_service = InMemorySessionService()
 

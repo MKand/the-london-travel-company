@@ -21,10 +21,6 @@ async def call_db_agent(
     question: str,
     tool_context: ToolContext,
 ) -> list[activity]:
-    print(
-        "\n call_db_agent.use_database:"
-        f' {tool_context.state["all_db_settings"]["use_database"]}'
-    )
 
     agent_tool = AgentTool(agent=db_agent)
 

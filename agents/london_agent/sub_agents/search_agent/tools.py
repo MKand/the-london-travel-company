@@ -58,7 +58,7 @@ class actvities_search_output(BaseModel):
     error_message: str
 
 
-def get_sqlite_client():
+def setup_sqlite_client():
     """
     Establishes and returns a SQLite database connection.
     If the database file does not exist, it copies it from a default location.
@@ -89,29 +89,19 @@ def get_sqlite_client():
             if _sqlite_conn:
                 _sqlite_conn.close()
             _sqlite_conn = None
-    return _sqlite_conn
-
+            return None
+    else:
+        return _sqlite_conn
 
 def get_database_settings():
     """
     Retrieves and returns database settings.
-    If settings are not loaded, it calls update_database_settings to load them.
+    If settings are not loaded, it loads them from a hardcoded schema.
     """
     global database_settings
     if database_settings is None:
-        database_settings = update_database_settings()
-    return database_settings
-
-
-def update_database_settings():
-    """
-    Updates and returns database settings.
-    For a local SQLite database, a hardcoded schema is provided.
-    Ensure `embedding` dimension matches your actual LLM output (e.g., 768).
-    """
-    global database_settings
-    database_settings = {
-        "sqlite_ddl_schema": """
+        database_settings = {
+            "sqlite_ddl_schema": """
             TABLE activities (
                 activity_id VARCHAR(50) PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
@@ -122,7 +112,6 @@ def update_database_settings():
                 sight_id VARCHAR(50) REFERENCES locations(sight_id), -- Foreign key to locations table
                 description TEXT,
                 embedding VECTOR(768);
-           
             """
     }
     return database_settings
@@ -319,7 +308,7 @@ async def get_data_from_db_tool(
     conn = None
     cur = None
     try:
-        conn = get_sqlite_client()
+        conn = setup_sqlite_client()
         if not conn:
             raise ConnectionError("Failed to establish SQLite connection.")
 
@@ -375,7 +364,7 @@ async def get_data_from_db_tool(
 if __name__ == "__main__":
     print("Initializing database tools...")
     get_database_settings()
-    conn = get_sqlite_client()
+    conn = setup_sqlite_client()
     if conn:
         print("Test connection successful.")
     else:

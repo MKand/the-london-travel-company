@@ -14,7 +14,7 @@
 
 from .config import Config
 from .prompts import return_instructions_lyla
-from .sub_agents.search_agent.tools import get_sqlite_client
+from .sub_agents.search_agent.tools import setup_sqlite_client
 from google.adk.agents import Agent
 from google.adk.agents.callback_context import CallbackContext
 from .sub_agents.search_agent.tools import (
@@ -27,26 +27,10 @@ APP_NAME="LYLA"
 configs = Config()
 
 def setup_before_agent_call(callback_context: CallbackContext):
-    """Setup the agent."""
-    db_settings = dict()
-    db_settings["use_database"] = "SQLite"
-    callback_context.state["all_db_settings"] = db_settings
-    get_sqlite_client()
+    """Setup the sqllite client."""
+    setup_sqlite_client()
 
-    # setting up schema in instruction
-    if callback_context.state["all_db_settings"]["use_database"] == "SQLite":
-        callback_context.state["database_settings"] = get_database_settings()
-        schema = callback_context.state["database_settings"]["sqlite_ddl_schema"]
-        # set up db
-        callback_context._invocation_context.agent.instruction = (
-            return_instructions_lyla()
-            + f"""
 
-    --------- The sqlite schema of the relevant data with a few sample rows. ---------
-    {schema}
-
-    """
-)
 # Initialize the agent outside the request handler for efficiency.
 root_agent = Agent(
     model=configs.agent_settings.model,
