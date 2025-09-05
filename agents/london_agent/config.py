@@ -21,49 +21,41 @@ from google.adk.sessions import InMemorySessionService
 logging.basicConfig(level=logging.WARN)
 logger = logging.getLogger(__name__)
 
-os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "TRUE"
-os.environ["GOOGLE_CLOUD_PROJECT"] = os.getenv("GOOGLE_CLOUD_PROJECT","o11y-movie-guru")
-os.environ["GOOGLE_CLOUD_LOCATION"] = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
-
 DB_PATH = os.getenv('DB_PATH', "../data_london/")
-
 MAX_NUM_ROWS = os.getenv('MAX_NUM_ROWS', 20)
-embedding_model_name = os.getenv("EMBEDDING_MODEL_NAME", 'text-embedding-005')
-EMBEDDING_DIMENSION = 768
+EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", 'text-embedding-005')
 DEBUG_STATE = os.getenv("DEBUG_STATE", "false").lower() in ('true', '1', 't', 'yes', 'y')
+EMBEDDING_DIMENSION = 768
+LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", 'gemini-2.0-flash-001')
+PROJECT_ID= os.getenv("GOOGLE_CLOUD_PROJECT")
+LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION")
 
-logger.info(f"CWD {os.getcwd()}")
-logger.info(f"DB path {DB_PATH}")
 session_service = InMemorySessionService()
 
 class AgentModel(BaseModel):
     """Agent model settings."""
     name: str = Field(default="london_holiday_agent")
-    model: str = Field(default="gemini-2.0-flash-001")
-
+    model: str = Field(default=LLM_MODEL_NAME)
 
 class Config(BaseSettings):
     """Configuration settings for the london holiday agent."""
 
     db_file_path: str = os.path.join(DB_PATH, "london_travel.db")
-    embedding_model_name: str = embedding_model_name
+    embedding_model_name: str = EMBEDDING_MODEL_NAME
     max_rows: int = MAX_NUM_ROWS
     debug_state:bool = DEBUG_STATE
-    project: str = os.getenv("GOOGLE_CLOUD_PROJECT")
-    location:str = os.getenv("GOOGLE_CLOUD_LOCATION")
+    project: str = PROJECT_ID
+    location:str = LOCATION
     app_name: str = "LYLA"
     agent_settings: AgentModel = Field(default_factory=AgentModel) 
     GENAI_USE_VERTEXAI: str = Field(default="1") 
 
-# Instantiate Config to read .env for other settings
 try:
     configs = Config()
 except ValidationError as e:
     logger.error(
-        f"Pydantic ValidationError loading configuration from .env in config.py. "
+        f"Pydantic ValidationError loading configuration in config.py. "
         f"Details: {e.errors()}"
     )
-    configs = Config() # Initialize with defaults if .env loading fails
-except Exception as e: # Catch other unexpected errors
-    logger.error(f"Unexpected error loading configuration from .env in config.py: {e}")
-    configs = Config() # Initialize with defaults if .env loading fails
+except Exception as e:
+    logger.error(f"Unexpected error loading configuration in config.py: {e}")

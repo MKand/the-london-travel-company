@@ -40,7 +40,7 @@ steps:
     - -c
     - |
       docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-${SHORT_SHA}' && \
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v2'
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v3'
 
 options:
   logging: CLOUD_LOGGING_ONLY
