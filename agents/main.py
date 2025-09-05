@@ -37,8 +37,10 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.instrumentation.google_genai import GoogleGenAiSdkInstrumentor
 from google.adk.cli.fast_api import get_fast_api_app
 from fastapi import FastAPI
+from london_agent.sub_agents.search_agent.tools import setup_sqlite_client
 
 import london_agent # doing to make errors importing the agent appear explicity
+
 
 logging.basicConfig(level=logging.INFO)
 
@@ -109,6 +111,7 @@ def setup_opentelemetry() -> None:
     return
 
 setup_opentelemetry()
+setup_sqlite_client()
 
 # Call the function to get the FastAPI app instance
 app: FastAPI = get_fast_api_app(

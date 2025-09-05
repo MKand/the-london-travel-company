@@ -17,9 +17,6 @@ from .prompts import return_instructions_lyla
 from .sub_agents.search_agent.tools import setup_sqlite_client
 from google.adk.agents import Agent
 from google.adk.agents.callback_context import CallbackContext
-from .sub_agents.search_agent.tools import (
-    get_database_settings,
-)
 from .tools.tools import call_db_agent
 from google.genai import types
 
