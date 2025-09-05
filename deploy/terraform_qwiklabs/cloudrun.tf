@@ -16,12 +16,6 @@ data "http" "db_file" {
   url = var.db_file
 }
 
-# data "github_repository_file" "db_file" {
-#   repository = "MKand/the-london-travel-company"
-#   file       = "data_london/london_travel.db"
-#   branch     = "simplify"
-# }
-
 data "http" "otel-config" {
   url = var.otel_file
   request_headers = {
@@ -36,7 +30,7 @@ resource "google_storage_bucket_object" "otel" {
 }
 
 resource "google_storage_bucket_object" "db-file" {
-  name   = "london_travel.db"
+  name   = "london_travel.sql"
   bucket = google_storage_bucket.db_file.name
   content = data.http.db_file.response_body
 }

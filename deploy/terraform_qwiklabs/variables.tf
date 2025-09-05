@@ -51,5 +51,5 @@ variable "db_file" {
   type = string
 
   description = "URL of the sqllite db file"
-  default = "https://raw.githubusercontent.com/MKand/the-london-travel-company/simplify/data_london/london_travel.db"
+  default = "https://raw.githubusercontent.com/MKand/the-london-travel-company/simplify/data_london/london_travel.sql"
 }
