@@ -16,4 +16,4 @@ services:
       OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED: "true"
     volumes:
       - .key.json:/app/.key.json:ro
-      - ./data_london/london_travel.db:/app/data_london/london_travel.db
+      - ./data_london/london_travel.sql:/app/data_london/london_travel.sql

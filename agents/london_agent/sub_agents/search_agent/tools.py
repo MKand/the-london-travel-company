@@ -70,10 +70,20 @@ def get_sqlite_client():
         try:
             if not os.path.exists(configs.db_file_path):
                 raise Exception(f"Database not found at {configs.db_file_path}")
-            _sqlite_conn = sqlite3.connect(configs.db_file_path)
+            
+            # load the data in configs.db_file_path  which is a .sql file to the sqllite db
+            with open(configs.db_file_path, 'r') as f:
+                sql_script = f.read()
+            
+            _sqlite_conn = sqlite3.connect(":memory:")
+            temp_cursor = _sqlite_conn.cursor()
+            temp_cursor.executescript(sql_script)
+            print(f"Database created and loaded from {configs.db_file_path}")
             _sqlite_conn.enable_load_extension(True)
             sqlite_vec.load(_sqlite_conn)
             print("SQLite database connected successfully and sqlite-vec extension loaded.")
+            temp_cursor.close()
+            return _sqlite_conn
         except Exception as e:
             print(f"Error connecting to SQLite: {e}")
             if _sqlite_conn:

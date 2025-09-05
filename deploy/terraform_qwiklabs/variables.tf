@@ -1,7 +1,6 @@
 variable "gcp_project_id" {
   type        = string
   description = "GCP Project ID"
-  default = "o11y-movie-guru"
 }
 
 variable "repo_prefix" {
@@ -12,7 +11,7 @@ variable "repo_prefix" {
 
 variable "image_tag" {
   description = "TAG of the movie guru docker images"
-  default     = "obslab-v2"
+  default     = "obslab-v3"
 }
 
 variable "gcp_region" {
@@ -34,20 +33,23 @@ variable "vertexAI_model_location" {
   default     = "us-central1"
 }
 
-variable "helm_chart" {
-  type        = string
-  description = "URL of the movie guru helm char without version"
-  default     = "oci://us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/ltc-observability-lab"
-}
-
-variable "helm_chart_version" {
-  type        = string
-  description = "version of the movie guru helm chart. Defaults to 2.0.0"
-  default     = "2.0.0"
-}
 
 variable "branch_name" {
   type        = string
   description = "value of the branch for cloud build trigger"
   default     = "main"
+}
+
+variable "otel_file" {
+  type = string
+
+  description = "URL of the otel config"
+  default     = "https://raw.githubusercontent.com/MKand/movie-guru/refs/heads/main/utils/metrics/otel.values.yaml"
+}
+
+variable "db_file" {
+  type = string
+
+  description = "URL of the sqllite db file"
+  default = "https://raw.githubusercontent.com/MKand/the-london-travel-company/simplify/data_london/london_travel.db"
 }

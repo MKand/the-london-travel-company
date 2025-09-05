@@ -29,6 +29,10 @@ EMBEDDING_DIMENSION = 768
 LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", 'gemini-2.0-flash-001')
 PROJECT_ID= os.getenv("GOOGLE_CLOUD_PROJECT")
 LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION")
+GOOGLE_APPLICATION_CREDENTIALS_PATH=os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "")
+
+if not os.path.exists(GOOGLE_APPLICATION_CREDENTIALS_PATH):
+    print("path not found")
 
 session_service = InMemorySessionService()
 
@@ -40,7 +44,7 @@ class AgentModel(BaseModel):
 class Config(BaseSettings):
     """Configuration settings for the london holiday agent."""
 
-    db_file_path: str = os.path.join(DB_PATH, "london_travel.db")
+    db_file_path: str = os.path.join(DB_PATH, "london_travel.sql")
     embedding_model_name: str = EMBEDDING_MODEL_NAME
     max_rows: int = MAX_NUM_ROWS
     debug_state:bool = DEBUG_STATE

@@ -21,7 +21,6 @@ resource "google_project_service" "enable_apis" {
     "firebase.googleapis.com",
     "iam.googleapis.com",
     "cloudbilling.googleapis.com",
-    "compute.googleapis.com",
     "container.googleapis.com",
     "secretmanager.googleapis.com",
     "apphub.googleapis.com",
@@ -29,6 +28,7 @@ resource "google_project_service" "enable_apis" {
     "telemetry.googleapis.com",
     "monitoring.googleapis.com",
     "cloudtrace.googleapis.com",
+    "run.googleapis.com"
   ])
 
   service = each.key

@@ -22,9 +22,9 @@ terraform {
       source  = "hashicorp/google-beta"
       version = "~> 6.18"
     }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "3.0.1"
+    github = {
+      source  = "integrations/github"
+      version = "~> 6.0"
     }
   }
 }
@@ -35,3 +35,5 @@ provider "google" {
   region  = var.gcp_region
   zone    = var.gcp_zone
 }
+
+provider "github" {}
