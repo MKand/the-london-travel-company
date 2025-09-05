@@ -13,41 +13,41 @@
 # limitations under the License.
 
 
-# resource "google_apphub_service_project_attachment" "apphub-service-attachment" {
-#   service_project_attachment_id = var.gcp_project_id
-#   project                       = var.gcp_project_id
-#   depends_on                    = [google_project_service.enable_apis]
-# }
+resource "google_apphub_service_project_attachment" "apphub-service-attachment" {
+  service_project_attachment_id = var.gcp_project_id
+  project                       = var.gcp_project_id
+  depends_on                    = [google_project_service.enable_apis]
+}
 
-# resource "google_apphub_application" "apphub-app" {
-#   location       = "global"
-#   project        = var.gcp_project_id
-#   application_id = "lta-app"
-#   display_name   = "Application For The London Travel Company"
-#   scope {
-#     type = "GLOBAL"
-#   }
-#   description = "Application for The London Travel Company"
-#   attributes {
-#     environment {
-#       type = "STAGING"
-#     }
-#     criticality {
-#       type = "MISSION_CRITICAL"
-#     }
-#     business_owners {
-#       display_name = "Alice"
-#       email        = "alice@google.com"
-#     }
-#     developer_owners {
-#       display_name = "Bob"
-#       email        = "bob@google.com"
-#     }
-#     operator_owners {
-#       display_name = "Charlie"
-#       email        = "charlie@google.com"
-#     }
-#   }
-#   depends_on = [google_project_service.enable_apis]
-# }
+resource "google_apphub_application" "apphub-app" {
+  location       = "global"
+  project        = var.gcp_project_id
+  application_id = "lta-app"
+  display_name   = "Application For The London Travel Company"
+  scope {
+    type = "GLOBAL"
+  }
+  description = "Application for The London Travel Company"
+  attributes {
+    environment {
+      type = "STAGING"
+    }
+    criticality {
+      type = "MISSION_CRITICAL"
+    }
+    business_owners {
+      display_name = "Alice"
+      email        = "alice@google.com"
+    }
+    developer_owners {
+      display_name = "Bob"
+      email        = "bob@google.com"
+    }
+    operator_owners {
+      display_name = "Charlie"
+      email        = "charlie@google.com"
+    }
+  }
+  depends_on = [google_project_service.enable_apis]
+}
 

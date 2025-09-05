@@ -48,7 +48,24 @@ AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8080", "*"]
 SESSION_DB_URL = "sqlite:///./sessions.db"
 
-print_health_status = os.getenv("PRINT_HEALTH_STATUS", "False")
+def str_to_bool(s: str) -> bool:
+    """
+    Convert a string to a boolean.
+    Accepts: yes/no, true/false, t/f, y/n, on/off, 1/0.
+    Raises ValueError if invalid.
+    """
+    truthy = {"y", "yes", "t", "true", "on", "1"}
+    falsy  = {"n", "no", "f", "false", "off", "0"}
+
+    s = s.strip().lower()
+    if s in truthy:
+        return True
+    if s in falsy:
+        return False
+    raise ValueError(f"Invalid boolean string: {s}")
+
+
+print_health_status = str_to_bool(os.getenv("PRINT_HEALTH_STATUS", "False"))
 
 def check_health_status():
     logging.error("Application crashed during health check.")
@@ -122,11 +139,17 @@ app: FastAPI = get_fast_api_app(
 
 @app.get("/health")
 async def read_root():
-    if print_health_status != "False":
+    if print_health_status:
         # This will force the app to crash 
         check_health_status()
-        
     return "OK"
+
+@app.post("/change_health_status")
+async def post_health_status():
+    global print_health_status
+    print_health_status = not print_health_status
+    return f"Updated print_health_status to {print_health_status}"
+
 
 if __name__ == "__main__":
    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
