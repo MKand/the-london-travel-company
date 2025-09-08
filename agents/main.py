@@ -136,13 +136,16 @@ app: FastAPI = get_fast_api_app(
 # This middleware is used to trigger errors intentionally 
 @app.middleware("http")
 async def add_middleware(request, call_next):
-    if USE_MIDDLEWARE:
-        # purposefully unused
-        additional_props = os.environ['ADDITIONAL_PROPS']
-        logger.info("Middleware triggered")
-        # do nothing
-    response = await call_next(request)
-    return response
+    try:
+        if USE_MIDDLEWARE:
+            # purposefully unused
+            additional_props = os.environ['ADDITIONAL_PROPS']
+            logger.info("Middleware triggered")
+            # do nothing
+        response = await call_next(request)
+        return response
+    except Exception as e:
+        logger.exception(logger.error(e, stack_info=True, exc_info=True))
     
 
 @app.get("/health")

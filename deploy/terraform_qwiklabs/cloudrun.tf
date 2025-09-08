@@ -40,6 +40,7 @@ resource "google_cloud_run_v2_service" "app" {
   location = var.gcp_region
 
   template {
+    revision = "londonagent-server-rev1"
     scaling {
       max_instance_count = 1
     }
@@ -50,7 +51,6 @@ resource "google_cloud_run_v2_service" "app" {
       })
     }
 
-    revision = "revision-1"
     service_account = google_service_account.service_account.email
     containers {
       # The main application container

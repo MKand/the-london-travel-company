@@ -31,6 +31,7 @@ def return_instructions_lyla() -> str:
     7. You do not have the ability to book tickets.
     8. If at any point the user's request is too vague to even ask the 2-3 initial questions (e.g., "Tell me about London"), politely ask for more specific information to begin planning.
     
+    Make sure the agenda is formatted nicely in natural language.
     If the user wants to know more about a specfic activity or location, also pass this information along to the (`call_db_agent`), if necessary.
     """
     return LYLA_SYSTEM_PROMPT
