@@ -29,6 +29,8 @@ from google.genai import Client
 from ...config import Config
 from ...utils import write_to_tool_context
 
+logger = logging.getLogger(__name__)
+
 configs = Config()
 base_dir = os.path.dirname(os.path.abspath(__name__))
 
@@ -78,10 +80,10 @@ def setup_sqlite_client():
             _sqlite_conn = sqlite3.connect(":memory:")
             temp_cursor = _sqlite_conn.cursor()
             temp_cursor.executescript(sql_script)
-            logging.info(f"Database created and loaded from {configs.db_file_path}")
+            logger.info(f"Database created and loaded from {configs.db_file_path}")
             _sqlite_conn.enable_load_extension(True)
             sqlite_vec.load(_sqlite_conn)
-            logging.info("SQLite database connected successfully and sqlite-vec extension loaded.")
+            logger.info("SQLite database connected successfully and sqlite-vec extension loaded.")
             temp_cursor.close()
             return _sqlite_conn
         except Exception as e:
@@ -134,11 +136,11 @@ async def get_embedding_tool(
             write_to_tool_context("get_embedding_tool_output", response.embeddings[0].values, tool_context)
         return response.embeddings[0].values
     except requests.exceptions.RequestException as e:
-        logging.error(f"Error generating embedding for text '{vector_query}': {e}")
+        logger.error(f"Error generating embedding for text '{vector_query}': {e}")
         write_to_tool_context("get_embedding_tool_error", f"Error generating embedding for text '{vector_query}': {e}", tool_context)
         return None
     except json.JSONDecodeError as e:
-        logging.error(f"Error decoding JSON response for text '{vector_query}': {e}")
+        logger.error(f"Error decoding JSON response for text '{vector_query}': {e}")
         write_to_tool_context("get_embedding_tool_error", f"Error decoding JSON response for text '{vector_query}': {e}", tool_context)
         return None
 
@@ -240,7 +242,7 @@ async def get_sql_where_clause_tool(
 
     ddl_schema = database_settings.get("sqlite_ddl_schema", "")
     if not ddl_schema:
-        logging.warning("Database schema is not available. Please ensure update_database_settings() populates it or fetch it dynamically.")
+        logger.warning("Database schema is not available. Please ensure update_database_settings() populates it or fetch it dynamically.")
 
     try:
         prompt = prompt_template.format(
@@ -264,7 +266,7 @@ async def get_sql_where_clause_tool(
             write_to_tool_context("get_sql_where_clause_output", where_clause, tool_context)
         return where_clause
     except Exception as e:
-        logging.error(f"Error generating SQL: {e}")
+        logger.error(f"Error generating SQL: {e}")
         write_to_tool_context("get_sql_where_clause_error", f"Error generating SQL: {e}", tool_context)
         return None
 
@@ -297,7 +299,7 @@ async def get_data_from_db_tool(
 
     output = actvities_search_output(error_message="")
 
-    logging.debug("Validating SQL: %s", sql_string)
+    logger.debug("Validating SQL: %s", sql_string)
 
     if re.search(
         r"(?i)\b(update|delete|drop|insert|create|alter|truncate|merge)\b", sql_string
@@ -337,7 +339,7 @@ async def get_data_from_db_tool(
                     )
                     activities_list.append(activity_obj)
                 
-                logging.info(f"Number of activities returned: {len(activities_list)}")
+                logger.info(f"Number of activities returned: {len(activities_list)}")
 
                 output.activities_list = activities_list
                 if configs.debug_state and tool_context is not None:
@@ -345,7 +347,7 @@ async def get_data_from_db_tool(
             except Exception as format_error:
                 output.error_message = f"Error formatting row into activity object: {format_error}"
                 write_to_tool_context("get_data_from_db_tool_error", output.error_message, tool_context)
-                logging.error(output.error_message)
+                logger.error(output.error_message)
         else:
             write_to_tool_context("get_data_from_db_tool_error", "Valid SQL. Query executed successfully (no results).", tool_context)
 
@@ -364,11 +366,11 @@ async def get_data_from_db_tool(
 
 
 if __name__ == "__main__":
-    logging.info("Initializing database tools...")
+    logger.info("Initializing database tools...")
     get_database_settings()
     conn = setup_sqlite_client()
     if conn:
-        logging.info("Test connection successful.")
+        logger.info("Test connection successful.")
     else:
-        logging.info("Test connection failed.")
+        logger.info("Test connection failed.")
     asyncio.run(get_activities_tool("museums", "less than 3 hours", None))

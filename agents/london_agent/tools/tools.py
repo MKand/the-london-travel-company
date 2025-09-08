@@ -27,6 +27,5 @@ async def call_db_agent(
     db_agent_output = await agent_tool.run_async(
         args={"request": question}, tool_context=tool_context
     )
-    print('--- finished with db_agent ---')
     tool_context.state["db_agent_output"] = db_agent_output
     return db_agent_output

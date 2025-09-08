@@ -21,6 +21,7 @@ from google.adk.sessions import InMemorySessionService
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 DB_PATH = os.getenv('DB_PATH', "../data_london/")
 MAX_NUM_ROWS = os.getenv('MAX_NUM_ROWS', 20)
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", 'text-embedding-005')

@@ -55,6 +55,13 @@ resource "google_cloud_run_v2_service" "app" {
       # The main application container
       name  = "london-app"
       image = "${var.repo_prefix}/agent:${var.image_tag}"
+
+      liveness_probe {
+      http_get {
+        path = "/health"
+      }
+    }
+      
       ports {
         container_port = 8000
       }      
