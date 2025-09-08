@@ -65,7 +65,7 @@ def str_to_bool(s: str) -> bool:
     raise ValueError(f"Invalid boolean string: {s}")
 
 
-USE_MIDDLEWARE = str_to_bool(os.getenv("USE_MIDDLEWARE", "True"))
+USE_MIDDLEWARE = str_to_bool(os.getenv("USE_MIDDLEWARE", "False"))
 
 GCP_SCOPES = [
     "https://www.googleapis.com/auth/trace.append",       # For Cloud Trace
