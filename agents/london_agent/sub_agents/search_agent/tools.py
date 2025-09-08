@@ -336,6 +336,8 @@ async def get_data_from_db_tool(
                         kid_friendliness_score=row.get('kid_friendliness_score')
                     )
                     activities_list.append(activity_obj)
+                
+                logging.INFO(f"Number of activities returned: {len(activities_list)}")
 
                 output.activities_list = activities_list
                 if configs.debug_state and tool_context is not None:
