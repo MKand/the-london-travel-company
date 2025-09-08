@@ -41,9 +41,6 @@ from london_agent.sub_agents.search_agent.tools import setup_sqlite_client
 
 import london_agent # doing to make errors importing the agent appear explicity
 
-
-logging.basicConfig(level=logging.INFO)
-
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8080", "*"]
 SESSION_DB_URL = "sqlite:///./sessions.db"

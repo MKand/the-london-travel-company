@@ -28,7 +28,7 @@ def return_instructions_sql() -> str:
         - justification: What steps did you take and 
 
         Use the provided tool to help generate the most accurate SQL:
-        1. Simplify the user's natural language query. For example, "help me plan a trip to London where I can take my kids" could become "3 day london trip with kids".
+        1. Simplify the user's natural language query. For example, "help me plan a trip to London where I can take my kids" could become "3 day london trip with kids" ,"tell me more about xyz".
         2. Breakdown the simplified query into parts that require a vector search and those that require keyword-based filtering. The relevant keywords for filtering are `duration_max` (in minutes), `cost` (in euros), and `kid_friendliness_score` (0-10).
             Examples:
             input: For the input "3 day london trip with kids":

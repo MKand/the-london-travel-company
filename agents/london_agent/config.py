@@ -18,7 +18,7 @@ from pydantic_settings import BaseSettings
 from pydantic import BaseModel, Field, ValidationError
 from google.adk.sessions import InMemorySessionService
 
-logging.basicConfig(level=logging.WARN)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 DB_PATH = os.getenv('DB_PATH', "../data_london/")

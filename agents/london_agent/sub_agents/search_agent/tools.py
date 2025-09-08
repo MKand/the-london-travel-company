@@ -78,10 +78,10 @@ def setup_sqlite_client():
             _sqlite_conn = sqlite3.connect(":memory:")
             temp_cursor = _sqlite_conn.cursor()
             temp_cursor.executescript(sql_script)
-            print(f"Database created and loaded from {configs.db_file_path}")
+            logging.info(f"Database created and loaded from {configs.db_file_path}")
             _sqlite_conn.enable_load_extension(True)
             sqlite_vec.load(_sqlite_conn)
-            print("SQLite database connected successfully and sqlite-vec extension loaded.")
+            logging.info("SQLite database connected successfully and sqlite-vec extension loaded.")
             temp_cursor.close()
             return _sqlite_conn
         except Exception as e:
@@ -240,7 +240,7 @@ async def get_sql_where_clause_tool(
 
     ddl_schema = database_settings.get("sqlite_ddl_schema", "")
     if not ddl_schema:
-        print("Warning: Database schema is not available. Please ensure update_database_settings() populates it or fetch it dynamically.")
+        logging.warning("Database schema is not available. Please ensure update_database_settings() populates it or fetch it dynamically.")
 
     try:
         prompt = prompt_template.format(
@@ -264,7 +264,7 @@ async def get_sql_where_clause_tool(
             write_to_tool_context("get_sql_where_clause_output", where_clause, tool_context)
         return where_clause
     except Exception as e:
-        print(f"Error generating SQL: {e}")
+        logging.error(f"Error generating SQL: {e}")
         write_to_tool_context("get_sql_where_clause_error", f"Error generating SQL: {e}", tool_context)
         return None
 
@@ -297,7 +297,7 @@ async def get_data_from_db_tool(
 
     output = actvities_search_output(error_message="")
 
-    logging.info("Validating SQL: %s", sql_string)
+    logging.debug("Validating SQL: %s", sql_string)
 
     if re.search(
         r"(?i)\b(update|delete|drop|insert|create|alter|truncate|merge)\b", sql_string
@@ -337,7 +337,7 @@ async def get_data_from_db_tool(
                     )
                     activities_list.append(activity_obj)
                 
-                logging.INFO(f"Number of activities returned: {len(activities_list)}")
+                logging.info(f"Number of activities returned: {len(activities_list)}")
 
                 output.activities_list = activities_list
                 if configs.debug_state and tool_context is not None:
@@ -364,11 +364,11 @@ async def get_data_from_db_tool(
 
 
 if __name__ == "__main__":
-    print("Initializing database tools...")
+    logging.info("Initializing database tools...")
     get_database_settings()
     conn = setup_sqlite_client()
     if conn:
-        print("Test connection successful.")
+        logging.info("Test connection successful.")
     else:
-        print("Test connection failed.")
+        logging.info("Test connection failed.")
     asyncio.run(get_activities_tool("museums", "less than 3 hours", None))
