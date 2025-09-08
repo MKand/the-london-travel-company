@@ -68,8 +68,9 @@ def str_to_bool(s: str) -> bool:
 print_health_status = str_to_bool(os.getenv("PRINT_HEALTH_STATUS", "False"))
 
 def check_health_status():
-    logger.error("Application crashed during health check.")
-    raise Exception("Application crashed during health check.")
+    print_message = os.environ['PRINT_MESSAGE']
+    if print_message ==  "True":
+        logger.info("health check succeeded")
 
 
 GCP_SCOPES = [

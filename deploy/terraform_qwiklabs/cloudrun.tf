@@ -50,6 +50,7 @@ resource "google_cloud_run_v2_service" "app" {
       })
     }
 
+    revision = "revision-1"
     service_account = google_service_account.service_account.email
     containers {
       # The main application container
@@ -61,6 +62,7 @@ resource "google_cloud_run_v2_service" "app" {
         path = "/health"
       }
     }
+
       
       ports {
         container_port = 8000
