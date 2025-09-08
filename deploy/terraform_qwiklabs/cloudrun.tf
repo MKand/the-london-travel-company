@@ -97,10 +97,6 @@ resource "google_cloud_run_v2_service" "app" {
         value = "true"
       }
       env {
-        name  = "PRINT_HEALTH_STATUS"
-        value = "False"
-      }
-      env {
         name = "DB_PATH"
         value = "/app/data_london/"
       }

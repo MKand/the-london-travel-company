@@ -65,13 +65,7 @@ def str_to_bool(s: str) -> bool:
     raise ValueError(f"Invalid boolean string: {s}")
 
 
-print_health_status = str_to_bool(os.getenv("PRINT_HEALTH_STATUS", "False"))
-
-def check_health_status():
-    print_message = os.environ['PRINT_MESSAGE']
-    if print_message ==  "True":
-        logger.info("health check succeeded")
-
+USE_MIDDLEWARE = str_to_bool(os.getenv("USE_MIDDLEWARE", "True"))
 
 GCP_SCOPES = [
     "https://www.googleapis.com/auth/trace.append",       # For Cloud Trace
@@ -139,18 +133,21 @@ app: FastAPI = get_fast_api_app(
     web=True,
 )
 
+# This middleware is used to trigger errors intentionally 
+@app.middleware("http")
+async def add_middleware(request, call_next):
+    if USE_MIDDLEWARE:
+        # purposefully unused
+        additional_props = os.environ['ADDITIONAL_PROPS']
+        logger.info("Middleware triggered")
+        # do nothing
+    response = await call_next(request)
+    return response
+    
+
 @app.get("/health")
 async def read_root():
-    if print_health_status:
-        # This will force the app to crash 
-        check_health_status()
     return "OK"
-
-@app.post("/change_health_status")
-async def post_health_status():
-    global print_health_status
-    print_health_status = not print_health_status
-    return f"Updated print_health_status to {print_health_status}"
 
 
 if __name__ == "__main__":
