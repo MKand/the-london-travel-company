@@ -46,10 +46,9 @@ variable "otel_file" {
   description = "URL of the otel config"
   default     = "https://raw.githubusercontent.com/MKand/movie-guru/refs/heads/main/utils/metrics/otel.values.yaml"
 }
-
 variable "db_file" {
   type = string
 
   description = "URL of the sqllite db file"
-  default = "https://raw.githubusercontent.com/MKand/the-london-travel-company/simplify/data_london/london_travel.sql"
+  default = "https://raw.githubusercontent.com/MKand/the-london-travel-company/main/data_london/london_travel.sql"
 }

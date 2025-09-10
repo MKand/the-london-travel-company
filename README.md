@@ -43,7 +43,7 @@ For a more detailed explanation of the infrastructure and architecture, please r
 
 ## [For Repo Maintainers] Creating a host project to host the artifacts required for this app
 
-The `deploy/terraform` directory is only needed to bootstrap a host project where the Helm charts and Docker images are stored (currently o11y-movie-guru). This central host project is where all other application projects get their images and artifacts. Run the Terraform scripts in `deploy/terraform` to create the infrastructure in the base project. The CI pipeline is described in more detail in the `Helm.md` file.
+The `deploy/terraform` directory is only needed to bootstrap a host project where the Helm charts and Docker images are stored (currently o11y-movie-guru). This central host project is where all other application projects get their images and artifacts. Run the Terraform scripts in `deploy/terraform` to create the infrastructure in the base project.
 
 The Docker images can be created or updated by running the `build_images.sh` script, which triggers a build pipeline.
 
