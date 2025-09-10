@@ -1,73 +1,111 @@
 # The London Travel Company
 
-The London Travel Company is a generative AI-powered travel assistant that helps users plan their trips to London. It provides information about attractions, activities, and other points of interest.
+The London Travel Company is a generative AI-powered travel assistant designed to help users plan their trips to London. It provides tailored information about attractions, activities, and points of interest based on user queries.
 
-## Architecture
+## AI Agent Architecture
 
-The application consists of the following components:
+The core of this application is a hierarchical AI agent built with the Python-based [Google Agent Development Kit (ADK)](https://github.com/google/agent-development-kit). The agent, named "Lyla", is exposed via a FastAPI backend and is designed to be a friendly and expert London travel planner.
 
-* **Frontend:** (Not yet started) A Vue.js frontend with Tailwind CSS.
-* **Backend:** A Python backend built with FastAPI. The backend uses a generative AI agent to process user queries.
-* **Database:** A PostgreSQL database with the pgvector extension for storing and querying vector embeddings.
+The architecture consists of a main "root agent" that handles user interaction and delegates specialized tasks to a sub-agent.
 
-The backend and database are deployed to Google Kubernetes Engine (GKE).
+### Root Agent (`london_agent`)
 
-## Getting Started
+* **Orchestration:** This is the primary agent that receives the user's request from the API. Its main responsibility is to understand the user's intent, ask clarifying questions (e.g., duration of stay, interests), and decide when to call its tools.
+* **Prompting:** The agent's personality and workflow are defined in `london_agent/prompts.py`. It is instructed to be a friendly travel planner that gathers initial requirements before acting.
+* **Tooling:** The root agent has one primary tool: `call_db_agent`. This tool does not perform the database lookup directly; instead, it invokes the specialized `database_agent` to handle the request.
+
+### Sub-Agent (`database_agent`)
+
+*   **Specialization:** This agent, defined in `agents/london_agent/sub_agents/search_agent/`, is an expert at interacting with the travel database. Its sole purpose is to translate a user's request into a database query.
+*   **Tooling:** The `database_agent` has its own tool, `get_activities_tool`, which executes a SQL query against the local SQLite database to find relevant activities based on the user's refined request (e.g., "find historical sites for a 3-day trip").
+*   **Data Access:** It directly interfaces with the `london_travel.sql` SQLite database to fetch information about activities and attractions.
+
+This hierarchical structure allows for a clean separation of concerns: the root agent manages the conversation, while the sub-agent manages the technical details of data retrieval.
+
+### Observability with OpenTelemetry
+
+The agent is fully instrumented using OpenTelemetry, an open-source observability framework. This provides deep visibility into the agent's performance and behavior by exporting traces, logs, and metrics to Google Cloud's operations suite (Cloud Trace, Cloud Logging, and Cloud Monitoring).
+
+A key component of this is the **`GoogleGenAiSdkInstrumentor`**. By calling the `.instrument()` method, this library automatically "patches" the Google Generative AI SDK to capture detailed information about every interaction with the underlying language model (Gemini).
+
+This creates detailed traces for each LLM call, automatically recording critical data such as:
+
+* The full prompt sent to the model.
+* The model's response.
+* The model name being used.
+* Execution time and other performance metrics.
+
+This level of automatic instrumentation is invaluable for debugging the agent's reasoning process, evaluating the quality of its outputs, and monitoring the cost and performance of the application.
+
+## Cloud Deployment with Terraform
+
+This repository provides multiple, distinct Terraform configurations to support different deployment and management scenarios.
+
+### Main Deployment (`deploy/terraform_qwiklabs`)
+
+This is the primary, all-in-one configuration for deploying the entire application to a single GCP project. The "qwiklabs" name suggests it's designed for a self-contained, reproducible setup.
+
+Running this Terraform will provision a complete serverless environment, including:
+
+* **Cloud Run:** Deploys the backend agent as a serverless container (`cloudrun.tf`).
+* **App Hub:** Registers the deployed services as a formal application within Google Cloud's App Hub for visibility and management (`apphub.tf`).
+* **Service Accounts & APIs:** Configures all necessary IAM service accounts and enables the required Google Cloud APIs.
+
+### Central Artifact Management (`deploy/terraform`)
+
+This is a specialized configuration intended for repository maintainers. Its purpose is to set up a **separate, central GCP project** dedicated to CI/CD and artifact storage. It does **not** deploy the application itself.
+
+This configuration provisions:
+
+* **Artifact Registry:** Creates a repository to host the official Docker images for the application (`ar.tf`).
+* **Cloud Build:** Sets up a build trigger (`cb-trigger.tf`) to automate the building and publishing of images.
+
+The CI pipeline, defined in `deploy/ci/ci.yaml`, is then used to push images to this central location.
+
+### Standalone App Hub Registration (`deploy/terraform_apphub`)
+
+This is a minimal configuration whose only purpose is to register an application with Google Cloud's App Hub. This is useful if the application was deployed using a different method (e.g., manually) and you want to add it to App Hub for centralized management without running the full `terraform_qwiklabs` deployment.
+
+## Getting Started Locally
 
 ### Prerequisites
 
 * Docker
 * docker-compose
-* Google cloud project with owner priviliges (to create a Service account with necessary roles)
+* A Google Cloud project with Owner privileges (to create a Service Account with the necessary roles).
 
-## Deployment to Cloud
+### Running the App Locally
 
-The application can be deployed to GKE using the provided Helm charts and Terraform scripts.
+1. **Clone the repository:**
 
-### Deploying app infra with Terraform in a NEW project
+    ```bash
+    git clone https://github.com/GoogleCloudPlatform/the-london-travel-company.git
+    cd the-london-travel-company
+    ```
 
-Clone the repository
+2. **Create a Google Cloud Service Account:**
+    Create a service account with the following roles:
+    * `roles/aiplatform.user`
+    * `roles/monitoring.metricWriter`
+    * `roles/logging.logWriter`
+    * `roles/telemetry.writer`
 
-```bash
-git clone https://github.com/GoogleCloudPlatform/the-london-travel-company.git
-cd the-london-travel-company
-```
+3. **Service Account Key:**
+    Download the JSON key for the service account and save it as `.key.json` in the root directory of the project.
 
-The Terraform scripts in the `deploy/terraform_qwiklabs` directory can be used to provision the necessary infrastructure on GCP for running the application. This will create a GKE cluster, and all the necessary APIs and service accounts.
+4. **Create a `.env` file:**
+    Create a `.env` file in the root directory and add the following environment variables, replacing the values with your Google Cloud project details:
 
-Before running the Terraform scripts, you need to update the `backend.tf` with your GCS bucket information and `variables.tf` with your GCP project ID and other variables.
+    ```bash
+    PROJECT_ID=your-gcp-project-id
+    LOCATION=your-gcp-region
+    ```
 
-## Workbook
-
-For a more detailed explanation of the infrastructure and architecture, please refer to the [Workbook doc]([Workbook.md](https://docs.google.com/document/d/10NkZJ-7KkRBjSxGRK9K8QohmDgEFzMdtj3-6QNiA2aU/edit?usp=sharing&resourcekey=0-32fAkFlRtWcoiF7S6-pIfQ)) and skip ahead to `Part 1`. This is readable only by Alphabet employees for now.
-
-## [For Repo Maintainers] Creating a host project to host the artifacts required for this app
-
-The `deploy/terraform` directory is only needed to bootstrap a host project where the Helm charts and Docker images are stored (currently o11y-movie-guru). This central host project is where all other application projects get their images and artifacts. Run the Terraform scripts in `deploy/terraform` to create the infrastructure in the base project.
-
-The Docker images can be created or updated by running the `build_images.sh` script, which triggers a build pipeline.
-
-### Running the app locally
-
-1. Clone the repository
-
-```bash
-git clone https://github.com/GoogleCloudPlatform/the-london-travel-company.git
-cd the-london-travel-company
-```
-
-1. Create a service account with the following roles `roles/aiplatform.user`, `roles/monitoring.metricWriter`, `roles/cloudtrace.agent`, `roles/logging.logWriter`, `roles/telemetry.writer`.
-
-1. Download the service account json key and store it as `.key.json` in the root directory of the project.
-
-1. **Create a .env file:**
-    Create a `.env` file in the root directory of the project and add the following environment variables: `PROJECT_ID`, `LOCATION`
-
-1. **Start the application:**
+5. **Start the application:**
 
     ```bash
     docker-compose up -d
     ```
 
-1. **Access the application:**
-    The backend will be available at [http://localhost:8001](http://localhost:8001)
+6. **Access the application:**
+    The backend API will be available at `http://localhost:8001`.
