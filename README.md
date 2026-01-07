@@ -2,6 +2,39 @@
 
 The London Travel Company is a generative AI-powered travel assistant designed to help users plan their trips to London. It provides tailored information about attractions, activities, and points of interest based on user queries.
 
+## System Architecture
+
+```mermaid
+graph TD
+    User([User]) <--> Frontend[Vue 3 Frontend]
+    Frontend <--> API["FastAPI Backend (Google ADK)"]
+    
+    subgraph "Hierarchical Agents"
+        API <--> RootAgent["Root Agent (Lyla)"]
+        RootAgent <--> SearchAgent["Search Agent (Sub-Agent)"]
+    end
+    
+    subgraph "Data & Tools"
+        SearchAgent --> SQL[SQL Generator]
+        SearchAgent --> Vector[Embedding API]
+        SQL --> DB[(Database: SQLite / PostgreSQL)]
+        Vector --> DB
+    end
+    
+    subgraph "Observability"
+        API -.-> OTel[OpenTelemetry]
+        RootAgent -.-> OTel
+        SearchAgent -.-> OTel
+        OTel -.-> GCP[Google Cloud Ops Suite]
+    end
+```
+
+## Frontend
+
+The application features a modern, responsive frontend built with **Vue 3**, **Vite**, and **Tailwind CSS**. 
+
+* **API Integration**: Connects to the FastAPI agent backend to provide real-time responses from the hierarchical agents.
+
 ## AI Agent Architecture
 
 The core of this application is a hierarchical AI agent built with the Python-based [Google Agent Development Kit (ADK)](https://github.com/google/agent-development-kit). The agent, named "Lyla", is exposed via a FastAPI backend and is designed to be a friendly and expert London travel planner.
@@ -16,9 +49,9 @@ The architecture consists of a main "root agent" that handles user interaction a
 
 ### Sub-Agent (`database_agent`)
 
-*   **Specialization:** This agent, defined in `agents/london_agent/sub_agents/search_agent/`, is an expert at interacting with the travel database. Its sole purpose is to translate a user's request into a database query.
-*   **Tooling:** The `database_agent` has its own tool, `get_activities_tool`, which executes a SQL query against the local SQLite database to find relevant activities based on the user's refined request (e.g., "find historical sites for a 3-day trip").
-*   **Data Access:** It directly interfaces with the `london_travel.sql` SQLite database to fetch information about activities and attractions.
+*   **Specialization**: This agent, defined in `agents/london_agent/sub_agents/search_agent/`, is an expert at interacting with the travel database. Its sole purpose is to translate a user's request into a database query.
+*   **Tooling**: The `database_agent` has its own tool, `get_activities_tool`, which executes a SQL query against the database to find relevant activities based on the user's refined request (e.g., "find historical sites for a 3-day trip").
+*   **Data Access**: It supports both **SQLite** (local development) and **PostgreSQL** (production) for storing and retrieving activity data, including vector embeddings for semantic search.
 
 This hierarchical structure allows for a clean separation of concerns: the root agent manages the conversation, while the sub-agent manages the technical details of data retrieval.
 
@@ -70,11 +103,33 @@ This is a minimal configuration whose only purpose is to register an application
 
 ### Prerequisites
 
-* Docker
-* docker-compose
+* Docker and docker-compose (optional, for containerized setup)
+* Python 3.10+
+* Node.js 18+ and npm
 * A Google Cloud project with Owner privileges (to create a Service Account with the necessary roles).
 
-### Running the App Locally
+### Development Setup (No Docker)
+
+For a faster development loop, you can run the components separately:
+
+#### 1. Backend Agent
+```bash
+cd agents
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+# Set environment variables (see below)
+python3 -m src.main
+```
+
+#### 2. Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Running with Docker
 
 1. **Clone the repository:**
 
