@@ -29,6 +29,23 @@ graph TD
     end
 ```
 
+## Core Search Components
+
+The **Search Agent** uses a hybrid search strategy to provide highly relevant results by combining semantic understanding with structured data filtering.
+
+### 1. SQL Generator
+The **SQL Generator** is an LLM-powered tool that translates natural language constraints into valid SQL filtering logic. 
+* **Role**: It extracts structured parameters from the user's query (e.g., "activities under 50 euros" or "suitable for kids") and generates a strict SQL `WHERE` clause.
+* **Benefit**: Enables precise filtering on non-semantic data like cost, duration, and ratings that vector search alone cannot handle reliably.
+
+### 2. Embedding API
+The **Embedding API** powers the semantic search capability of the assistant.
+* **Model**: Uses the **`text-embedding-005`** model via the Google GenAI SDK.
+* **Role**: It converts the user's interests (e.g., "street food" or "hidden history") into numerical vectors. 
+* **Benefit**: Allows the agent to find activities based on their *meaning* rather than just keyword matching, using vector similarity search against the database.
+
+By combining these two components, the agent can fulfill complex requests like *"Find me affordable museum tours,"* where the Embedding API finds "museum tours" and the SQL Generator ensures they are "affordable."
+
 ## Frontend
 
 The application features a modern, responsive frontend built with **Vue 3**, **Vite**, and **Tailwind CSS**. 
