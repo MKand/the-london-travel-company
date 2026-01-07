@@ -31,6 +31,14 @@ LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", 'gemini-2.0-flash-001')
 PROJECT_ID= os.getenv("GOOGLE_CLOUD_PROJECT")
 LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION")
 
+# Database Configuration
+DB_TYPE = os.getenv("DB_TYPE", "sqlite").lower()
+POSTGRES_USER = os.getenv("POSTGRES_USER", "user")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "password")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
+POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5432")
+POSTGRES_DB = os.getenv("POSTGRES_DB", "london_travel")
+
 session_service = InMemorySessionService()
 
 class AgentModel(BaseModel):
@@ -40,6 +48,14 @@ class AgentModel(BaseModel):
 
 class Config(BaseSettings):
     """Configuration settings for the london holiday agent."""
+
+    # Database settings
+    db_type: str = DB_TYPE
+    postgres_user: str = POSTGRES_USER
+    postgres_password: str = POSTGRES_PASSWORD
+    postgres_host: str = POSTGRES_HOST
+    postgres_port: str = POSTGRES_PORT
+    postgres_db: str = POSTGRES_DB
 
     db_file_path: str = os.path.join(DB_PATH, "london_travel.sql")
     embedding_model_name: str = EMBEDDING_MODEL_NAME

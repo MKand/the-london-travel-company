@@ -20,8 +20,24 @@ import requests
 import json
 import asyncio
 import os
-from pysqlite3 import dbapi2 as sqlite3
-import sqlite_vec
+import time
+from typing import Any, Dict, List, Optional
+
+# Conditional imports to handle local development environments where strict dependencies might be missing
+try:
+    from pysqlite3 import dbapi2 as sqlite3
+    import sqlite_vec
+except ImportError:
+    import sqlite3
+    # Fallback or warning if sqlite_vec is missing, though it is in requirements
+
+try:
+    import psycopg2
+    from psycopg2.extras import RealDictCursor
+    from pgvector.psycopg2 import register_vector
+except ImportError:
+    psycopg2 = None
+
 from pydantic import BaseModel
 from google import genai
 from google.adk.tools import ToolContext
@@ -36,9 +52,10 @@ base_dir = os.path.dirname(os.path.abspath(__name__))
 
 llm_client = Client(vertexai=True, project=configs.project, location=configs.location)
 
-# Global variables to store database settings and SQLite client connection
+# Global variables to store database settings and connections
 database_settings = None
-_sqlite_conn = None  # Store the connection globally to reuse
+_sqlite_conn = None
+_postgres_conn = None
 
 class activity(BaseModel):
     activity_id: str
@@ -49,23 +66,19 @@ class activity(BaseModel):
     duration_max: int
     kid_friendliness_score: int
 
-
 class SQL_query_output(BaseModel):
     sql_query: str
     justification: str
 
-
 class actvities_search_output(BaseModel):
     activities_list: list[activity] | None = None
     error_message: str
-
 
 def setup_sqlite_client():
     """
     Establishes and returns a SQLite database connection.
     If the database file does not exist, it copies it from a default location.
     Ensures the sqlite-vec extension is loaded.
-    This function will attempt to reuse an existing connection.
     """
     global _sqlite_conn
     if _sqlite_conn is None:
@@ -73,21 +86,26 @@ def setup_sqlite_client():
             if not os.path.exists(configs.db_file_path):
                 raise Exception(f"Database not found at {configs.db_file_path}")
             
-            # load the data in configs.db_file_path  which is a .sql file to the sqllite db
+            # load the data in configs.db_file_path which is a .sql file to the sqllite db
             with open(configs.db_file_path, 'r') as f:
                 sql_script = f.read()
             
             _sqlite_conn = sqlite3.connect(":memory:")
             temp_cursor = _sqlite_conn.cursor()
             temp_cursor.executescript(sql_script)
-            logger.info(f"Database created and loaded from {configs.db_file_path}")
-            _sqlite_conn.enable_load_extension(True)
-            sqlite_vec.load(_sqlite_conn)
-            logger.info("SQLite database connected successfully and sqlite-vec extension loaded.")
+            logger.info(f"SQLite Database created and loaded from {configs.db_file_path}")
+            
+            try:
+                _sqlite_conn.enable_load_extension(True)
+                sqlite_vec.load(_sqlite_conn)
+                logger.info("sqlite-vec extension loaded.")
+            except Exception as e:
+                logger.warning(f"Failed to load sqlite-vec extension: {e}")
+
             temp_cursor.close()
             return _sqlite_conn
         except Exception as e:
-            print(f"Error connecting to SQLite: {e}")
+            logger.error(f"Error connecting to SQLite: {e}")
             if _sqlite_conn:
                 _sqlite_conn.close()
             _sqlite_conn = None
@@ -95,27 +113,120 @@ def setup_sqlite_client():
     else:
         return _sqlite_conn
 
+def setup_postgres_client():
+    """
+    Establishes and returns a Postgres database connection.
+    Ensures the vector extension is loaded and data is initialized.
+    """
+    global _postgres_conn
+    
+    if not psycopg2:
+        logger.error("psycopg2 module not found. Cannot connect to Postgres.")
+        return None
+
+    # Check validity of existing connection
+    if _postgres_conn is not None:
+        try:
+            cur = _postgres_conn.cursor()
+            cur.execute("SELECT 1")
+            cur.close()
+            return _postgres_conn
+        except psycopg2.Error:
+            logger.info("Existing Postgres connection closed or invalid. Reconnecting...")
+            _postgres_conn = None
+
+    try:
+        conn = psycopg2.connect(
+            host=configs.postgres_host,
+            port=configs.postgres_port,
+            user=configs.postgres_user,
+            password=configs.postgres_password,
+            dbname=configs.postgres_db
+        )
+        conn.autocommit = True
+        
+        # Enable pgvector extension
+        with conn.cursor() as cur:
+            cur.execute("CREATE EXTENSION IF NOT EXISTS vector;")
+            register_vector(conn)
+        
+        # Check if data exists
+        with conn.cursor() as cur:
+            cur.execute("SELECT to_regclass('public.activities');")
+            table_exists = cur.fetchone()[0]
+            
+            if not table_exists:
+                logger.info("Initializing Postgres database from SQL file...")
+                if os.path.exists(configs.db_file_path):
+                    with open(configs.db_file_path, 'r') as f:
+                        sql_lines = f.readlines()
+                    
+                    # Filter out SQLite specific commands and execute
+                    filtered_sql = []
+                    for line in sql_lines:
+                        if line.strip().upper().startswith("PRAGMA"):
+                            continue
+                        filtered_sql.append(line)
+                    
+                    full_sql = "".join(filtered_sql)
+                    cur.execute(full_sql)
+                    logger.info("Postgres database initialized.")
+                else:
+                    logger.error(f"SQL file not found at {configs.db_file_path}")
+            else:
+                logger.info("Postgres activities table already exists.")
+
+        _postgres_conn = conn
+        return _postgres_conn
+    except Exception as e:
+        logger.error(f"Error connecting to Postgres: {e}")
+        return None
+
+def get_db_connection():
+    """Wrapper to get appropriate DB connection based on config."""
+    if configs.db_type == "postgres":
+        return setup_postgres_client()
+    else:
+        return setup_sqlite_client()
+
 def get_database_settings():
     """
     Retrieves and returns database settings.
-    If settings are not loaded, it loads them from a hardcoded schema.
     """
     global database_settings
     if database_settings is None:
-        database_settings = {
-            "sqlite_ddl_schema": """
-            TABLE activities (
-                activity_id VARCHAR(50) PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                duration_min INT,
-                duration_max INT,
-                kid_friendliness_score INT,
-                cost INT,
-                sight_id VARCHAR(50) REFERENCES locations(sight_id), -- Foreign key to locations table
-                description TEXT,
-                embedding VECTOR(768);
-            """
-    }
+        if configs.db_type == "postgres":
+             database_settings = {
+                "sqlite_ddl_schema": """
+                TABLE activities (
+                    activity_id VARCHAR(50) PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    duration_min INT,
+                    duration_max INT,
+                    kid_friendliness_score INT,
+                    cost INT,
+                    sight_id VARCHAR(50) REFERENCES locations(sight_id), -- Foreign key to locations table
+                    description TEXT,
+                    embedding VECTOR(768)
+                );
+                """
+            }
+        else:
+            database_settings = {
+                "sqlite_ddl_schema": """
+                TABLE activities (
+                    activity_id VARCHAR(50) PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    duration_min INT,
+                    duration_max INT,
+                    kid_friendliness_score INT,
+                    cost INT,
+                    sight_id VARCHAR(50) REFERENCES locations(sight_id), -- Foreign key to locations table
+                    description TEXT,
+                    embedding VECTOR(768)
+                );
+                """
+            }
     return database_settings
 
 
@@ -125,7 +236,6 @@ async def get_embedding_tool(
 ) -> list[float]:
     """Tool to create vector embedding for the vector search components of the user's query."""
     try:
-
         write_to_tool_context("get_embedding_tool_input", vector_query, tool_context)
         client = genai.Client()
         response = client.models.embed_content(
@@ -160,22 +270,40 @@ async def get_activities_tool(
     sql_query = ""
     params = []
 
-    sql_query += "SELECT activity_id, name, description, cost, duration_min, duration_max, kid_friendliness_score, sight_id "
-    if embedding:
-        sql_query+= f", vec_distance_cosine(embedding, vec_f32('{embedding}')) AS score "
+    if configs.db_type == "postgres":
+        sql_query += "SELECT activity_id, name, description, cost, duration_min, duration_max, kid_friendliness_score, sight_id "
         
-    
-    sql_query += f"""
-    FROM activities 
-    """
-    if where_clause:
-        sql_query += f"""
-        WHERE {where_clause} 
-        """
-    
-    sql_query += f"""ORDER BY score ASC 
-    LIMIT {configs.max_rows};
-    """
+        if embedding:
+            # Postgres pgvector syntax using cosine distance operator <=>
+            # Note: We need to cast the embedding array string to vector type if handled as string, 
+            # but psycopg2 with register_vector handles list directly if passed as param.
+            # However, here we are constructing SQL string.
+            # To keep it simple and consistent with how other parts might work, let's inject valid SQL syntax
+            # pgvector distance: embedding <=> '[...]'
+            sql_query += f", (embedding <=> '{embedding}') AS score "
+        else:
+            sql_query += ", 0 AS score " # Default score if no embedding
+
+        sql_query += "FROM activities "
+        
+        if where_clause:
+            sql_query += f"WHERE {where_clause} "
+        
+        sql_query += f"ORDER BY score ASC LIMIT {configs.max_rows};"
+
+    else:
+        # SQLite with sqlite-vec
+        sql_query += "SELECT activity_id, name, description, cost, duration_min, duration_max, kid_friendliness_score, sight_id "
+        if embedding:
+            sql_query+= f", vec_distance_cosine(embedding, vec_f32('{embedding}')) AS score "
+        else:
+            sql_query += ", 0 AS score "
+        
+        sql_query += "FROM activities "
+        if where_clause:
+            sql_query += f"WHERE {where_clause} "
+        
+        sql_query += f"ORDER BY score ASC LIMIT {configs.max_rows};"
 
     if configs.debug_state:
         write_to_tool_context("get_data_tool_sql_query", sql_query, tool_context)
@@ -192,27 +320,14 @@ async def get_sql_where_clause_tool(
     keyword_queries: str,
     tool_context: ToolContext=None,
 ) -> str:
-    """Generates an initial SQLite SQL query from a natural language question.
-
-    This function leverages an LLM to construct an SQL query based on the
-    provided database schema and a sql query params string.
-
-    Args:
-        keyword_queries (string): A string that respresents the list of keyword queries.
-        tool_context (ToolContext): The ADK (Agent Development Kit) tool context,
-            providing access to shared state, invocation details, and other
-            contextual information relevant to the agent's operation.
-    Returns:
-        SQL_query_output: A Pydantic model containing the generated SQL query
-            and a justification for its creation.
-    """
+    """Generates an initial SQL WHERE clause from a natural language question."""
 
     get_database_settings()
     write_to_tool_context("get_sql_where_clause_tool_input", keyword_queries, tool_context)
 
     prompt_template = """
-    You are an AI assistant serving as an expert in converting keywords into the WHERE clauses of the **SQLite SQL queries**.
-    Your primary goal is to take keywords (eg: "duration <= 3 days") that express their travel constraints and translate into a WHERE clause of a SQLite query.
+    You are an AI assistant serving as an expert in converting keywords into the WHERE clauses of the **SQL queries**.
+    Your primary goal is to take keywords (eg: "duration <= 3 days") that express their travel constraints and translate into a WHERE clause of a SQL query.
     The schema of the db is given below.
 
     You must produce your final response as a JSON format with the following four keys:
@@ -236,13 +351,12 @@ async def get_sql_where_clause_tool(
     {QUERY_PARAMS}
     ```
 
-    **Think Step-by-Step:** Carefully consider the schema and keyword queries, and all guidelines to generate and validate the correct SQLite SQL.
-
-   """
+    **Think Step-by-Step:** Carefully consider the schema and keyword queries, and all guidelines to generate and validate the correct SQL.
+    """
 
     ddl_schema = database_settings.get("sqlite_ddl_schema", "")
     if not ddl_schema:
-        logger.warning("Database schema is not available. Please ensure update_database_settings() populates it or fetch it dynamically.")
+        logger.warning("Database schema is not available.")
 
     try:
         prompt = prompt_template.format(
@@ -277,24 +391,7 @@ async def get_data_from_db_tool(
     tool_context: ToolContext = None,
 ) -> actvities_search_output:
     """
-    Validates SQLite SQL syntax and functionality by executing it against the SQLite database.
-
-    This function performs the following checks:
-    1. **DML/DDL Restriction:** Rejects any SQL queries containing DML or DDL
-       statements (e.g., UPDATE, DELETE, INSERT, CREATE, ALTER) to ensure
-       read-only operations.
-    2. **Syntax and Execution:** Attempts to execute the SQL. If the query
-       is syntactically correct and executable, it retrieves the results.
-    3. **Result Analysis:** Checks if the query produced any results. If so, it
-       formats the results.
-
-    Args:
-        sql_string (str): The SQL query string to validate.
-        params (list): The parameters to pass to the SQL query.
-        tool_context (ToolContext): The tool context to use for validation.
-
-    Returns:
-        actvities_search_output: An object indicating the validation outcome.
+    Validates SQL syntax and functionality by executing it against the database.
     """
 
     output = actvities_search_output(error_message="")
@@ -307,60 +404,76 @@ async def get_data_from_db_tool(
         output.error_message = "Invalid SQL: Contains disallowed DML/DDL operations."
         return output
 
-    conn = None
+    conn = null_conn = None
     cur = None
     try:
-        conn = setup_sqlite_client()
+        conn = get_db_connection()
         if not conn:
-            raise ConnectionError("Failed to establish SQLite connection.")
+            raise ConnectionError(f"Failed to establish {configs.db_type} connection.")
 
-        cur = conn.cursor()
+        # Cursor creation diffs
+        if configs.db_type == "postgres":
+            cur = conn.cursor(cursor_factory=RealDictCursor)
+        else:
+            cur = conn.cursor()
+
         cur.execute(sql_string, params)
 
-        if cur.description:
-            column_names = [desc[0] for desc in cur.description]
+        formatted_rows = []
+        
+        if configs.db_type == "postgres":
+            # RealDictCursor returns dict-like objects
             db_rows = cur.fetchall()
-
-            formatted_rows = []
-            for row_data in db_rows:
-                formatted_rows.append(dict(zip(column_names, row_data)))
-
-            activities_list = []
-            try:
-                for row in formatted_rows:
-                    activity_obj = activity(
-                        activity_id=row.get('activity_id'),
-                        name=row.get('name'),
-                        description=row.get('description'),
-                        cost=row.get('cost'),
-                        duration_min=row.get('duration_min'),
-                        duration_max=row.get('duration_max'),
-                        kid_friendliness_score=row.get('kid_friendliness_score')
-                    )
-                    activities_list.append(activity_obj)
-                
-                logger.info(f"Number of activities returned: {len(activities_list)}")
-
-                output.activities_list = activities_list
-                if configs.debug_state and tool_context is not None:
-                    write_to_tool_context("get_data_from_db_tool_output", output.activities_list, tool_context)
-            except Exception as format_error:
-                output.error_message = f"Error formatting row into activity object: {format_error}"
-                write_to_tool_context("get_data_from_db_tool_error", output.error_message, tool_context)
-                logger.error(output.error_message)
+            for row in db_rows:
+                formatted_rows.append(dict(row))
         else:
-            write_to_tool_context("get_data_from_db_tool_error", "Valid SQL. Query executed successfully (no results).", tool_context)
+            # SQLite default cursor returns tuples
+            if cur.description:
+                column_names = [desc[0] for desc in cur.description]
+                db_rows = cur.fetchall()
+                for row_data in db_rows:
+                    formatted_rows.append(dict(zip(column_names, row_data)))
 
-    except sqlite3.Error as e:
+        activities_list = []
+        try:
+            for row in formatted_rows:
+                # Handle potential key differences or casing if any
+                activity_obj = activity(
+                    activity_id=row.get('activity_id'),
+                    name=row.get('name'),
+                    description=row.get('description'),
+                    cost=row.get('cost'),
+                    duration_min=row.get('duration_min'),
+                    duration_max=row.get('duration_max'),
+                    kid_friendliness_score=row.get('kid_friendliness_score')
+                )
+                activities_list.append(activity_obj)
+            
+            logger.info(f"Number of activities returned: {len(activities_list)}")
+
+            output.activities_list = activities_list
+            if configs.debug_state and tool_context is not None:
+                write_to_tool_context("get_data_from_db_tool_output", output.activities_list, tool_context)
+        except Exception as format_error:
+            output.error_message = f"Error formatting row into activity object: {format_error}"
+            write_to_tool_context("get_data_from_db_tool_error", output.error_message, tool_context)
+            logger.error(output.error_message)
+
+    except (sqlite3.Error, psycopg2.Error) as e:
         output.error_message = f"Invalid SQL: Database error - {e}"
+        logger.error(output.error_message)
     except ConnectionError as e:
         output.error_message = f"Database Connection Error: {e}"
+        logger.error(output.error_message)
     except Exception as e:
         output.error_message = f"Invalid SQL: An unexpected error occurred - {e}"
+        logger.error(output.error_message)
     finally:
         write_to_tool_context("get_data_from_db_tool_error", output.error_message, tool_context)
         if cur:
             cur.close()
+        # For Postgres we typically leave connection open or pooled, but here we might close if not global?
+        # Current logic reuses global, so don't close conn.
 
     return output
 
@@ -368,9 +481,9 @@ async def get_data_from_db_tool(
 if __name__ == "__main__":
     logger.info("Initializing database tools...")
     get_database_settings()
-    conn = setup_sqlite_client()
+    conn = get_db_connection()
     if conn:
-        logger.info("Test connection successful.")
+        logger.info(f"Test connection successful ({configs.db_type}).")
     else:
         logger.info("Test connection failed.")
     asyncio.run(get_activities_tool("museums", "less than 3 hours", None))
