@@ -18,24 +18,20 @@ import ChatContainer from './components/ChatContainer.vue'
           </div>
         </div>
         
-        <div class="hidden md:flex gap-6 text-sm font-bold text-slate-600">
-          <span class="hover:text-london-red cursor-pointer transition-colors">ATTRACTIONS</span>
-          <span class="hover:text-london-red cursor-pointer transition-colors">ITINERARIES</span>
-          <span class="hover:text-london-red cursor-pointer transition-colors">BOOKINGS</span>
-        </div>
+
       </div>
     </header>
 
-    <div class="max-w-5xl mx-auto w-full px-8 pt-12 pb-6 text-center md:text-left">
+    <div class="max-w-5xl mx-auto w-full px-8 py-10">
       <h2 class="text-4xl md:text-5xl font-black text-white drop-shadow-lg mb-4">
-        Welcome to <span class="text-london-red">London</span>.
+        Welcome to <span class="text-london-red text-shadow-sm">London</span>.
       </h2>
       <p class="text-lg md:text-xl font-medium text-white/90 drop-shadow-md max-w-2xl leading-relaxed">
         I'm Lyla, your personal concierge. I can curate a bespoke itinerary, find the best afternoon tea spots, or guide you through London's hidden history. How can I assist you today?
       </p>
     </div>
 
-    <main class="flex-1 flex flex-col overflow-hidden max-w-5xl mx-auto w-full p-4 md:p-8 pt-0 md:pt-0">
+    <main class="flex-1 flex flex-col overflow-hidden max-w-5xl mx-auto w-full p-4 md:p-8 pt-0">
       <ChatContainer />
     </main>
 

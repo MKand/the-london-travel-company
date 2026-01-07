@@ -2,12 +2,20 @@
 import { ref, onMounted, nextTick } from 'vue'
 import { createSession, sendMessage, generateNewSessionId } from '../api'
 
+const INTRO_MESSAGE = "Welcome to London! I'm Lyla, your personal concierge. I can curate a bespoke itinerary, find the best afternoon tea spots, or guide you through London's hidden history. How can I assist you today?"
+
 const messages = ref([])
 
 const userInput = ref('')
 const isLoading = ref(false)
 const scrollContainer = ref(null)
 const sessionId = ref(generateNewSessionId())
+
+const loadingMessages = [
+  "Lyla is thinking..."
+]
+const currentLoadingMessage = ref(loadingMessages[0])
+let loadingInterval = null
 
 const scrollToBottom = async () => {
   await nextTick()
@@ -46,6 +54,12 @@ const handleSend = async () => {
   scrollToBottom()
   
   isLoading.value = true
+  currentLoadingMessage.value = loadingMessages[0]
+  loadingInterval = setInterval(() => {
+    const nextIndices = loadingMessages.filter(m => m !== currentLoadingMessage.value)
+    currentLoadingMessage.value = nextIndices[Math.floor(Math.random() * nextIndices.length)]
+  }, 3000)
+
   try {
     const events = await sendMessage(sessionId.value, text)
     
@@ -77,6 +91,7 @@ const handleSend = async () => {
     })
   } finally {
     isLoading.value = false
+    clearInterval(loadingInterval)
     scrollToBottom()
   }
 }
@@ -105,11 +120,14 @@ const handleSend = async () => {
       </TransitionGroup>
       
       <!-- Typing Indicator -->
-      <div v-if="isLoading" id="typing-indicator" class="bg-white/80 border border-white/50 p-5 rounded-2xl rounded-bl-none shadow-md w-20 backdrop-blur-md">
-        <div class="flex gap-1.5 justify-center">
-          <div class="w-1.5 h-1.5 bg-london-blue rounded-full animate-bounce"></div>
-          <div class="w-1.5 h-1.5 bg-london-blue rounded-full animate-bounce [animation-delay:0.2s]"></div>
-          <div class="w-1.5 h-1.5 bg-london-blue rounded-full animate-bounce [animation-delay:0.4s]"></div>
+      <div v-if="isLoading" id="typing-indicator" class="flex items-center gap-4 bg-white/95 border border-white/50 p-4 px-7 rounded-3xl rounded-bl-none shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-left-4 duration-500">
+        <div class="relative w-8 h-8">
+          <div class="absolute inset-0 border-4 border-london-blue/20 rounded-full"></div>
+          <div class="absolute inset-0 border-4 border-london-red rounded-full border-t-transparent animate-spin"></div>
+        </div>
+        <div class="flex flex-col gap-0.5">
+          <span class="text-[10px] font-black text-london-red uppercase tracking-[0.2em]">Processing</span>
+          <span class="text-sm font-bold text-slate-700">{{ currentLoadingMessage }}</span>
         </div>
       </div>
     </div>
