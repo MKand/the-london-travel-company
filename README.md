@@ -164,6 +164,7 @@ npm run dev
 
 3. **Service Account Key:**
     Download the JSON key for the service account and save it as `.key.json` in the root directory of the project.
+    Please note that using downloaded keys is a security risk and is generally not recommended practice. We're only doing it to keep the demo easy to run.
 
 4. **Create a `.env` file:**
     Create a `.env` file in the root directory and add the following environment variables, replacing the values with your Google Cloud project details:
