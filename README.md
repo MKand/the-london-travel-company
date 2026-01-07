@@ -181,4 +181,4 @@ npm run dev
     ```
 
 6. **Access the application:**
-    The backend API will be available at `http://localhost:8001`.
+    The backend API will be available at `http://localhost:8001` and the frontend at `http://localhost:8080`.
