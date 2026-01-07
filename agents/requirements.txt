@@ -112,3 +112,4 @@ websockets==15.0.1
 wrapt==1.17.2
 sqlite-vec
 pandas
+pysqlite3-binary

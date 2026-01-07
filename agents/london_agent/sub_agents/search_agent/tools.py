@@ -18,10 +18,10 @@ import logging
 import re
 import requests
 import json
-import sqlite3
-import sqlite_vec
 import asyncio
 import os
+from pysqlite3 import dbapi2 as sqlite3
+import sqlite_vec
 from pydantic import BaseModel
 from google import genai
 from google.adk.tools import ToolContext
