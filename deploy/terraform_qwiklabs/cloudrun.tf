@@ -105,7 +105,6 @@ resource "google_cloud_run_v2_service" "app" {
         name       = "db_data"
         mount_path = "/app/data_london/"
       }
-      
     }
 
     containers {
@@ -141,6 +140,45 @@ resource "google_cloud_run_v2_service" "app" {
 resource "google_cloud_run_service_iam_binding" "default" {
   location = google_cloud_run_v2_service.app.location
   service  = google_cloud_run_v2_service.app.name
+  role     = "roles/run.invoker"
+  members = [
+    "allUsers"
+  ]
+}
+
+resource "google_cloud_run_v2_service" "frontend" {
+  name     = "londonagent-frontend"
+  location = var.gcp_region
+
+  template {
+    revision = "londonagent-frontend-rev1"
+    scaling {
+      max_instance_count = 1
+    }
+
+    service_account = google_service_account.service_account.email
+    containers {
+      name  = "london-frontend"
+      image = "${var.repo_prefix}/frontend:${var.image_tag}"
+
+      ports {
+        container_port = 80
+      }
+
+      env {
+        name  = "API_BASE_URL"
+        value = google_cloud_run_v2_service.app.uri
+      }
+    }
+  }
+  deletion_protection = false
+
+  depends_on = [ google_project_service.enable_apis, google_cloud_run_v2_service.app ]
+}
+
+resource "google_cloud_run_v2_service_iam_binding" "frontend" {
+  location = google_cloud_run_v2_service.frontend.location
+  name     = google_cloud_run_v2_service.frontend.name
   role     = "roles/run.invoker"
   members = [
     "allUsers"

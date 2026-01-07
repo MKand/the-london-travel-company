@@ -28,8 +28,8 @@ steps:
     - |
       docker build \
          -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-${SHORT_SHA}" \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v3" \
-         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v3" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v4" \
+         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v4" \
          .
 - name: 'gcr.io/cloud-builders/docker'
   id: "push-agent-image"
@@ -40,8 +40,31 @@ steps:
     - -c
     - |
       docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-${SHORT_SHA}' && \
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v3'
-
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-v4'
+- name: 'gcr.io/cloud-builders/docker'
+  id: "build-frontend-image"
+  waitFor: ['-']
+  dir: './frontend'
+  entrypoint: "sh"
+  args:
+    - -xe 
+    - -c
+    - |
+      docker build \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:obslab-${SHORT_SHA}" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:obslab-v4" \
+         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:obslab-v4" \
+         .
+- name: 'gcr.io/cloud-builders/docker'
+  id: "push-frontend-image"
+  waitFor: [build-frontend-image]
+  entrypoint: "sh"
+  args:
+    - -xe 
+    - -c
+    - |
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:obslab-${SHORT_SHA}' && \
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:obslab-v4'
 options:
   logging: CLOUD_LOGGING_ONLY
   substitution_option: ALLOW_LOOSE

@@ -11,7 +11,7 @@ variable "repo_prefix" {
 
 variable "image_tag" {
   description = "TAG of the movie guru docker images"
-  default     = "obslab-v3"
+  default     = "obslab-v4"
 }
 
 variable "gcp_region" {
