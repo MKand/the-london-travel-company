@@ -17,3 +17,14 @@ services:
     volumes:
       - .key.json:/app/.key.json:ro
       - ./data_london/london_travel.sql:/app/data_london/london_travel.sql
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - API_BASE_URL=http://localhost:8001
+    depends_on:
+      - agent

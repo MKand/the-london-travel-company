@@ -1,5 +1,6 @@
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = window.APP_CONFIG?.API_BASE_URL || 'http://localhost:8000';
 const AGENT_NAME = 'london_agent';
+
 export const DEFAULT_USER_ID = 'u_123';
 
 export function generateNewSessionId() {
