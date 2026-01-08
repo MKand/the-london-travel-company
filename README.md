@@ -9,8 +9,8 @@ graph TD
     User([User]) <--> Frontend[Vue 3 Frontend]
     Frontend <--> API["FastAPI Backend (Google ADK)"]
     
-    subgraph "Google Cloud Vertex AI"
-        LLM[Gemini 2.5 Flash]
+    subgraph "Vertex AI"
+        LLM[Gemini Models]
         Embed[Text Embedding 005]
     end
 
@@ -31,10 +31,10 @@ graph TD
     end
     
     subgraph "Observability"
-        API -.-> OTel[OpenTelemetry]
+        API -.-> OTel[OpenTelemetry Exporter]
         RootAgent -.-> OTel
         SearchAgent -.-> OTel
-        OTel -.-> GCP[Google Cloud Ops Suite]
+        OTel -.-> GCP[Google Cloud Observability]
     end
 ```
 
