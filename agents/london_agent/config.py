@@ -27,7 +27,7 @@ MAX_NUM_ROWS = os.getenv('MAX_NUM_ROWS', 20)
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", 'text-embedding-005')
 DEBUG_STATE = os.getenv("DEBUG_STATE", "false").lower() in ('true', '1', 't', 'yes', 'y')
 EMBEDDING_DIMENSION = 768
-LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", 'gemini-2.0-flash-001')
+LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", 'gemini-2.5-flash')
 PROJECT_ID= os.getenv("GOOGLE_CLOUD_PROJECT")
 LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION")
 

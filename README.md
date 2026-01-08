@@ -9,11 +9,20 @@ graph TD
     User([User]) <--> Frontend[Vue 3 Frontend]
     Frontend <--> API["FastAPI Backend (Google ADK)"]
     
+    subgraph "Google Cloud Vertex AI"
+        LLM[Gemini 2.5 Flash]
+        Embed[Text Embedding 005]
+    end
+
     subgraph "Hierarchical Agents"
         API <--> RootAgent["Root Agent (Lyla)"]
         RootAgent <--> SearchAgent["Search Agent (Sub-Agent)"]
     end
     
+    RootAgent --> LLM
+    SearchAgent --> LLM
+    SearchAgent --> Embed
+
     subgraph "Data & Tools"
         SearchAgent --> SQL[SQL Generator]
         SearchAgent --> Vector[Embedding API]
