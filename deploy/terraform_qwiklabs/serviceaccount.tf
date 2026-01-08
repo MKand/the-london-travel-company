@@ -7,15 +7,20 @@ resource "google_service_account" "service_account" {
 
 resource "google_storage_bucket_iam_member" "bucket_reader_otel" {
   bucket = google_storage_bucket.otel.name
-  role   = "roles/storage.admin"
+  role   = "roles/storage.objectViewer"
   member = "serviceAccount:${google_service_account.service_account.email}"
 }
 resource "google_storage_bucket_iam_member" "bucket_reader_db" {
   bucket = google_storage_bucket.db_file.name
-  role   = "roles/storage.admin"
+  role   = "roles/storage.objectViewer"
   member = "serviceAccount:${google_service_account.service_account.email}"
 }
 
+resource "google_project_iam_member" "storage-viewer" {
+  project = var.gcp_project_id
+  role    = "roles/storage.objectViewer"
+  member  = "serviceAccount:${google_service_account.service_account.email}"
+}
 
 resource "google_project_iam_member" "vertex-user" {
   project = var.gcp_project_id
@@ -50,5 +55,11 @@ resource "google_project_iam_member" "log-writer" {
 resource "google_project_iam_member" "telemetry-writer" {
   project = var.gcp_project_id
   role    = "roles/telemetry.writer"
+  member  = "serviceAccount:${google_service_account.service_account.email}"
+}
+
+resource "google_project_iam_member" "cloudsql-client" {
+  project = var.gcp_project_id
+  role    = "roles/cloudsql.client"
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }

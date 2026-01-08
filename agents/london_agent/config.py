@@ -18,11 +18,10 @@ from pydantic_settings import BaseSettings
 from pydantic import BaseModel, Field, ValidationError
 from google.adk.sessions import InMemorySessionService
 
-logging.basicConfig(level=logging.INFO)
+
 logger = logging.getLogger(__name__)
 
 
-DB_PATH = os.getenv('DB_PATH', "../data_london/")
 MAX_NUM_ROWS = os.getenv('MAX_NUM_ROWS', 20)
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", 'text-embedding-005')
 DEBUG_STATE = os.getenv("DEBUG_STATE", "false").lower() in ('true', '1', 't', 'yes', 'y')
@@ -33,11 +32,16 @@ LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION")
 
 # Database Configuration
 DB_TYPE = os.getenv("DB_TYPE", "sqlite").lower()
+SQLLITE_DB_PATH = os.getenv('DB_PATH', "../data_london/")
 POSTGRES_USER = os.getenv("POSTGRES_USER", "user")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "password")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
 POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5432")
-POSTGRES_DB = os.getenv("POSTGRES_DB", "london_travel")
+POSTGRES_DB = os.getenv("POSTGRES_DB", "LONDON_travel")
+
+logger.info(f"The DB type is: {DB_TYPE}")
+
+
 
 session_service = InMemorySessionService()
 
@@ -51,13 +55,13 @@ class Config(BaseSettings):
 
     # Database settings
     db_type: str = DB_TYPE
-    postgres_user: str = POSTGRES_USER
-    postgres_password: str = POSTGRES_PASSWORD
-    postgres_host: str = POSTGRES_HOST
-    postgres_port: str = POSTGRES_PORT
-    postgres_db: str = POSTGRES_DB
+    postgres_user: str = POSTGRES_USER or "user"
+    postgres_password: str = POSTGRES_PASSWORD or "password"
+    postgres_host: str = POSTGRES_HOST or "localhost"
+    postgres_port: str = POSTGRES_PORT or "5432"
+    postgres_db: str = POSTGRES_DB or "London_travel"
 
-    db_file_path: str = os.path.join(DB_PATH, "london_travel.sql")
+    db_file_path: str = os.path.join(SQLLITE_DB_PATH, "london_travel.sql")
     embedding_model_name: str = EMBEDDING_MODEL_NAME
     max_rows: int = MAX_NUM_ROWS
     debug_state:bool = DEBUG_STATE

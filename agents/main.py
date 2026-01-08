@@ -20,6 +20,7 @@ import google.auth.transport.requests
 import grpc
 from google.auth.transport.grpc import AuthMetadataPlugin
 from opentelemetry import _events as events, _logs as logs, metrics, trace
+from google.cloud import logging as cloud_logging
 from opentelemetry.exporter.cloud_logging import CloudLoggingExporter
 from opentelemetry.exporter.cloud_monitoring import CloudMonitoringMetricsExporter
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (
@@ -41,7 +42,15 @@ from london_agent.sub_agents.search_agent.tools import setup_sqlite_client
 
 import london_agent # doing to make errors importing the agent appear explicity
 
-logging.basicConfig(level=logging.INFO)
+# Set up Cloud Logging for GCP
+# This ensures that standard Python logging.ERROR etc. map correctly to GCP severity
+try:
+    client = cloud_logging.Client()
+    client.setup_logging()
+except Exception:
+    # Fallback to standard logging if credentials aren't found or initialization fails
+    logging.basicConfig(level=logging.INFO)
+
 logger = logging.getLogger(__name__)
 
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
