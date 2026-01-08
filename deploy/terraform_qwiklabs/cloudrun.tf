@@ -40,7 +40,7 @@ resource "google_cloud_run_v2_service" "backend" {
   location = var.gcp_region
 
   template {
-    revision = "londonagent-server-rev1"
+    revision = "londonagent-backend-rev1"
     scaling {
       max_instance_count = 1
     }
