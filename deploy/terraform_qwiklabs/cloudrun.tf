@@ -35,14 +35,20 @@ resource "google_storage_bucket_object" "db-file" {
   content = data.http.db_file.response_body
 }
 
-resource "google_cloud_run_v2_service" "app" {
-  name     = "londonagent-server"
+resource "google_cloud_run_v2_service" "backend" {
+  name     = "londonagent-backend"
   location = var.gcp_region
 
   template {
     revision = "londonagent-server-rev1"
     scaling {
       max_instance_count = 1
+    }
+    volumes {
+      name = "cloudsql"
+      cloud_sql_instance {
+        instances = [google_sql_database_instance.postgres_db.connection_name]
+      }
     }
     # Revision-level annotations, including container dependencies
     annotations = {
@@ -96,8 +102,28 @@ resource "google_cloud_run_v2_service" "app" {
         value = "true"
       }
       env {
-        name = "DB_PATH"
+        name = "SQLITE_DB_PATH"
         value = "/app/data_london/"
+      }
+      env{
+        name = "DB_TYPE"
+        value = "postgres"
+      }
+      env{
+        name = "POSTGRES_HOST"
+        value = "/cloudsql/${google_sql_database_instance.postgres_db.connection_name}"
+      }
+      env{
+        name = "POSTGRES_USER"
+        value = "postgres"
+      }
+      env{
+        name = "POSTGRES_PASSWORD"
+        value = random_password.db_password.result
+      }
+      env{
+        name = "POSTGRES_DB"
+        value = "london_activities" 
       }
 
     volume_mounts {
@@ -137,8 +163,8 @@ resource "google_cloud_run_v2_service" "app" {
 }
 
 resource "google_cloud_run_service_iam_binding" "default" {
-  location = google_cloud_run_v2_service.app.location
-  service  = google_cloud_run_v2_service.app.name
+  location = google_cloud_run_v2_service.backend.location
+  service  = google_cloud_run_v2_service.backend.name
   role     = "roles/run.invoker"
   members = [
     "allUsers"
@@ -166,13 +192,13 @@ resource "google_cloud_run_v2_service" "frontend" {
 
       env {
         name  = "API_BASE_URL"
-        value = google_cloud_run_v2_service.app.uri
+        value = google_cloud_run_v2_service.backend.uri
       }
     }
   }
   deletion_protection = false
 
-  depends_on = [ google_project_service.enable_apis, google_cloud_run_v2_service.app ]
+  depends_on = [ google_project_service.enable_apis ]
 }
 
 resource "google_cloud_run_v2_service_iam_binding" "frontend" {

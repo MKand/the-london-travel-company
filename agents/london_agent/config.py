@@ -32,7 +32,7 @@ LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION")
 
 # Database Configuration
 DB_TYPE = os.getenv("DB_TYPE", "sqlite").lower()
-SQLLITE_DB_PATH = os.getenv('DB_PATH', "../data_london/")
+SQLLITE_DB_PATH = os.getenv('SQLITE_DB_PATH', "../data_london/")
 POSTGRES_USER = os.getenv("POSTGRES_USER", "user")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "password")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
@@ -59,7 +59,7 @@ class Config(BaseSettings):
     postgres_password: str = POSTGRES_PASSWORD or "password"
     postgres_host: str = POSTGRES_HOST or "localhost"
     postgres_port: str = POSTGRES_PORT or "5432"
-    postgres_db: str = POSTGRES_DB or "London_travel"
+    postgres_db: str = POSTGRES_DB or "london_activities"
 
     db_file_path: str = os.path.join(SQLLITE_DB_PATH, "london_travel.sql")
     embedding_model_name: str = EMBEDDING_MODEL_NAME
@@ -69,7 +69,7 @@ class Config(BaseSettings):
     location:str = LOCATION
     app_name: str = "LYLA"
     agent_settings: AgentModel = Field(default_factory=AgentModel) 
-    GENAI_USE_VERTEXAI: str = Field(default="1") 
+    genai_use_vertexai: str = Field(default="1") 
 
 try:
     configs = Config()

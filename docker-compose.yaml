@@ -7,7 +7,7 @@ services:
       - "8001:8000"
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
-      DB_PATH: "/app/data_london/"
+      SQLITE_DB_PATH: "/app/data_london/"
       GOOGLE_CLOUD_PROJECT: $PROJECT_ID
       GOOGLE_CLOUD_LOCATION: $LOCATION
       GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
@@ -18,7 +18,7 @@ services:
       POSTGRES_HOST: "postgres"
       POSTGRES_USER: "user"
       POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: "london_travel"
+      POSTGRES_DB: "london_activities"
     volumes:
       - .key.json:/app/.key.json:ro
       - ./data_london/london_travel.sql:/app/data_london/london_travel.sql
