@@ -4,9 +4,11 @@ from london_agent.agent import root_agent
 import os
 import vertexai
 
-PROJECT_ID = "o11y-movie-guru"
-LOCATION = "us-central1"
-STAGING_BUCKET = "gs://o11y-movie-guru-agentengine2"
+# Deploy for sqlite version
+
+PROJECT_ID = os.getenv("PROJECT_ID")
+LOCATION = os.getenv("LOCATION")
+STAGING_BUCKET = os.getenv("STAGING_BUCKET")
 
 vertexai.init(
     project=PROJECT_ID,
@@ -28,15 +30,8 @@ try:
         display_name="LondonAgent",
         description="London Travel Agent",
         env_vars={
-            "ENABLE_METRICS": "true",
-            "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:4318",
             "GOOGLE_GENAI_USE_VERTEXAI": "TRUE",
-            "DB_TYPE": "sqlite",
-            "POSTGRES_HOST": "o11y-movie-guru:europe-west4:london-travel-db",
-            "POSTGRES_USER": "postgres",
-            "POSTGRES_PASSWORD": "YOUR_POSTGRES_PASSWORD",
-            "POSTGRES_DB": "LONDON_activities",
-        }
+            "DB_TYPE": "sqlite",        }
     )
 except Exception as e:
     print(e)
