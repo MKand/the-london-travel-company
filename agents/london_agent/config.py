@@ -32,7 +32,8 @@ LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION")
 
 # Database Configuration
 DB_TYPE = os.getenv("DB_TYPE", "sqlite").lower()
-SQLLITE_DB_PATH = os.getenv('SQLITE_DB_PATH', "../data_london/")
+LOCAL_SQLLITE_DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+SQLLITE_DB_PATH = os.getenv('SQLITE_DB_PATH', LOCAL_SQLLITE_DB_PATH)
 POSTGRES_USER = os.getenv("POSTGRES_USER", "user")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "password")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
