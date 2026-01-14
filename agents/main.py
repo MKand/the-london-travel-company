@@ -35,12 +35,10 @@ from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
 from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.instrumentation.google_genai import GoogleGenAiSdkInstrumentor
-from google.adk.cli.fast_api import get_fast_api_app
 from fastapi import FastAPI
+from google.adk.cli.fast_api import get_fast_api_app
 from london_agent.sub_agents.search_agent.tools import setup_sqlite_client
-
-import london_agent # doing to make errors importing the agent appear explicity
+from london_agent.config import configs
 
 # Set up Cloud Logging for GCP
 # This ensures that standard Python logging.ERROR etc. map correctly to GCP severity
@@ -54,27 +52,6 @@ except Exception:
 logger = logging.getLogger(__name__)
 
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
-ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8080", "*"]
-SESSION_DB_URL = "sqlite:///./sessions.db"
-
-def str_to_bool(s: str) -> bool:
-    """
-    Convert a string to a boolean.
-    Accepts: yes/no, true/false, t/f, y/n, on/off, 1/0.
-    Raises ValueError if invalid.
-    """
-    truthy = {"y", "yes", "t", "true", "on", "1"}
-    falsy  = {"n", "no", "f", "false", "off", "0"}
-
-    s = s.strip().lower()
-    if s in truthy:
-        return True
-    if s in falsy:
-        return False
-    raise ValueError(f"Invalid boolean string: {s}")
-
-
-USE_MIDDLEWARE = str_to_bool(os.getenv("USE_MIDDLEWARE", "False"))
 
 GCP_SCOPES = [
     "https://www.googleapis.com/auth/trace.append",       # For Cloud Trace
@@ -138,24 +115,9 @@ setup_sqlite_client()
 # Call the function to get the FastAPI app instance
 app: FastAPI = get_fast_api_app(
     agents_dir=AGENT_DIR,
-    allow_origins=ALLOWED_ORIGINS,
+    allow_origins=configs.allowed_origins,
     web=True,
 )
-
-# This middleware is used to trigger errors intentionally 
-@app.middleware("http")
-async def add_middleware(request, call_next):
-    try:
-        if USE_MIDDLEWARE:
-            # purposefully unused
-            additional_props = os.environ['ADDITIONAL_PROPS']
-            logger.info("Middleware triggered")
-            # do nothing
-        response = await call_next(request)
-        return response
-    except Exception as e:
-        logger.exception(logger.error(e, stack_info=True, exc_info=True))
-    
 
 @app.get("/health")
 async def read_root():
