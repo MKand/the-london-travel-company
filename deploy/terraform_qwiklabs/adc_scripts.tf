@@ -28,6 +28,6 @@ module "cft_components_connections" {
   platform              = "linux"
   create_cmd_entrypoint = "cd ${path.module}/adc_scripts; chmod +x 2_cft-components-connections.sh; ./2_cft-components-connections.sh"
   create_cmd_body       = var.gcp_project_id
-
+  service_account_key_file = var.service_account_key_file
   module_depends_on = [module.cft_google_components]
 }
