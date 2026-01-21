@@ -54,7 +54,7 @@ except Exception:
 logger = logging.getLogger(__name__)
 
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
-ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8080", "*"]
+ALLOWED_ORIGINS = ["*"]
 SESSION_DB_URL = "sqlite:///./sessions.db"
 
 def str_to_bool(s: str) -> bool:
@@ -163,4 +163,4 @@ async def read_root():
 
 
 if __name__ == "__main__":
-   uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+   uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("FASTAPI_PORT", 8080)))

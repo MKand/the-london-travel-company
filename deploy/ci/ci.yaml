@@ -27,7 +27,7 @@ steps:
     - -c
     - |
       docker build \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-${SHORT_SHA}" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:lab-${SHORT_SHA}" \
          -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:${_IMAGE_TAG}" \
          --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:${_IMAGE_TAG}" \
          .
@@ -39,7 +39,7 @@ steps:
     - -xe 
     - -c
     - |
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:obslab-${SHORT_SHA}' && \
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:lab-${SHORT_SHA}' && \
       docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:${_IMAGE_TAG}'
 - name: 'gcr.io/cloud-builders/docker'
   id: "build-frontend-image"
@@ -51,7 +51,7 @@ steps:
     - -c
     - |
       docker build \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:obslab-${SHORT_SHA}" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:lab-${SHORT_SHA}" \
          -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:${_IMAGE_TAG}" \
          --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:${_IMAGE_TAG}" \
          .
@@ -63,7 +63,7 @@ steps:
     - -xe 
     - -c
     - |
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:obslab-${SHORT_SHA}' && \
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:lab-${SHORT_SHA}' && \
       docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:${_IMAGE_TAG}'
 options:
   logging: CLOUD_LOGGING_ONLY
