@@ -15,7 +15,13 @@ gcloud components update
 # ------------------------------------------------------------------------------
 # 1. Enable APIs
 # ------------------------------------------------------------------------------
-gcloud services enable config.googleapis.com servicehealth.googleapis.com apphub.googleapis.com cloudasset.googleapis.com designcenter.googleapis.com cloudasset.googleapis.com
+gcloud services enable \
+config.googleapis.com \
+servicehealth.googleapis.com \
+apphub.googleapis.com \
+cloudasset.googleapis.com \
+designcenter.googleapis.com \
+cloudasset.googleapis.com
 
 # ------------------------------------------------------------------------------
 # 2. Create AppHub Boundary
