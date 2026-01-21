@@ -6,7 +6,7 @@ module "cft_create_space" {
   create_cmd_body          = var.gcp_project_id
   skip_download            = false
   upgrade                  = false
-  module_depends_on        = [google_project_service.enable_apis, google_apphub_application.lta]
+  module_depends_on        = [google_project_service.enable_apis]
   service_account_key_file = var.service_account_key_file
 }
 
@@ -26,6 +26,9 @@ module "cft_google_components" {
 module "cft_components_connections" {
   source                = "terraform-google-modules/gcloud/google"
   platform              = "linux"
+  
+  skip_download         = false
+  upgrade               = false
   create_cmd_entrypoint = "cd ${path.module}/adc_scripts; chmod +x 2_cft-components-connections.sh; ./2_cft-components-connections.sh"
   create_cmd_body       = var.gcp_project_id
   service_account_key_file = var.service_account_key_file

@@ -18,7 +18,6 @@ resource "google_project_service" "enable_apis" {
     "artifactregistry.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "storage-api.googleapis.com",
-    "firebase.googleapis.com",
     "iam.googleapis.com",
     "cloudbilling.googleapis.com",
     "container.googleapis.com",
