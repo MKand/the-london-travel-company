@@ -11,8 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-TARGET=observability-challenge-lab_lta-v3.zip
-OBJS=*.tf runtime.yaml 
+TARGET=adc-lab_lta-v0.1.zip
+OBJS=*.tf runtime.yaml *.sh
 
 $(TARGET): $(OBJS)
 	zip -r $(TARGET) $(OBJS) .default.auto.tfvars -x backend.tf 

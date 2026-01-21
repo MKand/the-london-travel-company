@@ -52,3 +52,7 @@ variable "db_file" {
   description = "URL of the sqllite db file"
   default = "https://raw.githubusercontent.com/MKand/the-london-travel-company/main/data_london/london_travel.sql"
 }
+
+variable "service_account_key_file" {
+ type = string
+}
