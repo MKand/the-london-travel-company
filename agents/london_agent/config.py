@@ -28,19 +28,23 @@ DEBUG_STATE = os.getenv("DEBUG_STATE", "false").lower() in ('true', '1', 't', 'y
 EMBEDDING_DIMENSION = 768
 LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", 'gemini-2.5-flash')
 PROJECT_ID= os.getenv("GOOGLE_CLOUD_PROJECT")
-LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION")
+LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 
 # Database Configuration
 DB_TYPE = os.getenv("DB_TYPE", "sqlite").lower()
-SQLLITE_DB_PATH = os.getenv('SQLITE_DB_PATH', "../data_london/")
+logger.info(f"The DB type is: {DB_TYPE}")
+SQLITE_DB_PATH = os.getenv('SQLITE_DB_PATH', "/app/data_london")
+
 POSTGRES_USER = os.getenv("POSTGRES_USER", "user")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "password")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
 POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5432")
 POSTGRES_DB = os.getenv("POSTGRES_DB", "LONDON_travel")
 
-logger.info(f"The DB type is: {DB_TYPE}")
-
+# OTEL Configuration
+OTEL_SERVICE_NAME = os.getenv("OTEL_SERVICE_NAME", "london-travel-agent")
+OTEL_EXPORTER_OTLP_ENDPOINT = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4318")
+OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT = os.getenv("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "true").lower() in ('true', '1', 't', 'yes', 'y')
 
 
 session_service = InMemorySessionService()
@@ -61,7 +65,7 @@ class Config(BaseSettings):
     postgres_port: str = POSTGRES_PORT or "5432"
     postgres_db: str = POSTGRES_DB or "london_activities"
 
-    db_file_path: str = os.path.join(SQLLITE_DB_PATH, "london_travel.sql")
+    db_file_path: str = os.path.join(SQLITE_DB_PATH, "london_travel.sql")
     embedding_model_name: str = EMBEDDING_MODEL_NAME
     max_rows: int = MAX_NUM_ROWS
     debug_state:bool = DEBUG_STATE

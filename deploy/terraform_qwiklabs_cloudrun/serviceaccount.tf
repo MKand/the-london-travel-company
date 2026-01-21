@@ -1,4 +1,3 @@
-
 resource "google_service_account" "service_account" {
   account_id   = "lta-sa"
   display_name = "lta"
@@ -15,7 +14,6 @@ resource "google_storage_bucket_iam_member" "bucket_reader_db" {
   role   = "roles/storage.admin"
   member = "serviceAccount:${google_service_account.service_account.email}"
 }
-
 
 resource "google_project_iam_member" "vertex-user" {
   project = var.gcp_project_id
@@ -50,5 +48,11 @@ resource "google_project_iam_member" "log-writer" {
 resource "google_project_iam_member" "telemetry-writer" {
   project = var.gcp_project_id
   role    = "roles/telemetry.writer"
+  member  = "serviceAccount:${google_service_account.service_account.email}"
+}
+
+resource "google_project_iam_member" "cloudsql-client" {
+  project = var.gcp_project_id
+  role    = "roles/cloudsql.client"
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }

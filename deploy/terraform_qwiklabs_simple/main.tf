@@ -15,10 +15,8 @@
 resource "google_project_service" "enable_apis" {
   for_each = toset([
     "aiplatform.googleapis.com",
-    "artifactregistry.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "storage-api.googleapis.com",
-    "firebase.googleapis.com",
     "iam.googleapis.com",
     "cloudbilling.googleapis.com",
     "container.googleapis.com",
@@ -29,6 +27,7 @@ resource "google_project_service" "enable_apis" {
     "monitoring.googleapis.com",
     "cloudtrace.googleapis.com",
     "run.googleapis.com",
+    "designcenter.googleapis.com",
     "sqladmin.googleapis.com",
     "secretmanager.googleapis.com"
   ])
