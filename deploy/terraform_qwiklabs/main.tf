@@ -29,7 +29,6 @@ resource "google_project_service" "enable_apis" {
     "monitoring.googleapis.com",
     "cloudtrace.googleapis.com",
     "run.googleapis.com",
-    "sqladmin.googleapis.com",
     "secretmanager.googleapis.com",
     "designcenter.googleapis.com",
     "apphub.googleapis.com"

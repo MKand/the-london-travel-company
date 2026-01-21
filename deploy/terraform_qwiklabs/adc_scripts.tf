@@ -1,4 +1,3 @@
-
 module "cft_create_space" {
   source   = "terraform-google-modules/gcloud/google"
   platform = "linux"
@@ -7,10 +6,10 @@ module "cft_create_space" {
   create_cmd_body          = var.gcp_project_id
   skip_download            = false
   upgrade                  = false
-  module_depends_on        = [google_project_service.enable_apis]
+  module_depends_on        = [google_project_service.enable_apis, google_apphub_application.lta]
   service_account_key_file = var.service_account_key_file
-
 }
+
 module "cft_google_components" {
   source   = "terraform-google-modules/gcloud/google"
   platform = "linux"
@@ -19,7 +18,7 @@ module "cft_google_components" {
   create_cmd_body          = var.gcp_project_id
   skip_download            = false
   upgrade                  = false
-  module_depends_on        = [google_project_service.enable_apis]
+  module_depends_on        = [module.cft_create_space]
   service_account_key_file = var.service_account_key_file
 
 }
