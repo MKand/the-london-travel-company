@@ -794,8 +794,8 @@ gcloud config set project $PROJECT_ID
   --description="This module is used to create Model Armor template." 
 
 ./adc.sh --function=create-catalog-template-revision \
-  --space-id="easysaas-adc-demo" \
-  --catalog-id="default-catalog" \
+  --space-id=$SPACE_ID \
+  --catalog-id=$CATALOG_ID \
   --catalog-template-id="vertex-model-armor-template" \
   --revision-id="r1" \
   --ref-tag="v2.4.1" \
@@ -957,8 +957,8 @@ roles/modelarmor.floorSettingsAdmin" \
   --description="The module creates Agent Engine and related dependencies. It supports both source based deployments (aka in-line deployment) and serialized object deployment (aka pickle deployment)." 
 
 ./adc.sh --function=create-catalog-template-revision \
-  --space-id="easysaas-adc-demo" \
-  --catalog-id="default-catalog" \
+  --space-id=$SPACE_ID \
+  --catalog-id=$CATALOG_ID \
   --catalog-template-id="agent-engine" \
   --revision-id="r1" \
   --ref-tag="v1.0" \
