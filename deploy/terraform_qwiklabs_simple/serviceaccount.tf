@@ -17,12 +17,6 @@ resource "google_service_account" "lta_backend_sa" {
   project      = var.gcp_project_id
 }
 
-resource "google_storage_bucket_iam_member" "bucket_reader_db" {
-  bucket = google_storage_bucket.db_file_bucket.name
-  role   = "roles/storage.admin"
-  member = "serviceAccount:${google_service_account.lta_backend_sa.email}"
-}
-
 
 resource "google_project_iam_member" "vertex-user" {
   project = var.gcp_project_id
