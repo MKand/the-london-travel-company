@@ -91,3 +91,4 @@ pandas
 pysqlite3-binary
 psycopg2-binary
 pgvector
+deprecated

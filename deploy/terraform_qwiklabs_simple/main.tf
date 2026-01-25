@@ -14,7 +14,6 @@
 
 resource "google_project_service" "enable_apis" {
   for_each = toset([
-    "vertexai.googleapis.com",
     "aiplatform.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "storage-api.googleapis.com",
