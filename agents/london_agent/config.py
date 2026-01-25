@@ -21,20 +21,30 @@ from google.adk.sessions import InMemorySessionService
 
 logger = logging.getLogger(__name__)
 
-
+# Default values for the agent
 MAX_NUM_ROWS = os.getenv('MAX_NUM_ROWS', 20)
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", 'text-embedding-005')
 DEBUG_STATE = os.getenv("DEBUG_STATE", "false").lower() in ('true', '1', 't', 'yes', 'y')
-EMBEDDING_DIMENSION = 768
+EMBEDDING_DIMENSION = os.getenv("EMBEDDING_DIMENSION", 768)
 LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", 'gemini-2.5-flash')
+
+# Google Cloud Configuration
 PROJECT_ID= os.getenv("GOOGLE_CLOUD_PROJECT")
 LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
+
+# Set the location for the Vertex AI client
+os.environ["GOOGLE_CLOUD_LOCATION"] = LOCATION
+
+if PROJECT_ID == "":
+    logger.error("GOOGLE_CLOUD_PROJECT is not set")
+    raise ValueError("GOOGLE_CLOUD_PROJECT is not set")
 
 # Database Configuration
 DB_TYPE = os.getenv("DB_TYPE", "sqlite").lower()
 logger.info(f"The DB type is: {DB_TYPE}")
-SQLITE_DB_PATH = os.getenv('SQLITE_DB_PATH', "/app/data_london")
+SQLITE_DB_PATH = os.getenv('SQLITE_DB_PATH', "/app/london_agent/data/")
 
+# Postgres Configuration (if using Postgres)
 POSTGRES_USER = os.getenv("POSTGRES_USER", "user")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "password")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
@@ -45,7 +55,6 @@ POSTGRES_DB = os.getenv("POSTGRES_DB", "LONDON_travel")
 OTEL_SERVICE_NAME = os.getenv("OTEL_SERVICE_NAME", "london-travel-agent")
 OTEL_EXPORTER_OTLP_ENDPOINT = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4318")
 OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT = os.getenv("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "true").lower() in ('true', '1', 't', 'yes', 'y')
-
 
 session_service = InMemorySessionService()
 

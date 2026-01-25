@@ -13,25 +13,15 @@
 # limitations under the License.
 
 google-adk==1.1.0
-opentelemetry-exporter-gcp-logging==1.9.0a0
-opentelemetry-exporter-gcp-monitoring==1.9.0a0
-opentelemetry-exporter-otlp-proto-grpc==1.33.1
-opentelemetry-instrumentation-google-genai==0.2b0
-opentelemetry-instrumentation-httpx==0.54b1
-opentelemetry-instrumentation-requests==0.54b1
-opentelemetry-instrumentation-sqlite3==0.54b1
-rich==14.0.0
 annotated-types==0.7.0
 anyio==4.9.0
 authlib==1.6.0
-cachetools==5.5.2
 certifi==2025.4.26
 cffi==1.17.1
 charset-normalizer==3.4.2
 click==8.2.1
 colorama==0.4.6 ; sys_platform == 'win32'
 cryptography==45.0.3
-deprecated==1.2.18
 docstring-parser==0.16
 fastapi==0.115.12
 google-api-core==2.24.2
@@ -65,19 +55,6 @@ httpx==0.28.1
 httpx-sse==0.4.0
 idna==3.10
 importlib-metadata==8.6.1
-markdown-it-py==3.0.0
-mcp==1.9.1
-mdurl==0.1.2
-numpy==2.2.6
-opentelemetry-api==1.33.1
-opentelemetry-exporter-otlp-proto-common==1.33.1
-opentelemetry-instrumentation==0.54b1
-opentelemetry-instrumentation-dbapi==0.54b1
-opentelemetry-proto==1.33.1
-opentelemetry-resourcedetector-gcp==1.9.0a0
-opentelemetry-sdk==1.33.1
-opentelemetry-semantic-conventions==0.54b1
-opentelemetry-util-http==0.54b1
 packaging==25.0
 proto-plus==1.26.1
 protobuf==5.29.4
@@ -109,7 +86,6 @@ uritemplate==4.1.1
 urllib3==2.4.0
 uvicorn==0.34.2
 websockets==15.0.1
-wrapt==1.17.2
 sqlite-vec
 pandas
 pysqlite3-binary
