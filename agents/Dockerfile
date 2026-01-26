@@ -26,7 +26,7 @@ COPY pyproject.toml uv.lock ./
 # to avoid creating a virtual environment inside the container.
 # Note: If this fails with 401, ensure Docker has access to the private registry 
 # defined in uv.lock, or regenerate uv.lock using public PyPI.
-RUN uv sync --system --frozen --no-cache
+RUN uv sync --frozen --no-cache
 
 RUN adduser --disabled-password --gecos "" myuser && \
     chown -R myuser:myuser /app
