@@ -34,6 +34,7 @@ LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 
 # Set the location for the Vertex AI client
 os.environ["GOOGLE_CLOUD_LOCATION"] = LOCATION
+os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "true"
 
 if PROJECT_ID == "":
     logger.error("GOOGLE_CLOUD_PROJECT is not set")
@@ -52,13 +53,6 @@ POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5432")
 POSTGRES_DB = os.getenv("POSTGRES_DB", "LONDON_travel")
 
 # OTEL Configuration
-OTEL_SERVICE_NAME = os.getenv("OTEL_SERVICE_NAME", "london-travel-agent")
-OTEL_EXPORTER_OTLP_ENDPOINT = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4318")
-OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT = os.getenv("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "true").lower() in ('true', '1', 't', 'yes', 'y')
-ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS=os.getenv("ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS", "false").lower() in ('true', '1', 't', 'yes', 'y')
-OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=os.getenv("OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED", "true").lower() in ('true', '1', 't', 'yes', 'y')
-OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=os.getenv("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "true").lower() in ('true', '1', 't', 'yes', 'y')
-GOOGLE_GENAI_USE_VERTEXAI=os.getenv("GOOGLE_GENAI_USE_VERTEXAI", "true").lower() in ('true', '1', 't', 'yes', 'y')
 session_service = InMemorySessionService()
 
 class AgentModel(BaseModel):

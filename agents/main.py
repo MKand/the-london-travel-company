@@ -35,6 +35,14 @@ except Exception:
 
 logger = logging.getLogger(__name__)
 
+# OTEL Configuration
+OTEL_SERVICE_NAME = os.getenv("OTEL_SERVICE_NAME", "london-travel-agent")
+OTEL_EXPORTER_OTLP_ENDPOINT = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4318")
+OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT = os.getenv("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "true").lower() in ('true', '1', 't', 'yes', 'y')
+ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS=os.getenv("ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS", "false").lower() in ('true', '1', 't', 'yes', 'y')
+OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=os.getenv("OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED", "true").lower() in ('true', '1', 't', 'yes', 'y')
+OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=os.getenv("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "true").lower() in ('true', '1', 't', 'yes', 'y')
+
 
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_ORIGINS = ["*"]
