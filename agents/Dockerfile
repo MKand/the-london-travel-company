@@ -19,9 +19,14 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y libpq-dev gcc
 
-# Copy dependency files and install
+# Copy dependency files
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-cache
+
+# Install dependencies to the system Python (--system) 
+# to avoid creating a virtual environment inside the container.
+# Note: If this fails with 401, ensure Docker has access to the private registry 
+# defined in uv.lock, or regenerate uv.lock using public PyPI.
+RUN uv sync --system --frozen --no-cache
 
 RUN adduser --disabled-password --gecos "" myuser && \
     chown -R myuser:myuser /app
@@ -30,7 +35,8 @@ COPY . /app
 
 USER myuser
 
-ENV PATH="/app/.venv/bin:$PATH"
+# Since we use --system, packages are in the system path.
+ENV PATH="/home/myuser/.local/bin:$PATH"
 
-CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
