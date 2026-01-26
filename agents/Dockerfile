@@ -13,15 +13,15 @@
 # limitations under the License.
 
 FROM python:3.13-slim
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y libpq-dev gcc
 
-# Copy the requirements file and install dependencies
-COPY requirements.txt .
- 
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy dependency files and install
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-cache
 
 RUN adduser --disabled-password --gecos "" myuser && \
     chown -R myuser:myuser /app
@@ -30,7 +30,7 @@ COPY . /app
 
 USER myuser
 
-ENV PATH="/home/myuser/.local/bin:$PATH"
+ENV PATH="/app/.venv/bin:$PATH"
 
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port 8000"]
+CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 

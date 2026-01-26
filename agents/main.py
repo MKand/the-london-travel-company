@@ -19,6 +19,8 @@ from google.cloud import logging as cloud_logging
 from google.adk.cli.fast_api import get_fast_api_app
 from fastapi import FastAPI
 from london_agent.sub_agents.search_agent.tools import setup_sqlite_client
+from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
 import london_agent # doing to make errors importing the agent appear explicity
 
@@ -33,6 +35,7 @@ except Exception:
 
 logger = logging.getLogger(__name__)
 
+
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_ORIGINS = ["*"]
 
@@ -43,8 +46,13 @@ app: FastAPI = get_fast_api_app(
     agents_dir=AGENT_DIR,
     allow_origins=ALLOWED_ORIGINS,
     web=True,
-    trace_to_cloud=True,
+    trace_to_cloud=False,
+    otel_to_cloud=True,
 )
+
+HTTPXClientInstrumentor().instrument()
+FastAPIInstrumentor.instrument_app(app)
+
 
 @app.get("/health")
 async def read_root():
