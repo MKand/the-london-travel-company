@@ -10,7 +10,7 @@ RUN npm run build
 FROM nginx:stable-alpine AS production-stage
 RUN apk add --no-cache gettext
 COPY --from=build-stage /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf.template
 
 # Copy entrypoint and config template
 COPY entrypoint.sh /entrypoint.sh

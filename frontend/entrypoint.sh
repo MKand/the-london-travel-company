@@ -8,5 +8,8 @@ echo "Injecting API_BASE_URL: $API_BASE_URL"
 # Replace variables in the template and write to config.js
 envsubst '${API_BASE_URL}' < /usr/share/nginx/html/config.template.js > /usr/share/nginx/html/config.js
 
+# Replace variables in the nginx config template
+envsubst '${API_BASE_URL}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
+
 # Start Nginx
 nginx -g 'daemon off;'
