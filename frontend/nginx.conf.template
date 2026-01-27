@@ -9,8 +9,9 @@ server {
     }
 
     location /api/ {
-        # Dynamically detected DNS resolver
+        # Dynamically detected DNS resolver with a short timeout
         resolver ${DNS_RESOLVER} valid=30s ipv6=off;
+        resolver_timeout 5s;
         
         set $backend_url ${API_BASE_URL};
         
@@ -24,19 +25,31 @@ server {
         proxy_http_version 1.1;
         proxy_set_header Connection "";
         
+        # Connection timeouts to fail faster and clearer
+        proxy_connect_timeout 10s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+        
         # Preserve body and headers
         proxy_pass_request_body on; 
         proxy_pass_request_headers on;
         
-        # Explicitly set Host to the domain name (Cloud Run requirement)
+        # Explicitly set Host and SNI to the domain name (Cloud Run requirement)
         proxy_set_header Host $backend_host;
+        proxy_ssl_name $backend_host;
+        proxy_ssl_server_name on;
+        proxy_ssl_verify off; # Skip verification for speed during debugging
+        
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         
         # SSL settings for HTTPS upstreams
-        proxy_ssl_server_name on;
         proxy_ssl_session_reuse off;
+        
+        # Debug headers (will show up in your curl output)
+        add_header X-Debug-Backend $backend_url always;
+        add_header X-Debug-Host $backend_host always;
     }
 
     error_page 500 502 503 504 /50x.html;
