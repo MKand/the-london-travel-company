@@ -9,20 +9,32 @@ server {
     }
 
     location /api/ {
-        resolver 8.8.8.8 ipv6=off;
-        set $backend_url ${API_BASE_URL};
-        proxy_pass $backend_url/;
+        # Dynamically detected DNS resolver
+        resolver ${DNS_RESOLVER} valid=30s ipv6=off;
         
-        # Ensure the body and headers are preserved
+        set $backend_url ${API_BASE_URL};
+        
+        # Extraction logic for the domain name
+        if ($backend_url ~* "^https?://([^/]+)") {
+            set $backend_host $1;
+        }
+
+        # Proxy settings
+        proxy_pass $backend_url/;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        
+        # Preserve body and headers
         proxy_pass_request_body on; 
         proxy_pass_request_headers on;
         
-        proxy_set_header Host $proxy_host;
+        # Explicitly set Host to the domain name (Cloud Run requirement)
+        proxy_set_header Host $backend_host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         
-        # Add headers for Cloud Run / SSL proxying
+        # SSL settings for HTTPS upstreams
         proxy_ssl_server_name on;
         proxy_ssl_session_reuse off;
     }
