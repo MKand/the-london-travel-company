@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configuration
-ENDPOINT=${1:-"http://35.193.13.152:8001"}  # Default to provided IP on backend port
+ENDPOINT=${1:-"http://35.193.13.152/api"}  # Default to provided IP with /api prefix
 AGENT_NAME="london_agent"
 USER_ID="u_load_test"
 ITERATIONS=${2:-5}  # Default to 5 iterations
