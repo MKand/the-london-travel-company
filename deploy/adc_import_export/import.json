@@ -1,5 +1,11 @@
 {
   "serialized_application_template": {
+    "name": "projects/SOURCE_PROJECT_ID/locations/us-central1/spaces/default-space/applicationTemplates/lta-dev-app-imported",
+    "displayName": "lta-dev-app-imported",
+    "createTime": "2026-01-28T17:34:15.272232901Z",
+    "updateTime": "2026-01-28T17:40:37.925791613Z",
+    "iacFormat": "TERRAFORM",
+    "serializedApplicationTemplate": {
     "uri": "projects/SOURCE_PROJECT_ID/locations/us-central1/spaces/default-space/applicationTemplates/lta-dev-app-imported",
     "displayName": "lta-dev-app-imported",
     "iacFormat": "TERRAFORM",
@@ -34,8 +40,8 @@
                   "container_port": 80
                 },
                 "resources": {
-                  "startup_cpu_boost": false,
-                  "cpu_idle": true
+                  "cpu_idle": true,
+                  "startup_cpu_boost": false
                 }
               }
             ]
@@ -297,18 +303,18 @@
             "key": "containers",
             "value": [
               {
-                "resources": {
-                  "cpu_idle": true,
-                  "startup_cpu_boost": false
-                },
                 "container_name": "service-container",
                 "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/agent:adclab-v2",
                 "env_vars": {
                   "GOOGLE_CLOUD_PROJECT": "SOURCE_PROJECT_ID"
                 },
                 "ports": {
-                  "name": "http1",
-                  "container_port": 8000
+                  "container_port": 8000,
+                  "name": "http1"
+                },
+                "resources": {
+                  "cpu_idle": true,
+                  "startup_cpu_boost": false
                 }
               }
             ]
@@ -334,10 +340,14 @@
             "value": {
               "egress": "PRIVATE_RANGES_ONLY",
               "network_interfaces": {
-                "subnetwork": "default",
-                "network": "default"
+                "network": "default",
+                "subnetwork": "default"
               }
             }
+          },
+          {
+            "key": "enable_prometheus_sidecar",
+            "value": false
           }
         ],
         "roles": [
@@ -546,11 +556,11 @@
                 "key": "serverless_neg_backends",
                 "value": [
                   {
+                    "region": "module.frontend-service-cloud-run.location",
+                    "service_name": "module.frontend-service-cloud-run.service_name",
                     "service_version": "",
                     "type": "cloud-run",
-                    "capacity_scaler": 1,
-                    "region": "module.frontend-service-cloud-run.location",
-                    "service_name": "module.frontend-service-cloud-run.service_name"
+                    "capacity_scaler": 1
                   }
                 ]
               }
@@ -585,11 +595,11 @@
                 "key": "serverless_neg_backends",
                 "value": [
                   {
-                    "service_name": "module.frontend-service-cloud-run.service_name",
-                    "service_version": "",
                     "type": "cloud-run",
                     "capacity_scaler": 1,
-                    "region": "module.frontend-service-cloud-run.location"
+                    "region": "module.frontend-service-cloud-run.location",
+                    "service_name": "module.frontend-service-cloud-run.service_name",
+                    "service_version": ""
                   }
                 ]
               }
@@ -619,8 +629,8 @@
             "key": "host_path_mappings",
             "defaultValue": [
               {
-                "host": "*",
-                "path": "/*"
+                "path": "/*",
+                "host": "*"
               }
             ],
             "type": "list(object({\n    host = string\n    path = string\n  }))"
@@ -748,8 +758,8 @@
             "value": "default"
           },
           {
-            "key": "subnetwork",
-            "value": "lta-proxy-only-subnetwork"
+            "key": "create_proxy_only_subnet",
+            "value": true
           },
           {
             "key": "proxy_only_subnet_ip",
@@ -949,5 +959,7 @@
         ]
       }
     ]
-  }
+  },
+  "latestRevision": "projects/SOURCE_PROJECT_ID/locations/us-central1/spaces/default-space/applicationTemplates/lta-dev-app-imported/revisions/r-1"
+}
 }
