@@ -73,7 +73,8 @@ echo "  Template ID: $APPLICATION_TEMPLATE_ID"
 
 # Perform substitutions
 sed "s|projects/${SOURCE_PROJECT_ID}|projects/${DEST_PROJECT_ID}|g" "$JSON_FILE" | \
-sed "s|/spaces/${SOURCE_SPACE_ID}|/spaces/${DEST_SPACE_ID}|g" > "$OUTPUT_FILE"
+sed "s|/spaces/${SOURCE_SPACE_ID}|/spaces/${DEST_SPACE_ID}|g" | \
+sed "s|SOURCE_PROJECT_ID|${DEST_PROJECT_ID}|g" > "$OUTPUT_FILE"
 
 echo "------------------------------------------------"
 echo "Substitution complete."
