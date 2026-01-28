@@ -131,6 +131,7 @@ This is a minimal configuration whose only purpose is to register an application
 
 * Docker and docker-compose (optional, for containerized setup)
 * Python 3.10+
+* `uv` (recommended) or `pip`
 * Node.js 18+ and npm
 * A Google Cloud project with Owner privileges (to create a Service Account with the necessary roles).
 
@@ -139,11 +140,20 @@ This is a minimal configuration whose only purpose is to register an application
 For a faster development loop, you can run the components separately:
 
 #### 1. Backend Agent
+Using `uv` (recommended):
+```bash
+cd agents
+uv sync
+# Set environment variables (see below)
+uv run python -m src.main
+```
+
+Using `pip`:
 ```bash
 cd agents
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -e .
 # Set environment variables (see below)
 python3 -m src.main
 ```

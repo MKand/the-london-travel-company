@@ -9,24 +9,36 @@ OUTPUT_FILE="import_substituted.json"
 
 # --- USAGE ---
 usage() {
-    echo "Usage: $0 <SOURCE_PROJECT_ID> <DEST_PROJECT_ID> <SOURCE_SPACE_ID> <DEST_SPACE_ID>"
-    echo ""
-    echo "Example: $0 source-project-123 dest-project-456 source-space default-space"
+    echo "Usage: $0 <DEST_PROJECT_ID> <DEST_SPACE_ID> [<SOURCE_PROJECT_ID>] [<SOURCE_SPACE_ID>]"
     echo ""
     echo "This script performs target substitution and imports it to Google Cloud Design Center."
+    echo ""
+    echo "Arguments:"
+    echo "  DEST_PROJECT_ID:   The Google Cloud Project where you want to import the template."
+    echo "  DEST_SPACE_ID:     The Design Center Space where you want to import the template."
+    echo "  SOURCE_PROJECT_ID: (Optional) The Project ID referenced in the source JSON (default: 'SOURCE_PROJECT_ID')."
+    echo "  SOURCE_SPACE_ID:   (Optional) The Space ID referenced in the source JSON (default: 'default-space')."
+    echo ""
+    echo "Example (explicit): $0 my-dest-123 my-dest-space my-source-456 my-source-space"
+    echo "Example (defaults): $0 my-dest-123 my-dest-space"
     exit 1
 }
 
-# --- VALIDATION ---
-if [ "$#" -ne 4 ]; then
+# --- VALIDATION AND ASSIGNMENT ---
+if [ "$#" -eq 2 ]; then
+    DEST_PROJECT_ID=$1
+    DEST_SPACE_ID=$2
+    SOURCE_PROJECT_ID="SOURCE_PROJECT_ID"
+    SOURCE_SPACE_ID="default-space"
+elif [ "$#" -eq 4 ]; then
+    DEST_PROJECT_ID=$1
+    DEST_SPACE_ID=$2
+    SOURCE_PROJECT_ID=$3
+    SOURCE_SPACE_ID=$4
+else
     echo "Error: Invalid number of arguments."
     usage
 fi
-
-SOURCE_PROJECT_ID=$1
-DEST_PROJECT_ID=$2
-SOURCE_SPACE_ID=$3
-DEST_SPACE_ID=$4
 
 if [ ! -f "$JSON_FILE" ]; then
     echo "Error: Input file '$JSON_FILE' not found."
