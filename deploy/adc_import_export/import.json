@@ -1,11 +1,5 @@
 {
   "serialized_application_template": {
-    "name": "projects/SOURCE_PROJECT_ID/locations/us-central1/spaces/default-space/applicationTemplates/lta-dev-app-imported",
-    "displayName": "lta-dev-app-imported",
-    "createTime": "2026-01-28T17:34:15.272232901Z",
-    "updateTime": "2026-01-28T17:40:37.925791613Z",
-    "iacFormat": "TERRAFORM",
-    "serializedApplicationTemplate": {
     "uri": "projects/SOURCE_PROJECT_ID/locations/us-central1/spaces/default-space/applicationTemplates/lta-dev-app-imported",
     "displayName": "lta-dev-app-imported",
     "iacFormat": "TERRAFORM",
@@ -30,19 +24,19 @@
             "key": "containers",
             "value": [
               {
-                "container_name": "service-container",
                 "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/frontend:adclab-v2",
                 "env_vars": {
                   "API_BASE_URL": "module.backend-service-cloud-run.service_uri"
                 },
                 "ports": {
-                  "name": "http1",
-                  "container_port": 80
+                  "container_port": 80,
+                  "name": "http1"
                 },
                 "resources": {
-                  "cpu_idle": true,
-                  "startup_cpu_boost": false
-                }
+                  "startup_cpu_boost": false,
+                  "cpu_idle": true
+                },
+                "container_name": "service-container"
               }
             ]
           },
@@ -313,8 +307,8 @@
                   "name": "http1"
                 },
                 "resources": {
-                  "cpu_idle": true,
-                  "startup_cpu_boost": false
+                  "startup_cpu_boost": false,
+                  "cpu_idle": true
                 }
               }
             ]
@@ -556,11 +550,11 @@
                 "key": "serverless_neg_backends",
                 "value": [
                   {
-                    "region": "module.frontend-service-cloud-run.location",
                     "service_name": "module.frontend-service-cloud-run.service_name",
                     "service_version": "",
                     "type": "cloud-run",
-                    "capacity_scaler": 1
+                    "capacity_scaler": 1,
+                    "region": "module.frontend-service-cloud-run.location"
                   }
                 ]
               }
@@ -595,11 +589,11 @@
                 "key": "serverless_neg_backends",
                 "value": [
                   {
-                    "type": "cloud-run",
-                    "capacity_scaler": 1,
                     "region": "module.frontend-service-cloud-run.location",
                     "service_name": "module.frontend-service-cloud-run.service_name",
-                    "service_version": ""
+                    "service_version": "",
+                    "type": "cloud-run",
+                    "capacity_scaler": 1
                   }
                 ]
               }
@@ -629,8 +623,8 @@
             "key": "host_path_mappings",
             "defaultValue": [
               {
-                "path": "/*",
-                "host": "*"
+                "host": "*",
+                "path": "/*"
               }
             ],
             "type": "list(object({\n    host = string\n    path = string\n  }))"
@@ -959,7 +953,5 @@
         ]
       }
     ]
-  },
-  "latestRevision": "projects/SOURCE_PROJECT_ID/locations/us-central1/spaces/default-space/applicationTemplates/lta-dev-app-imported/revisions/r-1"
-}
+  }
 }

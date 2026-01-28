@@ -3,6 +3,8 @@
 # Exit on error, undefined variables, and pipe failures
 set -euo pipefail
 
+echo "Running import"
+
 # --- CONFIGURATION ---
 JSON_FILE="import.json"
 OUTPUT_FILE="import_substituted.json"
@@ -40,6 +42,14 @@ else
     usage
 fi
 
+echo "------------------------------------------------"
+echo "Configuration:"
+echo "  Input:       $JSON_FILE"
+echo "  Output:      $OUTPUT_FILE"
+echo "  Project:     $SOURCE_PROJECT_ID -> $DEST_PROJECT_ID"
+echo "  Space:       $SOURCE_SPACE_ID -> $DEST_SPACE_ID"
+
+
 if [ ! -f "$JSON_FILE" ]; then
     echo "Error: Input file '$JSON_FILE' not found."
     exit 1
@@ -53,8 +63,13 @@ fi
 
 # --- EXTRACTION ---
 # Extract Location and Template ID from the source JSON
-LOCATION=$(jq -r '.serialized_application_template.uri' "$JSON_FILE" | grep -oP 'locations/\K[^/]+')
-APPLICATION_TEMPLATE_ID=$(jq -r '.serialized_application_template.uri' "$JSON_FILE" | grep -oP 'applicationTemplates/\K[^/]+')
+LOCATION=$(jq -r '.serialized_application_template.uri | split("/")[3]' "$JSON_FILE")
+APPLICATION_TEMPLATE_ID=$(jq -r '.serialized_application_template.uri | split("/")[7]' "$JSON_FILE")
+
+echo "------------------------------------------------"
+echo "Extraction:"
+echo "  Input:       $JSON_FILE"
+echo "  Output:      $OUTPUT_FILE"
 
 if [[ -z "$LOCATION" || -z "$APPLICATION_TEMPLATE_ID" || "$LOCATION" == "null" ]]; then
     echo "Error: Could not extract LOCATION or APPLICATION_TEMPLATE_ID from $JSON_FILE"
@@ -94,6 +109,10 @@ envsubst < "$OUTPUT_FILE" | curl -X POST \
   -H "Authorization: Bearer $(gcloud auth print-access-token)" \
   -H "Content-Type: application/json" \
   -d @-
+
+echo "Cleaning Up.."
+
+rm -rf $OUTPUT_FILE
 
 echo ""
 echo "------------------------------------------------"
