@@ -1,0 +1,759 @@
+{
+  "serialized_application_template": {
+    "uri": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1",
+    "displayName": "ce-pub-1",
+    "iacFormat": "TERRAFORM",
+    "components": [
+      {
+        "uri": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/service-accounts-1",
+        "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/64f28f7c-92c7-4c8f-aa77-b0cab03fd6a5/revisions/r-8",
+        "roles": [
+          "roles/resourcemanager.projectIamAdmin",
+          "roles/iam.serviceAccountAdmin",
+          "roles/iam.serviceAccountUser",
+          "roles/logging.logWriter",
+          "roles/serviceusage.serviceUsageAdmin"
+        ],
+        "apis": [
+          "cloudresourcemanager.googleapis.com",
+          "iam.googleapis.com",
+          "serviceusage.googleapis.com"
+        ],
+        "componentParameterSchema": [
+          {
+            "key": "project_id",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "name",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "display_name",
+            "defaultValue": "Terraform-managed service account",
+            "type": "string"
+          },
+          {
+            "key": "description",
+            "defaultValue": "",
+            "type": "string"
+          },
+          {
+            "key": "project_roles",
+            "defaultValue": [],
+            "type": "list(string)"
+          }
+        ]
+      },
+      {
+        "uri": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/secret-manager-1",
+        "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/33bdf948-a847-4f9d-b514-0b3ad17eefff/revisions/r-10",
+        "roles": [
+          "roles/secretmanager.admin",
+          "roles/cloudkms.admin",
+          "roles/pubsub.admin",
+          "roles/logging.logWriter",
+          "roles/serviceusage.serviceUsageAdmin"
+        ],
+        "apis": [
+          "cloudkms.googleapis.com",
+          "pubsub.googleapis.com",
+          "secretmanager.googleapis.com"
+        ],
+        "connectionsParameters": [
+          {
+            "connection": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/cloud-run-1/connections/connection-1"
+          }
+        ],
+        "componentParameterSchema": [
+          {
+            "key": "project_id",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "name",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "secret_data",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "rotation",
+            "type": "object({\n    rotation_period    = string # The Duration between rotation notifications, in seconds.\n    next_rotation_time = string # The time at which the Secret Manager secret is scheduled for rotation, in RFC3339 format. Examples: '2014-10-02T15:01:23Z' and '2014-10-02T15:01:23.045123456Z'\n  })"
+          },
+          {
+            "key": "user_managed_replication",
+            "defaultValue": [],
+            "type": "list(object({\n    location     = string,\n    kms_key_name = string,\n  }))"
+          },
+          {
+            "key": "automatic_replication",
+            "defaultValue": {},
+            "type": "object({\n    kms_key_name = optional(string, null)\n  })"
+          },
+          {
+            "key": "topics",
+            "defaultValue": [],
+            "type": "list(string)"
+          },
+          {
+            "key": "labels",
+            "defaultValue": {},
+            "type": "map(string)"
+          }
+        ]
+      },
+      {
+        "uri": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/lb-frontend-1",
+        "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/cf725072-9484-4182-b51c-fc80206b84fb/revisions/r-6",
+        "connections": [
+          {
+            "uri": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/lb-frontend-1/connections/connection-1",
+            "destinationComponentUri": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/lb-backend-1",
+            "sourceComponentParameters": [
+              {
+                "key": "url_map_input",
+                "value": "module.lb-backend-1.backend_service_info"
+              }
+            ]
+          }
+        ],
+        "roles": [
+          "roles/storage.admin",
+          "roles/iap.admin",
+          "roles/certificatemanager.owner",
+          "roles/iam.serviceAccountUser",
+          "roles/compute.admin",
+          "roles/serviceusage.serviceUsageAdmin"
+        ],
+        "apis": [
+          "certificatemanager.googleapis.com",
+          "compute.googleapis.com",
+          "run.googleapis.com",
+          "storage-api.googleapis.com"
+        ],
+        "connectionsParameters": [
+          {
+            "connection": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/lb-frontend-1/connections/connection-1",
+            "parameters": [
+              {
+                "key": "url_map_input",
+                "value": "module.lb-backend-1.backend_service_info"
+              }
+            ]
+          }
+        ],
+        "componentParameterSchema": [
+          {
+            "key": "name",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "project_id",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "create_address",
+            "defaultValue": true,
+            "type": "bool"
+          },
+          {
+            "key": "address",
+            "type": "string"
+          },
+          {
+            "key": "enable_ipv6",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "create_ipv6_address",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "ipv6_address",
+            "type": "string"
+          },
+          {
+            "key": "create_url_map",
+            "defaultValue": true,
+            "type": "bool"
+          },
+          {
+            "key": "url_map_input",
+            "defaultValue": [],
+            "type": "list(object({\n    host            = string\n    path            = string\n    backend_service = string\n  }))"
+          },
+          {
+            "key": "url_map_resource_uri",
+            "type": "string"
+          },
+          {
+            "key": "http_forward",
+            "defaultValue": true,
+            "type": "bool"
+          },
+          {
+            "key": "ssl",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "create_ssl_certificate",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "ssl_certificates",
+            "defaultValue": [],
+            "type": "list(string)"
+          },
+          {
+            "key": "private_key",
+            "type": "string"
+          },
+          {
+            "key": "certificate",
+            "type": "string"
+          },
+          {
+            "key": "managed_ssl_certificate_domains",
+            "defaultValue": [],
+            "type": "list(string)"
+          },
+          {
+            "key": "certificate_map",
+            "type": "string"
+          },
+          {
+            "key": "ssl_policy",
+            "type": "string"
+          },
+          {
+            "key": "quic",
+            "type": "bool"
+          },
+          {
+            "key": "https_redirect",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "random_certificate_suffix",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "labels",
+            "defaultValue": {},
+            "type": "map(string)"
+          },
+          {
+            "key": "load_balancing_scheme",
+            "defaultValue": "EXTERNAL_MANAGED",
+            "type": "string"
+          },
+          {
+            "key": "network",
+            "defaultValue": "default",
+            "type": "string"
+          },
+          {
+            "key": "server_tls_policy",
+            "type": "string"
+          },
+          {
+            "key": "http_port",
+            "defaultValue": 80,
+            "type": "number"
+          },
+          {
+            "key": "https_port",
+            "defaultValue": 443,
+            "type": "number"
+          },
+          {
+            "key": "http_keep_alive_timeout_sec",
+            "type": "number"
+          },
+          {
+            "key": "internal_forwarding_rules_config",
+            "defaultValue": [],
+            "type": "list(object({\n    region     = string\n    address    = optional(string)\n    subnetwork = optional(string)\n  }))"
+          }
+        ]
+      },
+      {
+        "uri": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/lb-backend-1",
+        "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/c9b4428c-ce25-49d4-8a2e-1e9d376c89b8/revisions/r-6",
+        "connections": [
+          {
+            "uri": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/lb-backend-1/connections/connection-1",
+            "destinationComponentUri": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/cloud-run-1",
+            "sourceComponentParameters": [
+              {
+                "key": "serverless_neg_backends",
+                "value": [
+                  {
+                    "type": "cloud-run",
+                    "region": "module.cloud-run-1.location",
+                    "service_name": "module.cloud-run-1.service_name",
+                    "service_version": ""
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "roles": [
+          "roles/compute.admin",
+          "roles/storage.admin",
+          "roles/run.admin",
+          "roles/compute.networkAdmin",
+          "roles/iap.admin",
+          "roles/iam.serviceAccountUser",
+          "roles/iam.serviceAccountAdmin",
+          "roles/serviceusage.serviceUsageAdmin"
+        ],
+        "apis": [
+          "cloudresourcemanager.googleapis.com",
+          "compute.googleapis.com",
+          "iap.googleapis.com",
+          "run.googleapis.com",
+          "storage-api.googleapis.com",
+          "vpcaccess.googleapis.com"
+        ],
+        "connectionsParameters": [
+          {
+            "connection": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/lb-frontend-1/connections/connection-1"
+          },
+          {
+            "connection": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/lb-backend-1/connections/connection-1",
+            "parameters": [
+              {
+                "key": "serverless_neg_backends",
+                "value": [
+                  {
+                    "region": "module.cloud-run-1.location",
+                    "service_name": "module.cloud-run-1.service_name",
+                    "service_version": "",
+                    "type": "cloud-run"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "componentParameterSchema": [
+          {
+            "key": "name",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "project_id",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "load_balancing_scheme",
+            "defaultValue": "EXTERNAL_MANAGED",
+            "type": "string"
+          },
+          {
+            "key": "protocol",
+            "defaultValue": "HTTP",
+            "type": "string"
+          },
+          {
+            "key": "port_name",
+            "defaultValue": "http",
+            "type": "string"
+          },
+          {
+            "key": "description",
+            "type": "string"
+          },
+          {
+            "key": "enable_cdn",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "compression_mode",
+            "defaultValue": "DISABLED",
+            "type": "string"
+          },
+          {
+            "key": "custom_request_headers",
+            "defaultValue": [],
+            "type": "list(string)"
+          },
+          {
+            "key": "custom_response_headers",
+            "defaultValue": [],
+            "type": "list(string)"
+          },
+          {
+            "key": "connection_draining_timeout_sec",
+            "type": "number"
+          },
+          {
+            "key": "session_affinity",
+            "type": "string"
+          },
+          {
+            "key": "affinity_cookie_ttl_sec",
+            "type": "number"
+          },
+          {
+            "key": "locality_lb_policy",
+            "type": "string"
+          },
+          {
+            "key": "timeout_sec",
+            "type": "number"
+          },
+          {
+            "key": "log_config",
+            "defaultValue": {
+              "sample_rate": 1,
+              "enable": true
+            },
+            "type": "object({\n    enable      = bool\n    sample_rate = number\n  })"
+          },
+          {
+            "key": "groups",
+            "defaultValue": [],
+            "type": "list(object({\n    group       = string\n    description = optional(string)\n\n    balancing_mode               = optional(string)\n    capacity_scaler              = optional(number)\n    max_connections              = optional(number)\n    max_connections_per_instance = optional(number)\n    max_connections_per_endpoint = optional(number)\n    max_rate                     = optional(number)\n    max_rate_per_instance        = optional(number)\n    max_rate_per_endpoint        = optional(number)\n    max_utilization              = optional(number)\n  }))"
+          },
+          {
+            "key": "serverless_neg_backends",
+            "defaultValue": [],
+            "type": "list(object({\n    region          = string\n    type            = string // cloud-run, cloud-function, and app-engine\n    service_name    = string\n    service_version = optional(string)\n  }))"
+          },
+          {
+            "key": "psc_neg_backends",
+            "defaultValue": [],
+            "type": "list(object({\n    name               = string\n    region             = string\n    psc_target_service = string\n    network            = string\n    subnetwork         = string\n    producer_port      = optional(string)\n  }))"
+          },
+          {
+            "key": "backend_bucket_name",
+            "defaultValue": "",
+            "type": "string"
+          },
+          {
+            "key": "iap_config",
+            "defaultValue": {
+              "enable": false
+            },
+            "type": "object({\n    enable               = bool\n    oauth2_client_id     = optional(string)\n    oauth2_client_secret = optional(string)\n    iap_members          = optional(list(string))\n  })"
+          },
+          {
+            "key": "cdn_policy",
+            "defaultValue": {
+              "default_ttl": 3600,
+              "max_ttl": 86400,
+              "signed_url_cache_max_age_sec": "0",
+              "cache_mode": "CACHE_ALL_STATIC",
+              "client_ttl": 3600
+            },
+            "type": "object({\n    cache_mode                      = optional(string)\n    signed_url_cache_max_age_sec    = optional(string)\n    default_ttl                     = optional(number)\n    max_ttl                         = optional(number)\n    client_ttl                      = optional(number)\n    negative_caching                = optional(bool)\n    serve_while_stale               = optional(number)\n    bypass_cache_on_request_headers = optional(list(string))\n    negative_caching_policy = optional(object({\n      code = optional(number)\n      ttl  = optional(number)\n    }))\n    cache_key_policy = optional(object({\n      include_host           = optional(bool)\n      include_protocol       = optional(bool)\n      include_query_string   = optional(bool)\n      query_string_blacklist = optional(list(string))\n      query_string_whitelist = optional(list(string))\n      include_http_headers   = optional(list(string))\n      include_named_cookies  = optional(list(string))\n    }))\n  })"
+          },
+          {
+            "key": "outlier_detection",
+            "type": "object({\n    base_ejection_time = optional(object({\n      seconds = number\n      nanos   = optional(number)\n    }))\n    consecutive_errors                    = optional(number)\n    consecutive_gateway_failure           = optional(number)\n    enforcing_consecutive_errors          = optional(number)\n    enforcing_consecutive_gateway_failure = optional(number)\n    enforcing_success_rate                = optional(number)\n    interval = optional(object({\n      seconds = number\n      nanos   = optional(number)\n    }))\n    max_ejection_percent        = optional(number)\n    success_rate_minimum_hosts  = optional(number)\n    success_rate_request_volume = optional(number)\n    success_rate_stdev_factor   = optional(number)\n  })"
+          },
+          {
+            "key": "health_check",
+            "type": "object({\n    host                = optional(string, null)\n    request_path        = optional(string, null)\n    request             = optional(string, null)\n    response            = optional(string, null)\n    port                = optional(number, null)\n    port_name           = optional(string, null)\n    proxy_header        = optional(string, null)\n    port_specification  = optional(string, null)\n    protocol            = optional(string, null)\n    check_interval_sec  = optional(number, 5)\n    timeout_sec         = optional(number, 5)\n    healthy_threshold   = optional(number, 2)\n    unhealthy_threshold = optional(number, 2)\n    logging             = optional(bool, false)\n  })"
+          },
+          {
+            "key": "edge_security_policy",
+            "type": "string"
+          },
+          {
+            "key": "security_policy",
+            "type": "string"
+          },
+          {
+            "key": "host_path_mappings",
+            "defaultValue": [
+              {
+                "host": "*",
+                "path": "/*"
+              }
+            ],
+            "type": "list(object({\n    host = string\n    path = string\n  }))"
+          },
+          {
+            "key": "firewall_networks",
+            "defaultValue": [
+              "default"
+            ],
+            "type": "list(string)"
+          },
+          {
+            "key": "firewall_projects",
+            "defaultValue": [
+              "default"
+            ],
+            "type": "list(string)"
+          },
+          {
+            "key": "target_tags",
+            "defaultValue": [],
+            "type": "list(string)"
+          },
+          {
+            "key": "target_service_accounts",
+            "defaultValue": [],
+            "type": "list(string)"
+          },
+          {
+            "key": "firewall_source_ranges",
+            "defaultValue": [
+              "10.127.0.0/23"
+            ],
+            "type": "list(string)"
+          }
+        ]
+      },
+      {
+        "uri": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/cloud-run-1",
+        "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/1b5e09c8-780f-484e-b8ed-c7178f4e4342/revisions/r-17",
+        "connections": [
+          {
+            "uri": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/cloud-run-1/connections/connection-1",
+            "destinationComponentUri": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/secret-manager-1",
+            "sourceComponentParameters": [
+              {
+                "key": "containers[0].env_secret_vars",
+                "value": {
+                  "secret_manager_1_SECRET": "module.secret-manager-1.env_vars.SECRET"
+                }
+              },
+              {
+                "key": "service_account_project_roles",
+                "value": [
+                  "roles/secretmanager.secretAccessor"
+                ]
+              }
+            ]
+          }
+        ],
+        "roles": [
+          "roles/run.admin",
+          "roles/iam.serviceAccountAdmin",
+          "roles/iam.serviceAccountUser",
+          "roles/serviceusage.serviceUsageViewer",
+          "roles/resourcemanager.projectIamAdmin",
+          "roles/compute.viewer",
+          "roles/iap.admin",
+          "roles/serviceusage.serviceUsageAdmin"
+        ],
+        "apis": [
+          "cloudresourcemanager.googleapis.com",
+          "compute.googleapis.com",
+          "iam.googleapis.com",
+          "iap.googleapis.com",
+          "monitoring.googleapis.com",
+          "run.googleapis.com",
+          "serviceusage.googleapis.com",
+          "storage-api.googleapis.com"
+        ],
+        "connectionsParameters": [
+          {
+            "connection": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/lb-backend-1/connections/connection-1"
+          },
+          {
+            "connection": "projects/google-mpf-384588775716/locations/us-central1/spaces/easysaas-adc-demo/applicationTemplates/ce-pub-1/components/cloud-run-1/connections/connection-1",
+            "parameters": [
+              {
+                "key": "containers[0].env_secret_vars",
+                "value": {
+                  "secret_manager_1_SECRET": "module.secret-manager-1.env_vars.SECRET"
+                }
+              },
+              {
+                "key": "service_account_project_roles",
+                "value": [
+                  "roles/secretmanager.secretAccessor"
+                ]
+              }
+            ]
+          }
+        ],
+        "componentParameterSchema": [
+          {
+            "key": "project_id",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "location",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "service_name",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "description",
+            "type": "string"
+          },
+          {
+            "key": "containers",
+            "isRequired": true,
+            "type": "list(object({\n    container_name       = optional(string, null)\n    container_image      = string\n    working_dir          = optional(string, null)\n    depends_on_container = optional(list(string), null)\n    container_args       = optional(list(string), null)\n    container_command    = optional(list(string), null)\n    env_vars             = optional(map(string), {})\n    env_secret_vars = optional(map(object({\n      secret  = string\n      version = string\n    })), {})\n    volume_mounts = optional(list(object({\n      name       = string\n      mount_path = string\n    })), [])\n    ports = optional(object({\n      name           = optional(string, \"http1\")\n      container_port = optional(number, 8080)\n    }), {})\n    resources = optional(object({\n      limits = optional(object({\n        cpu        = optional(string)\n        memory     = optional(string)\n        nvidia_gpu = optional(string)\n      }))\n      cpu_idle          = optional(bool, true)\n      startup_cpu_boost = optional(bool, false)\n    }), {})\n    startup_probe = optional(object({\n      failure_threshold     = optional(number, null)\n      initial_delay_seconds = optional(number, null)\n      timeout_seconds       = optional(number, null)\n      period_seconds        = optional(number, null)\n      http_get = optional(object({\n        path = optional(string)\n        port = optional(string)\n        http_headers = optional(list(object({\n          name  = string\n          value = string\n        })), [])\n      }), null)\n      tcp_socket = optional(object({\n        port = optional(number)\n      }), null)\n      grpc = optional(object({\n        port    = optional(number)\n        service = optional(string)\n      }), null)\n    }), null)\n    liveness_probe = optional(object({\n      failure_threshold     = optional(number, null)\n      initial_delay_seconds = optional(number, null)\n      timeout_seconds       = optional(number, null)\n      period_seconds        = optional(number, null)\n      http_get = optional(object({\n        path = optional(string)\n        port = optional(string)\n        http_headers = optional(list(object({\n          name  = string\n          value = string\n        })), [])\n      }), null)\n      tcp_socket = optional(object({\n        port = optional(number)\n      }), null)\n      grpc = optional(object({\n        port    = optional(number)\n        service = optional(string)\n      }), null)\n    }), null)\n  }))"
+          },
+          {
+            "key": "node_selector",
+            "type": "object({\n    accelerator = string\n  })"
+          },
+          {
+            "key": "gpu_zonal_redundancy_disabled",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "create_service_account",
+            "defaultValue": true,
+            "type": "bool"
+          },
+          {
+            "key": "service_account_project_roles",
+            "defaultValue": [],
+            "type": "list(string)"
+          },
+          {
+            "key": "ingress",
+            "defaultValue": "INGRESS_TRAFFIC_ALL",
+            "type": "string"
+          },
+          {
+            "key": "members",
+            "defaultValue": [],
+            "type": "list(string)"
+          },
+          {
+            "key": "iap_members",
+            "defaultValue": [],
+            "type": "list(string)"
+          },
+          {
+            "key": "vpc_access",
+            "type": "object({\n    connector = optional(string)\n    egress    = optional(string)\n    network_interfaces = optional(object({\n      network    = optional(string)\n      subnetwork = optional(string)\n      tags       = optional(list(string))\n    }))\n  })"
+          },
+          {
+            "key": "cloud_run_deletion_protection",
+            "defaultValue": true,
+            "type": "bool"
+          },
+          {
+            "key": "enable_prometheus_sidecar",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "volumes",
+            "defaultValue": [],
+            "type": "list(object({\n    name = string\n    secret = optional(object({\n      secret       = string\n      default_mode = optional(string)\n      items = optional(object({\n        path    = string\n        version = optional(string)\n        mode    = optional(string)\n      }))\n    }))\n    cloud_sql_instance = optional(object({\n      instances = optional(list(string))\n    }))\n    empty_dir = optional(object({\n      medium     = optional(string)\n      size_limit = optional(string)\n    }))\n    gcs = optional(object({\n      bucket    = string\n      read_only = optional(string)\n    }))\n    nfs = optional(object({\n      server    = string\n      path      = string\n      read_only = optional(string)\n    }))\n  }))"
+          },
+          {
+            "key": "traffic",
+            "defaultValue": [],
+            "type": "list(object({\n    type     = optional(string, \"TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST\")\n    percent  = optional(number, 100)\n    revision = optional(string, null)\n    tag      = optional(string, null)\n  }))"
+          },
+          {
+            "key": "service_scaling",
+            "type": "object({\n    min_instance_count = optional(number)\n  })"
+          },
+          {
+            "key": "service_labels",
+            "defaultValue": {},
+            "type": "map(string)"
+          },
+          {
+            "key": "service_annotations",
+            "defaultValue": {},
+            "type": "map(string)"
+          },
+          {
+            "key": "client",
+            "defaultValue": {},
+            "type": "object({\n    name    = optional(string, null)\n    version = optional(string, null)\n  })"
+          },
+          {
+            "key": "launch_stage",
+            "defaultValue": "GA",
+            "type": "string"
+          },
+          {
+            "key": "custom_audiences",
+            "type": "list(string)"
+          },
+          {
+            "key": "binary_authorization",
+            "type": "object({\n    breakglass_justification = optional(bool) # If present, indicates to use Breakglass using this justification. If useDefault is False, then it must be empty. For more information on breakglass, [see](https://cloud.google.com/binary-authorization/docs/using-breakglass)\n    use_default              = optional(bool) #If True, indicates to use the default project's binary authorization policy. If False, binary authorization will be disabled.\n  })"
+          },
+          {
+            "key": "revision",
+            "type": "string"
+          },
+          {
+            "key": "template_scaling",
+            "type": "object({\n    min_instance_count = optional(number)\n    max_instance_count = optional(number)\n  })"
+          },
+          {
+            "key": "template_labels",
+            "defaultValue": {},
+            "type": "map(string)"
+          },
+          {
+            "key": "template_annotations",
+            "defaultValue": {},
+            "type": "map(string)"
+          },
+          {
+            "key": "timeout",
+            "type": "string"
+          },
+          {
+            "key": "service_account",
+            "type": "string"
+          },
+          {
+            "key": "encryption_key",
+            "type": "string"
+          },
+          {
+            "key": "max_instance_request_concurrency",
+            "type": "string"
+          },
+          {
+            "key": "session_affinity",
+            "type": "string"
+          },
+          {
+            "key": "execution_environment",
+            "defaultValue": "EXECUTION_ENVIRONMENT_GEN2",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "hasGlobalResource": true
+  }
+}
