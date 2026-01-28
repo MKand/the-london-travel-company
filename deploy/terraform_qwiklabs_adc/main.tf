@@ -30,7 +30,9 @@ resource "google_project_service" "enable_apis" {
     "run.googleapis.com",
     "secretmanager.googleapis.com",
     "designcenter.googleapis.com",
-    "apphub.googleapis.com"
+    "apphub.googleapis.com",
+    "observability.googleapis.com",
+    "apptopology.googleapis.com"
   ])
 
   service = each.key
