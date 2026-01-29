@@ -54,9 +54,13 @@ echo "Done! You can view the output by running: cat import.json"
 # Create a new bucket for the exported template
 export BUCKET_NAME="${SOURCE_PROJECT_ID}-adc-templates"
 
-# Create the bucket if it doesn't exist
-echo "Creating bucket: $BUCKET_NAME..."
-gsutil mb -p "$SOURCE_PROJECT_ID" "gs://$BUCKET_NAME"
+# Create the bucket if it doesn't exist, check if it exists first
+if ! gsutil ls "gs://$BUCKET_NAME" &> /dev/null; then
+    echo "Creating bucket: $BUCKET_NAME..."
+    gsutil mb -p "$SOURCE_PROJECT_ID" "gs://$BUCKET_NAME"
+else
+    echo "Bucket '$BUCKET_NAME' already exists."
+fi
 
 gsutil -m cp -r ./import.json gs://$BUCKET_NAME/templates/$SOURCE_APP_TEMPLATE/
 
