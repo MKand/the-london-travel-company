@@ -22,6 +22,17 @@ def trigger_sync(request: SyncRequest):
         logger.error(f"Error during synchronization: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/read")
+def get_metadata(request: SyncRequest):
+    logger.info(f"Received sync request targeting DB: {request.db_url or 'default'}")
+    try:
+        # get metadata from the database, such as tablenames, number of rows in each table, column names and types
+        return {}
+        
+    except Exception as e:
+        logger.error(f"Error during synchronization: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("data_london.src.main:app", host="0.0.0.0", port=8001, reload=True)
+    uvicorn.run("src.main:app", host="0.0.0.0", port=8001, reload=True)

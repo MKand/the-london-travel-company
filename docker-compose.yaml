@@ -14,14 +14,29 @@ services:
       PRINT_HEALTH_STATUS: "False"
       OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT: "true"
       OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED: "true"
-      DB_TYPE: "${DB_TYPE:-sqlite}"
-      POSTGRES_HOST: "postgres"
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: "london_activities"
     volumes:
       - .key.json:/app/.key.json:ro
       - ./data_london/london_travel.sql:/app/data_london/london_travel.sql
+    depends_on:
+      - postgres
+
+  syncer:
+    build:
+      context: data_syncer
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8001"
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: "/app/.key.json"
+      GOOGLE_CLOUD_PROJECT: "${PROJECT_ID}"
+      GOOGLE_CLOUD_LOCATION: "${LOCATION}"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "london_travel"
+      POSTGRES_HOST: "postgres"
+      POSTGRES_PORT: "5432"
+    volumes:
+      - .key.json:/app/.key.json:ro
     depends_on:
       - postgres
 

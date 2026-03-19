@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, text, event
 from sqlalchemy.orm import sessionmaker
-from data_london.src.config import settings
-from data_london.src.models import Base
+from src.config import settings
+from src.models import Base
 import os
 
 # Engine configuration
