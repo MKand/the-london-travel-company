@@ -9,7 +9,7 @@ const scrollContainer = ref(null)
 const sessionId = ref(generateNewSessionId())
 
 const loadingMessages = [
-  "Lyla is curating your journey...",
+  "Cymbal is curating your journey...",
   "Consulting the London archives...",
   "Finding the perfect spots for you..."
 ]
@@ -85,7 +85,7 @@ const handleSend = async () => {
     console.error('API Error:', err)
     messages.value.push({ 
       role: 'error', 
-      text: "I'm having trouble connecting to my London database. Please try again in a moment." 
+      text: "I'm having trouble connecting to the Agent. Please try again in a moment." 
     })
   } finally {
     isLoading.value = false
@@ -102,7 +102,7 @@ const handleSend = async () => {
       <div class="flex items-center gap-6">
         <div class="flex items-center gap-2.5">
           <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.8)] animate-pulse"></div>
-          <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white/90">Lyla Concierge Live</span>
+          <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white/90">Cymbal London Concierge</span>
         </div>
         <div class="w-px h-3 bg-white/10"></div>
         <button @click="clearSession" class="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-london-red transition-all hover:scale-105 active:scale-95">
@@ -136,7 +136,7 @@ const handleSend = async () => {
                    : 'bg-white/10 text-white rounded-tl-none border-white/20 backdrop-blur-[80px] shadow-[inset_0_2px_10px_rgba(255,255,255,0.15)]'
              ]">
           <div :class="['font-black mb-3 text-[9px] uppercase tracking-[0.3em]', msg.role === 'user' ? 'text-white/40' : 'text-london-red']">
-            {{ msg.role === 'user' ? 'Traveler' : 'Lyla' }}
+            {{ msg.role === 'user' ? 'Traveler' : 'Cymbal' }}
           </div>
           <div class="whitespace-pre-wrap font-medium drop-shadow-md text-white">{{ msg.text }}</div>
         </div>
@@ -159,7 +159,7 @@ const handleSend = async () => {
         <input 
           v-model="userInput"
           type="text" 
-          placeholder="Ask Lyla anything about London..."
+          placeholder="Ask Cymbal anything about London..."
           class="w-full pl-10 pr-20 py-7 rounded-3xl bg-white/10 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:ring-4 focus:ring-london-red/30 transition-all shadow-2xl focus:bg-white/15 text-base"
           :disabled="isLoading"
         />

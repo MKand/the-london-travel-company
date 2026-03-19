@@ -32,9 +32,9 @@ const destinations = [
       <div class="flex items-center gap-12">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 bg-london-red rounded-lg flex items-center justify-center transform rotate-3 shadow-lg">
-            <span class="font-black text-xl text-white">L</span>
+            <span class="font-black text-xl text-white">C</span>
           </div>
-          <span class="text-xl font-black tracking-tighter uppercase italic text-white">The London Travel Co.</span>
+          <span class="text-xl font-black tracking-tighter uppercase italic text-white">Cymbal London</span>
         </div>
         
         <div class="hidden lg:flex gap-10 text-xs font-black uppercase tracking-[0.3em] text-white/50">
@@ -72,7 +72,7 @@ const destinations = [
               LONDON
             </h2>
             <p class="max-w-md text-base lg:text-lg text-white/60 leading-relaxed font-medium pt-4 drop-shadow-md">
-              Uncover the secrets of the capital with Lyla, your bespoke AI concierge. From hidden speakeasies to historic landmarks, we curate your perfect journey.
+              Uncover the secrets of the capital with Cymbal, your bespoke AI concierge. From hidden speakeasies to historic landmarks, we curate your perfect journey.
             </p>
             <div class="flex gap-4 pt-10">
               <button 
