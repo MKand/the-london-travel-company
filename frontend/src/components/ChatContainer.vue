@@ -2,17 +2,16 @@
 import { ref, onMounted, nextTick } from 'vue'
 import { createSession, sendMessage, generateNewSessionId } from '../api'
 
-const INTRO_MESSAGE = "Welcome to London! I'm Lyla, your personal concierge. I can curate a bespoke itinerary, find the best afternoon tea spots, or guide you through London's hidden history. How can I assist you today?"
-
 const messages = ref([])
-
 const userInput = ref('')
 const isLoading = ref(false)
 const scrollContainer = ref(null)
 const sessionId = ref(generateNewSessionId())
 
 const loadingMessages = [
-  "Lyla is thinking..."
+  "Lyla is curating your journey...",
+  "Consulting the London archives...",
+  "Finding the perfect spots for you..."
 ]
 const currentLoadingMessage = ref(loadingMessages[0])
 let loadingInterval = null
@@ -30,7 +29,6 @@ const scrollToBottom = async () => {
 const initializeSession = async () => {
   try {
     await createSession(sessionId.value)
-    console.log('Session initialized:', sessionId.value)
   } catch (err) {
     console.error('Failed to initialize session:', err)
   }
@@ -54,11 +52,11 @@ const handleSend = async () => {
   scrollToBottom()
   
   isLoading.value = true
-  currentLoadingMessage.value = loadingMessages[0]
+  let msgIndex = 0
   loadingInterval = setInterval(() => {
-    const nextIndices = loadingMessages.filter(m => m !== currentLoadingMessage.value)
-    currentLoadingMessage.value = nextIndices[Math.floor(Math.random() * nextIndices.length)]
-  }, 3000)
+    msgIndex = (msgIndex + 1) % loadingMessages.length
+    currentLoadingMessage.value = loadingMessages[msgIndex]
+  }, 2500)
 
   try {
     const events = await sendMessage(sessionId.value, text)
@@ -80,14 +78,14 @@ const handleSend = async () => {
     } else {
        messages.value.push({ 
         role: 'assistant', 
-        text: "I've received your data. Analyzing it now..." 
+        text: "I've analyzed your request. What else would you like to know about London?" 
       })
     }
   } catch (err) {
     console.error('API Error:', err)
     messages.value.push({ 
       role: 'error', 
-      text: "Connection error. Please check your backend and try again." 
+      text: "I'm having trouble connecting to my London database. Please try again in a moment." 
     })
   } finally {
     isLoading.value = false
@@ -98,93 +96,97 @@ const handleSend = async () => {
 </script>
 
 <template>
-  <div id="chat-interface" class="flex-1 flex flex-col bg-white/20 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/30">
+  <div id="chat-interface" class="flex-1 flex flex-col h-full bg-slate-900/95 backdrop-blur-3xl rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] overflow-hidden border border-white/20 ring-1 ring-white/10">
+    <!-- Header -->
+    <div class="px-10 py-8 border-b border-white/10 bg-white/10 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2.5">
+          <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.8)] animate-pulse"></div>
+          <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white/90">Lyla Concierge Live</span>
+        </div>
+        <div class="w-px h-3 bg-white/10"></div>
+        <button @click="clearSession" class="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-london-red transition-all hover:scale-105 active:scale-95">
+          Reset Session
+        </button>
+      </div>
+    </div>
+
     <!-- Messages Area -->
-    <div ref="scrollContainer" id="message-container" class="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-hide">
+    <div ref="scrollContainer" id="message-container" class="flex-1 overflow-y-auto p-10 space-y-10 scrollbar-hide">
+      <div v-if="messages.length === 0" class="h-full flex flex-col items-center justify-center text-center space-y-6 opacity-30">
+        <div class="w-20 h-20 bg-white/5 rounded-[2rem] flex items-center justify-center border border-white/10 shadow-inner">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+          </svg>
+        </div>
+        <div class="space-y-2">
+           <p class="text-[11px] font-black uppercase tracking-[0.2em]">Start Planning</p>
+           <p class="text-sm font-medium max-w-[220px]">How can I help you explore London today?</p>
+        </div>
+      </div>
+
       <TransitionGroup name="message">
         <div v-for="(msg, i) in messages" :key="i" 
-             :id="`message-${i}`"
              :class="[
-               'max-w-[85%] p-5 rounded-3xl shadow-lg text-sm md:text-base leading-relaxed transition-all duration-300',
+               'max-w-[88%] p-8 rounded-[2.5rem] text-sm md:text-base leading-relaxed transition-all duration-700 shadow-2xl border',
                msg.role === 'user' 
-                 ? 'ml-auto bg-gradient-to-br from-london-blue to-blue-900 text-white rounded-br-none' 
+                 ? 'ml-auto bg-london-blue text-white rounded-tr-none border-white/10 shadow-[0_20px_40px_-10px_rgba(0,54,136,0.6)]' 
                  : msg.role === 'error'
-                   ? 'mx-auto bg-red-500/90 text-white border border-red-400 text-center backdrop-blur-md'
-                   : 'bg-white/90 text-slate-800 rounded-bl-none border border-white/50 backdrop-blur-md'
+                   ? 'mx-auto bg-red-500/20 text-red-100 border-red-500/40 text-center backdrop-blur-3xl px-10'
+                   : 'bg-white/10 text-white rounded-tl-none border-white/20 backdrop-blur-[80px] shadow-[inset_0_2px_10px_rgba(255,255,255,0.15)]'
              ]">
-          <div class="font-bold mb-1 opacity-70 text-[10px] uppercase tracking-tighter">
-            {{ msg.role === 'user' ? 'You' : 'Lyla' }}
+          <div :class="['font-black mb-3 text-[9px] uppercase tracking-[0.3em]', msg.role === 'user' ? 'text-white/40' : 'text-london-red']">
+            {{ msg.role === 'user' ? 'Traveler' : 'Lyla' }}
           </div>
-          <div class="whitespace-pre-wrap font-medium">{{ msg.text }}</div>
+          <div class="whitespace-pre-wrap font-medium drop-shadow-md text-white">{{ msg.text }}</div>
         </div>
       </TransitionGroup>
       
       <!-- Typing Indicator -->
-      <div v-if="isLoading" id="typing-indicator" class="flex items-center gap-4 bg-white/95 border border-white/50 p-4 px-7 rounded-3xl rounded-bl-none shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-left-4 duration-500">
-        <div class="relative w-8 h-8">
-          <div class="absolute inset-0 border-4 border-london-blue/20 rounded-full"></div>
-          <div class="absolute inset-0 border-4 border-london-red rounded-full border-t-transparent animate-spin"></div>
+      <div v-if="isLoading" class="flex items-center gap-6 bg-white/10 border border-white/20 p-6 px-10 rounded-[2.5rem] rounded-tl-none shadow-3xl backdrop-blur-3xl animate-in fade-in slide-in-from-left-6 duration-700">
+        <div class="flex gap-2">
+          <div class="w-2 h-2 bg-london-red rounded-full animate-bounce [animation-delay:-0.3s] shadow-[0_0_15px_rgba(223,27,18,1)]"></div>
+          <div class="w-2 h-2 bg-london-red rounded-full animate-bounce [animation-delay:-0.15s] shadow-[0_0_15px_rgba(223,27,18,1)]"></div>
+          <div class="w-2 h-2 bg-london-red rounded-full animate-bounce shadow-[0_0_15px_rgba(223,27,18,1)]"></div>
         </div>
-        <div class="flex flex-col gap-0.5">
-          <span class="text-[10px] font-black text-london-red uppercase tracking-[0.2em]">Processing</span>
-          <span class="text-sm font-bold text-slate-700">{{ currentLoadingMessage }}</span>
-        </div>
+        <span class="text-xs font-bold text-white/80 tracking-wider italic">{{ currentLoadingMessage }}</span>
       </div>
     </div>
 
     <!-- Input Area -->
-    <div class="p-6 bg-white/40 backdrop-blur-md border-t border-white/20">
-      <div class="flex gap-4 items-center">
+    <div class="p-10 bg-black/60 backdrop-blur-[80px] border-t border-white/10 space-y-4">
+      <form @submit.prevent="handleSend" class="relative group">
+        <input 
+          v-model="userInput"
+          type="text" 
+          placeholder="Ask Lyla anything about London..."
+          class="w-full pl-10 pr-20 py-7 rounded-3xl bg-white/10 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:ring-4 focus:ring-london-red/30 transition-all shadow-2xl focus:bg-white/15 text-base"
+          :disabled="isLoading"
+        />
         <button 
-          id="clear-button"
-          @click="clearSession"
-          class="flex flex-col items-center gap-1 group"
-          title="Clear session"
+          type="submit"
+          class="absolute right-4 top-4 bottom-4 aspect-square bg-london-red text-white rounded-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-[0_15px_30px_-5px_rgba(223,27,18,0.8)] disabled:opacity-20 group/btn"
+          :disabled="isLoading || !userInput.trim()"
         >
-          <div class="w-12 h-12 rounded-xl bg-white/50 border border-white/50 flex items-center justify-center hover:bg-white transition-all group-active:scale-95 shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-slate-500">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-            </svg>
-          </div>
-          <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Clear</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3.5" stroke="currentColor" class="w-6 h-6 group-hover/btn:translate-x-1 transition-transform">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
         </button>
-
-        <form @submit.prevent="handleSend" class="relative group flex-1">
-          <input 
-            id="user-input"
-            v-model="userInput"
-            type="text" 
-            placeholder="Where to next in London?"
-            class="w-full pl-6 pr-16 py-5 rounded-2xl bg-white/80 border border-white/50 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-london-blue/20 transition-all shadow-inner"
-            :disabled="isLoading"
-          />
-          <button 
-            id="send-button"
-            type="submit"
-            class="absolute right-2 top-2 bottom-2 aspect-square bg-london-red text-white rounded-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg disabled:opacity-30 disabled:hover:scale-100"
-            :disabled="isLoading || !userInput.trim()"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-            </svg>
-          </button>
-        </form>
-      </div>
-      <div class="mt-3 text-[10px] text-center text-slate-500 font-bold uppercase tracking-widest opacity-60">
-        AI-Powered Concierge Service • Session: {{ sessionId }}
+      </form>
+      <div class="text-[9px] text-center font-black uppercase tracking-[0.4em] text-white/30">
+        AI Concierge Service • Powered by Gemini
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.message-enter-active,
-.message-leave-active {
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.message-enter-active {
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .message-enter-from {
   opacity: 0;
-  transform: translateY(20px) scale(0.9);
+  transform: translateY(40px) scale(0.85) rotate(-2deg);
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;

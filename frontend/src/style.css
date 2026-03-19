@@ -1,15 +1,36 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@theme {
+  --color-london-red: #DF1B12;
+  --color-london-blue: #003688;
+  --color-london-gold: #C5A059;
+  --color-london-slate: #1E293B;
+  --font-inter: "Inter", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+}
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--font-inter);
+  background-color: var(--color-london-slate);
+  color: white;
 }
 
 body {
-  @apply bg-slate-50 text-slate-900 m-0 min-h-screen;
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-london-slate);
 }
 
 #app {
-  @apply min-h-screen flex flex-col;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
