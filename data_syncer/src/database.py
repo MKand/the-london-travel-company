@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, text, event
+from sqlalchemy import create_engine, text, event, inspect
 from sqlalchemy.orm import sessionmaker
 from src.config import settings
 from src.models import Base
@@ -14,7 +14,34 @@ def init_db():
     with engine.connect() as conn:
         conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
         conn.commit()
-    Base.metadata.create_all(bind=engine)
+        
+    inspector = inspect(engine)
+    from src.models import Location, Activity
+    if not inspector.has_table(Location.__tablename__) or not inspector.has_table(Activity.__tablename__):
+        with engine.connect() as conn:
+            conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS locations (
+                sight_id VARCHAR(50) PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                category VARCHAR(100),
+                description TEXT,
+                embedding VECTOR(768)
+            );
+            """))
+            conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS activities (
+                activity_id VARCHAR(50) PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                duration_min INT,
+                duration_max INT,
+                kid_friendliness_score INT,
+                cost INT,
+                sight_id VARCHAR(50) REFERENCES locations(sight_id),
+                description TEXT,
+                embedding VECTOR(768)
+            );
+            """))
+            conn.commit()
 
 def get_db():
     db = SessionLocal()

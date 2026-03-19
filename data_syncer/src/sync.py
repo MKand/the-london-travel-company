@@ -1,7 +1,7 @@
 import os
 import json
 import logging
-from sqlalchemy import create_engine, text, event
+from sqlalchemy import create_engine, text, event, inspect
 from sqlalchemy.orm import Session, sessionmaker
 from google import genai
 
@@ -97,7 +97,35 @@ def sync_data(db_url: str = None):
             conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
             conn.commit()
                 
-        Base.metadata.create_all(bind=engine)
+        inspector = inspect(engine)
+        if not inspector.has_table("locations") or not inspector.has_table("activities"):
+            logger.info("Tables not found, creating them via raw SQL...")
+            with engine.connect() as conn:
+                conn.execute(text("""
+                CREATE TABLE IF NOT EXISTS locations (
+                    sight_id VARCHAR(50) PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    category VARCHAR(100),
+                    description TEXT,
+                    embedding VECTOR(768)
+                );
+                """))
+                conn.execute(text("""
+                CREATE TABLE IF NOT EXISTS activities (
+                    activity_id VARCHAR(50) PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    duration_min INT,
+                    duration_max INT,
+                    kid_friendliness_score INT,
+                    cost INT,
+                    sight_id VARCHAR(50) REFERENCES locations(sight_id),
+                    description TEXT,
+                    embedding VECTOR(768)
+                );
+                """))
+                conn.commit()
+        else:
+            logger.info("Tables already exist, skipping creation.")
         CustomSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
         db: Session = CustomSessionLocal()
     else:

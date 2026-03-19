@@ -29,7 +29,7 @@ class Vector(UserDefinedType):
 class Location(Base):
     __tablename__ = "locations"
     
-    id = Column(String, primary_key=True)
+    id = Column("sight_id", String, primary_key=True)
     name = Column(String, nullable=False)
     category = Column(String)
     description = Column(Text)
@@ -47,7 +47,7 @@ class Activity(Base):
     kid_friendliness_score = Column(Integer)
     cost = Column(Float)
     description = Column(Text)
-    sight_id = Column(String, ForeignKey("locations.id")) # Linked to Location.id
+    sight_id = Column(String, ForeignKey("locations.sight_id")) # Linked to Location.sight_id
     embedding = Column(Vector) # Vector for semantic search on activities
     
     location = relationship("Location", back_populates="activities")
