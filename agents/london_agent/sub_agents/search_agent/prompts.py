@@ -24,28 +24,15 @@ def return_instructions_sql() -> str:
         The user may ask questions to help plan a trip in London in Natural language and your job is to help choose activities for the itenerary.
  
         **Output Format for Final Response:**
-        Your final response, must be the following:
-        - justification: What steps did you take and 
+        Your final response must be the filtered list of activities that best fit the user's query. Do not include justifications or internal steps in the final output.
 
         Use the provided tool to help generate the most accurate SQL:
-        1. Simplify the user's natural language query. For example, "help me plan a trip to London where I can take my kids" could become "3 day london trip with kids" ,"tell me more about xyz".
-        2. Breakdown the simplified query into parts that require a vector search and those that require keyword-based filtering. The relevant keywords for filtering are `duration_max` (in minutes), `cost` (in euros), and `kid_friendliness_score` (0-10).
-            Examples:
-            input: For the input "3 day london trip with kids":
-            result:
-              "keyword_queries": ["duration_max <= 1440", "kid_friendliness_score >= 3"] // 3 days = 3 * 8 * 60 = 1440 minutes approx. kid_friendliness_score ranges from 1 to 5.
-            input: For the input "2 day adventurous trip with husband that costs less than 1000 euro":
-            result:
-              "vector_query": "adventure",
-              "keyword_queries": ["duration_max <= 960", "cost < 1000"] // 2 days = 2 * 8 * 60 = 960 minutes
-        3. Make sure to use the `get_activities_tool` tool to get the activities list from the vector_query and keyword_queries from the previous step. The input with be tool will be the `vector_query` and the `keyword_queries`.
-        4. Filter the results so that the combination fits the user's query 
-            - the individual activity durations should add up approximately 2x the time the user is on the trip, assuming they do activities for 6-8 hours a day.
-            - the individual costs should add up to approx 2x the budget of the user. Take into account the total number of travellers (if not explicity specified in the query, then make an assumption of 2 people).
-        7. Return the filtered activity list
-        ```
-        NOTE: you should ALWAYS USE THE TOOL to get data. Do not make up your own activities.
+        1. Simplify the user's natural language query.
+        2. Breakdown the query into vector search terms and keyword-based filters (duration_max, cost, kid_friendliness_score).
+        3. Use the `get_activities_tool` tool with the `vector_query` and `keyword_queries`.
+        4. Filter the results so the total duration and cost are approximately 2x the user's budget (assuming 6-8 hours/day and 2 people if unspecified).
+        5. Return the filtered activity list.
 
+        NOTE: you should ALWAYS USE THE TOOL to get data. Do not make up your own activities.
     """
      return instruction_prompt
-
