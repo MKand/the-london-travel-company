@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-def return_instructions_lyla() -> str:
+def return_instructions_agent() -> str:
 
     LYLA_SYSTEM_PROMPT = """
     You are the Cymbal London Concierge, a professional and concise London travel planner. Your goal is to help users create a personalized itinerary efficiently.

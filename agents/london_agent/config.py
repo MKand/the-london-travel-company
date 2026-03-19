@@ -41,18 +41,7 @@ if PROJECT_ID == "":
     raise ValueError("GOOGLE_CLOUD_PROJECT is not set")
 
 # Database Configuration
-DB_TYPE = os.getenv("DB_TYPE", "sqlite").lower()
-logger.info(f"The DB type is: {DB_TYPE}")
-SQLITE_DB_PATH = os.getenv('SQLITE_DB_PATH', "/app/london_agent/data/")
-
-# Postgres Configuration (if using Postgres)
-POSTGRES_USER = os.getenv("POSTGRES_USER", "user")
-POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "password")
-POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
-POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5432")
-POSTGRES_DB = os.getenv("POSTGRES_DB", "LONDON_travel")
-
-# OTEL Configuration
+DATA_BACKEND_URL = os.environ.get("DATA_BACKEND_URL", "http://localhost:8002")
 session_service = InMemorySessionService()
 
 class AgentModel(BaseModel):
@@ -62,22 +51,11 @@ class AgentModel(BaseModel):
 
 class Config(BaseSettings):
     """Configuration settings for the london holiday agent."""
-
-    # Database settings
-    db_type: str = DB_TYPE
-    postgres_user: str = POSTGRES_USER or "user"
-    postgres_password: str = POSTGRES_PASSWORD or "password"
-    postgres_host: str = POSTGRES_HOST or "localhost"
-    postgres_port: str = POSTGRES_PORT or "5432"
-    postgres_db: str = POSTGRES_DB or "london_activities"
-
-    db_file_path: str = os.path.join(SQLITE_DB_PATH, "london_travel.sql")
     embedding_model_name: str = EMBEDDING_MODEL_NAME
-    max_rows: int = MAX_NUM_ROWS
-    debug_state:bool = DEBUG_STATE
     project: str = PROJECT_ID
     location:str = LOCATION
-    app_name: str = "LYLA"
+    app_name: str = "Cymbal London Concierge"
+    data_backend_url: str = DATA_BACKEND_URL
     agent_settings: AgentModel = Field(default_factory=AgentModel) 
     genai_use_vertexai: str = Field(default="1") 
 

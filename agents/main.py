@@ -18,7 +18,6 @@ import logging
 from google.cloud import logging as cloud_logging
 from google.adk.cli.fast_api import get_fast_api_app
 from fastapi import FastAPI
-from london_agent.sub_agents.search_agent.tools import setup_sqlite_client
 from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
@@ -52,7 +51,6 @@ os.environ["OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED"] = str(OTEL_PYTHON
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_ORIGINS = ["*"]
 
-setup_sqlite_client()
 
 # Call the function to get the FastAPI app instance
 app: FastAPI = get_fast_api_app(

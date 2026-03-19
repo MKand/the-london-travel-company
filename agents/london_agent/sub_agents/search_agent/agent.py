@@ -15,28 +15,20 @@
 from google.adk.agents import Agent
 from google.adk.agents.callback_context import CallbackContext
 from google.genai import types
-from .tools import get_database_settings, get_activities_tool
-from .prompts import return_instructions_sql
-from ...config import Config
+from london_agent.sub_agents.search_agent.tools import get_activities_tool, search_locations_tool, search_attractions_tool
+from london_agent.sub_agents.search_agent.prompts import return_instructions_search
+from london_agent.config import Config
 
 configs = Config()
-
-
-def setup_before_agent_call(callback_context: CallbackContext) -> None:
-    """Setup the agent."""
-
-    if "database_settings" not in callback_context.state:
-        callback_context.state["database_settings"] = \
-            get_database_settings()
-
 
 database_agent = Agent(
     model=configs.agent_settings.model,
     name="database_agent",
-    instruction=return_instructions_sql(),
+    instruction=return_instructions_search(),
     tools=[
         get_activities_tool,
+        search_locations_tool,
+        search_attractions_tool,
     ],
-    before_agent_callback=setup_before_agent_call,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
 )
