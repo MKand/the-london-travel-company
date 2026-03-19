@@ -21,9 +21,10 @@ const destinations = [
     <!-- Dark Background Layer -->
     <div class="absolute inset-0 z-0 bg-london-slate shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]"></div>
 
-    <!-- Immersive Background Placeholder with darkness -->
-    <div class="absolute inset-0 z-0 opacity-40 bg-hero-gradient">
-      <div class="absolute inset-0 bg-london-blue/30 mix-blend-multiply"></div>
+    <!-- Immersive Background Image with darkness -->
+    <div class="absolute inset-0 z-0 opacity-60 bg-cover bg-center bg-no-repeat" style="background-image: url('/images/bg.png'); filter: brightness(0.7) contrast(1.1);">
+      <div class="absolute inset-0 bg-london-slate/40 mix-blend-multiply"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-london-slate"></div>
     </div>
 
     <!-- Top Navigation -->
