@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
 import { createSession, sendMessage, generateNewSessionId } from '../api'
+import { marked } from 'marked'
 
 const messages = ref([])
 const userInput = ref('')
@@ -138,7 +139,7 @@ const handleSend = async () => {
           <div :class="['font-black mb-3 text-[9px] uppercase tracking-[0.3em]', msg.role === 'user' ? 'text-white/40' : 'text-london-red']">
             {{ msg.role === 'user' ? 'Traveler' : 'Cymbal' }}
           </div>
-          <div class="whitespace-pre-wrap font-medium drop-shadow-md text-white">{{ msg.text }}</div>
+          <div class="markdown-body font-medium drop-shadow-md text-white" v-html="marked.parse(msg.text)"></div>
         </div>
       </TransitionGroup>
       
@@ -194,5 +195,42 @@ const handleSend = async () => {
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.markdown-body :deep(h1), .markdown-body :deep(h2), .markdown-body :deep(h3) {
+  font-weight: 900;
+  margin-top: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.markdown-body :deep(h3) {
+  font-size: 1.15rem;
+}
+
+.markdown-body :deep(strong) {
+  font-weight: 800;
+  color: #ffcccc;
+}
+
+.markdown-body :deep(ul) {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.markdown-body :deep(ol) {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.markdown-body :deep(p) {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+.markdown-body :deep(li) {
+  margin-bottom: 0.4rem;
 }
 </style>

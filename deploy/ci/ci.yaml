@@ -65,6 +65,55 @@ steps:
     - |
       docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:lab-${SHORT_SHA}' && \
       docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/frontend:${_IMAGE_TAG}'
+- name: 'gcr.io/cloud-builders/docker'
+  id: "build-mcp-image"
+  waitFor: ['-']
+  dir: './london_data_mcp'
+  entrypoint: "sh"
+  args:
+    - -xe 
+    - -c
+    - |
+      docker build \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/data_mcp:lab-${SHORT_SHA}" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/data_mcp:${_IMAGE_TAG}" \
+         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/data_mcp:${_IMAGE_TAG}" \
+         .
+- name: 'gcr.io/cloud-builders/docker'
+  id: "push-mcp-image"
+  waitFor: [build-mcp-image]
+  entrypoint: "sh"
+  args:
+    - -xe 
+    - -c
+    - |
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/data_mcp:lab-${SHORT_SHA}' && \
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/data_mcp:${_IMAGE_TAG}'
+- name: 'gcr.io/cloud-builders/docker'
+  id: "build-syncer-image"
+  waitFor: ['-']
+  dir: './data_syncer'
+  entrypoint: "sh"
+  args:
+    - -xe 
+    - -c
+    - |
+      docker build \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/data_syncer:lab-${SHORT_SHA}" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/data_syncer:${_IMAGE_TAG}" \
+         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/data_syncer:${_IMAGE_TAG}" \
+         .
+- name: 'gcr.io/cloud-builders/docker'
+  id: "push-syncer-image"
+  waitFor: [build-mcp-image]
+  entrypoint: "sh"
+  args:
+    - -xe 
+    - -c
+    - |
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/data_syncer:lab-${SHORT_SHA}' && \
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/data_syncer:${_IMAGE_TAG}'
+
 options:
   logging: CLOUD_LOGGING_ONLY
   substitution_option: ALLOW_LOOSE
