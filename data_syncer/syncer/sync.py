@@ -5,9 +5,9 @@ from sqlalchemy import create_engine, text, event, inspect
 from sqlalchemy.orm import Session, sessionmaker
 from google import genai
 
-from src.database import SessionLocal, init_db
-from src.models import Location, Activity, Base
-from src.config import settings
+from syncer.database import SessionLocal, init_db
+from syncer.models import Location, Activity, Base
+from syncer.config import settings
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

@@ -8,9 +8,9 @@ from mcp.types import Tool, TextContent, ImageContent, EmbeddedResource
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 from google import genai
-from .database import engine, SessionLocal
-from .models import Location, Activity
-from .config import settings
+from london_mcp.database import engine, SessionLocal
+from london_mcp.models import Location, Activity
+from london_mcp.config import settings
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -61,6 +61,7 @@ async def search_with_natural_language(query: str = "fun activities", search_typ
     Returns:
         List[SearchResult]: A list of location or activity search results.
     """
+    logger.info(f"Received search query: {query}, with search type: {search_type}, and limit: {limit}")
     embedding = get_embedding(query)
     embedding_str = str(embedding)
         

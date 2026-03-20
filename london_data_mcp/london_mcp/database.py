@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, text, event
 from sqlalchemy.orm import sessionmaker
-from .config import settings
-from .models import Base
+from london_mcp.config import settings
+from london_mcp.models import Base
 import sqlite3
 import sqlite_vec
 import os

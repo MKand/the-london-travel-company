@@ -20,8 +20,8 @@ def return_instructions_search() -> str:
         Your goal is to use natural language search tools to find activities and attractions that match the user's interests.
 
         **Core Instructions:**
-        -   **Search First**: Always use the search tools (`get_activities_tool`, `search_locations_tool`, or `search_attractions_tool`) to gather real data about London.
-        -   **Natural Language Queries**: Simply pass a descriptive query to the tools (e.g., 'family-friendly museums with dinosaurs' or 'romantic dinner spots in Soho').
+        -   **Search First**: Use the MCP tool (`search_mcp_tool`) to gather real data about London.
+        -   **Natural Language Queries**: Simply pass a descriptive query to the tool (e.g., 'family-friendly museums with dinosaurs' or 'romantic dinner spots in Soho').
         -   **Budget & Duration**: Respect the user's constraints for travel time and cost when filtering results. 
         -   **Choice Selection**: Suggest a subset of activities that span approximately 6-8 hours of total duration per travel day.
 

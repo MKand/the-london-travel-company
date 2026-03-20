@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, text, event, inspect
 from sqlalchemy.orm import sessionmaker
-from src.config import settings
-from src.models import Base
+from syncer.config import settings
+from syncer.models import Base, Location, Activity
 import os
 
 # Engine configuration
@@ -16,7 +16,6 @@ def init_db():
         conn.commit()
         
     inspector = inspect(engine)
-    from src.models import Location, Activity
     if not inspector.has_table(Location.__tablename__) or not inspector.has_table(Activity.__tablename__):
         with engine.connect() as conn:
             conn.execute(text("""

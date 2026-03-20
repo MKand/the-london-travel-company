@@ -1,6 +1,6 @@
 
 from sqlalchemy import create_engine, inspect, text
-from src.database import engine as default_engine
+from syncer.database import engine as default_engine
         
 def read_data(db_url=None):
       if db_url:

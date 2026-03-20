@@ -15,7 +15,7 @@
 from london_agent.config import Config
 from london_agent.prompts import return_instructions_agent
 from google.adk.agents import Agent
-from london_agent.tools.tools import call_db_agent
+from london_agent.tools.tools import call_search_agent
 from google.genai import types
 
 configs = Config()
@@ -28,7 +28,7 @@ root_agent = Agent(
     instruction=return_instructions_agent(),
     name=configs.agent_settings.name,
     tools=[
-        call_db_agent,
+        call_search_agent,
     ],
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
 )

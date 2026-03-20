@@ -12,6 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .search_agent.agent import database_agent as db_agent
+from .search_agent.agent import search_agent
 
-__all__ = ["db_agent"]
+__all__ = ["search_agent"]

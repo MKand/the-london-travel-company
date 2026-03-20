@@ -14,18 +14,17 @@
 
 from google.adk.tools import ToolContext
 from google.adk.tools.agent_tool import AgentTool
-from ..sub_agents import db_agent
-from ..sub_agents.search_agent.tools import activity
+from london_agent.sub_agents import search_agent
 
-async def call_db_agent(
+async def call_search_agent(
     question: str,
     tool_context: ToolContext,
-) -> list[activity]:
+):
 
-    agent_tool = AgentTool(agent=db_agent)
+    agent_tool = AgentTool(agent=search_agent)
 
-    db_agent_output = await agent_tool.run_async(
+    search_agent_output = await agent_tool.run_async(
         args={"request": question}, tool_context=tool_context
     )
-    tool_context.state["db_agent_output"] = db_agent_output
-    return db_agent_output
+    tool_context.state["search_agent_output"] = search_agent_output
+    return search_agent_output

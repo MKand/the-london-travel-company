@@ -15,20 +15,18 @@
 from google.adk.agents import Agent
 from google.adk.agents.callback_context import CallbackContext
 from google.genai import types
-from london_agent.sub_agents.search_agent.tools import get_activities_tool, search_locations_tool, search_attractions_tool
+from london_agent.sub_agents.search_agent.tools import search_mcp_tool
 from london_agent.sub_agents.search_agent.prompts import return_instructions_search
 from london_agent.config import Config
 
 configs = Config()
 
-database_agent = Agent(
+search_agent = Agent(
     model=configs.agent_settings.model,
-    name="database_agent",
+    name="search_agent",
     instruction=return_instructions_search(),
     tools=[
-        get_activities_tool,
-        search_locations_tool,
-        search_attractions_tool,
+        search_mcp_tool
     ],
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
 )
