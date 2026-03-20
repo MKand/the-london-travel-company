@@ -17,9 +17,11 @@ from london_agent.prompts import return_instructions_agent
 from google.adk.agents import Agent
 from london_agent.tools.tools import call_search_agent
 from google.genai import types
+from london_agent.types import AgentOutput
 
 configs = Config()
 APP_NAME=configs.app_name
+
 
 
 # Initialize the agent outside the request handler for efficiency.
@@ -30,6 +32,7 @@ root_agent = Agent(
     tools=[
         call_search_agent,
     ],
+    output_schema = AgentOutput,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
 )
 

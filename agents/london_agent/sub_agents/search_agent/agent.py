@@ -18,6 +18,7 @@ from google.genai import types
 from london_agent.sub_agents.search_agent.tools import search_mcp_tool
 from london_agent.sub_agents.search_agent.prompts import return_instructions_search
 from london_agent.config import Config
+from london_agent.sub_agents.search_agent.types import SearchResult
 
 configs = Config()
 
@@ -28,5 +29,6 @@ search_agent = Agent(
     tools=[
         search_mcp_tool
     ],
+    output_schema = SearchResult,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
 )

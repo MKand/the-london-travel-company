@@ -4,6 +4,7 @@ import { createSession, sendMessage, generateNewSessionId } from '../api'
 import { marked } from 'marked'
 
 const messages = ref([])
+const emit = defineEmits(['itinerary-updated'])
 const userInput = ref('')
 const isLoading = ref(false)
 const scrollContainer = ref(null)
@@ -63,19 +64,32 @@ const handleSend = async () => {
     const events = await sendMessage(sessionId.value, text)
     
     let responseText = ''
-    events.forEach(event => {
-      if (event.content && event.content.role === 'model') {
-        event.content.parts.forEach(part => {
-          if (part.text) responseText += part.text
-        })
-      }
-    })
+    const modelEvents = events.filter(e => e.content && e.content.role === 'model');
+    if (modelEvents.length > 0) {
+      const finalModelEvent = modelEvents[modelEvents.length - 1];
+      finalModelEvent.content.parts.forEach(part => {
+        if (part.text) responseText += part.text
+      });
+    }
 
     if (responseText) {
+      let parsed;
+      try {
+        let cleanText = responseText.trim();
+        if (cleanText.startsWith('```json')) cleanText = cleanText.replace(/^```json\n?/, '').replace(/\n?```$/, '');
+        parsed = JSON.parse(cleanText);
+      } catch(e) {
+        parsed = { text_response: responseText, recommendations: [] };
+      }
+      
       messages.value.push({ 
         role: 'assistant', 
-        text: responseText
+        text: parsed.text_response || parsed.error || responseText
       })
+      
+      if (parsed.recommendations && parsed.recommendations.length > 0) {
+        emit('itinerary-updated', parsed.recommendations)
+      }
     } else {
        messages.value.push({ 
         role: 'assistant', 

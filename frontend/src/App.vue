@@ -3,6 +3,11 @@ import { ref } from 'vue'
 import ChatContainer from './components/ChatContainer.vue'
 
 const isChatOpen = ref(true)
+const itineraryItems = ref([])
+
+const handleItineraryUpdate = (items) => {
+  itineraryItems.value = items
+}
 
 const toggleChat = () => {
   isChatOpen.value = !isChatOpen.value
@@ -60,7 +65,7 @@ const destinations = [
     <!-- Main Content -->
     <main class="relative z-10 flex flex-col lg:flex-row min-h-[calc(100vh-100px)] max-w-7xl mx-auto px-10 pb-10 gap-10">
       
-      <!-- Left Section: Hero Text -->
+      <!-- Left Section: Hero Text (Always shown) -->
       <div class="flex-1 flex flex-col justify-center pt-10 lg:pt-0">
         <div class="relative">
           <h1 class="text-[10rem] lg:text-[14rem] leading-[0.8] font-black uppercase tracking-tighter opacity-5 absolute -top-10 -left-6 select-none italic text-white">
@@ -129,6 +134,41 @@ const destinations = [
 
     </main>
 
+    <!-- Dynamic Itinerary Panel -->
+    <transition 
+      enter-active-class="transition duration-700 ease-out"
+      enter-from-class="transform translate-x-10 opacity-0"
+      enter-to-class="transform translate-x-0 opacity-100"
+      leave-active-class="transition duration-400 ease-in"
+      leave-from-class="transform translate-x-0 opacity-100"
+      leave-to-class="transform translate-x-10 opacity-0"
+    >
+      <div v-if="itineraryItems.length > 0 && isChatOpen" class="fixed top-24 right-[580px] z-30 w-[420px] h-[calc(100vh-120px)] bg-slate-900/95 backdrop-blur-3xl rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] border border-white/20 p-8 overflow-y-auto scrollbar-hide">
+        <div class="flex flex-col gap-2 border-b border-white/10 pb-6 mb-8">
+          <p class="text-[10px] font-black uppercase tracking-[0.4em] text-london-red opacity-80">Your Personalized Plan</p>
+          <h3 class="text-3xl font-black uppercase tracking-tighter italic opacity-95">London Itinerary</h3>
+        </div>
+        
+        <div class="space-y-6">
+          <div v-for="(item, index) in itineraryItems" :key="index" class="bg-white/5 border border-white/10 p-6 rounded-[2rem] hover:bg-white/10 transition-colors duration-300 relative overflow-hidden group">
+            <div class="absolute inset-0 bg-gradient-to-r from-london-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="flex flex-col gap-4 relative z-10">
+              <div class="flex flex-col gap-1">
+                <span class="text-xs font-black uppercase text-london-red tracking-widest">Day {{ item.day }} • {{ item.time }}</span>
+                <h4 class="text-xl font-bold uppercase tracking-tight">{{ item.name }}</h4>
+                <p class="text-white/70 text-sm leading-relaxed mt-2">{{ item.description }}</p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <div class="text-[9px] uppercase font-bold tracking-widest bg-white/10 px-3 py-1.5 rounded-full">{{ item.duration }}</div>
+                <div class="text-[9px] uppercase font-bold tracking-widest bg-london-red/20 text-london-red px-3 py-1.5 rounded-full">{{ item.cost }}</div>
+                <div v-if="item.kid_friendly === 'Yes'" class="text-[9px] uppercase font-bold tracking-widest bg-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-full">Kid Friendly</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+
     <!-- Right Section: Fixed Chat Interface -->
     <transition 
       enter-active-class="transition duration-700 ease-out"
@@ -138,8 +178,8 @@ const destinations = [
       leave-from-class="transform translate-x-0 opacity-100"
       leave-to-class="transform translate-x-32 opacity-0"
     >
-      <div v-if="isChatOpen" class="fixed top-24 right-10 z-40 w-full sm:w-[480px] h-[calc(100vh-120px)] shadow-2xl">
-        <ChatContainer />
+      <div v-show="isChatOpen" class="fixed top-24 right-10 z-40 w-full sm:w-[480px] h-[calc(100vh-120px)] shadow-2xl">
+        <ChatContainer @itinerary-updated="handleItineraryUpdate" />
         <button 
           @click="toggleChat"
           class="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-xl border border-white/20 transition-all shadow-xl hover:rotate-90 active:scale-90"
