@@ -85,23 +85,14 @@ def parse_json_data():
             
     return locations, activities
 
-def sync_data(db_url: str = None):
-    logger.info("Starting sync from JSON files")
-    locations_data, activities_data = parse_json_data()
-    
-    if db_url:
-        logger.info(f"Targeting custom DB: {db_url}")
-        engine = create_engine(db_url)
-        
-        with engine.connect() as conn:
-            conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
-            conn.commit()
-                
+def create_tables_if_not_exist(engine, conn):
+    try:
         inspector = inspect(engine)
-        if not inspector.has_table("locations") or not inspector.has_table("activities"):
+        if not inspector.has_table("locations") :
             logger.info("Tables not found, creating them via raw SQL...")
             with engine.connect() as conn:
                 conn.execute(text("""
+                CREATE EXTENSION IF NOT EXISTS vector;
                 CREATE TABLE IF NOT EXISTS locations (
                     sight_id VARCHAR(50) PRIMARY KEY,
                     name VARCHAR(255) NOT NULL,
@@ -110,7 +101,11 @@ def sync_data(db_url: str = None):
                     embedding VECTOR(768)
                 );
                 """))
+                conn.commit()
+        
+        if not inspector.has_table("activities"):
                 conn.execute(text("""
+                CREATE EXTENSION IF NOT EXISTS vector;
                 CREATE TABLE IF NOT EXISTS activities (
                     activity_id VARCHAR(50) PRIMARY KEY,
                     name VARCHAR(255) NOT NULL,
@@ -124,8 +119,23 @@ def sync_data(db_url: str = None):
                 );
                 """))
                 conn.commit()
-        else:
-            logger.info("Tables already exist, skipping creation.")
+    except Exception as e:
+        logger.error(f"Error inspecting database: {str(e)}")
+        raise
+    return conn
+
+
+def sync_data(db_url: str = None):
+    logger.info("Starting sync from JSON files")
+    locations_data, activities_data = parse_json_data()
+    
+    if db_url:
+        logger.info(f"Targeting custom DB: {db_url}")
+        engine = create_engine(db_url)
+        
+        with engine.connect() as conn:
+            create_tables_if_not_exist(engine, conn)
+                
         CustomSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
         db: Session = CustomSessionLocal()
     else:

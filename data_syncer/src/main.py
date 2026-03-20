@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Optional
-from .sync import sync_data
+from src.sync import sync_data
+from src.read import read_data
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -22,15 +23,15 @@ def trigger_sync(request: SyncRequest):
         logger.error(f"Error during synchronization: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/read")
+@app.post("/read")
 def get_metadata(request: SyncRequest):
-    logger.info(f"Received sync request targeting DB: {request.db_url or 'default'}")
+    logger.info(f"Received read request targeting DB: {request.db_url or 'default'}")
     try:
-        # get metadata from the database, such as tablenames, number of rows in each table, column names and types
-        return {}
+        response = read_data(db_url=request.db_url)
+        return response
         
     except Exception as e:
-        logger.error(f"Error during synchronization: {str(e)}")
+        logger.error(f"Error extracting metadata: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
