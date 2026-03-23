@@ -46,7 +46,7 @@ The London Travel Company is a generative AI-powered travel assistant based on t
    ```
    *Verify the synced metadata:*
    ```bash
-   curl -X POST http://localhost:8003/read -H "Content-Type: application/json" -d '{}'
+   curl -X POST http://localhost:8003/read -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://user:password@postgres:5432/postgres"}'
    ```
 
 4. Access the application components:
