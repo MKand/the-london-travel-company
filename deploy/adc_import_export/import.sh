@@ -97,7 +97,7 @@ echo "Created: $OUTPUT_FILE"
 echo "------------------------------------------------"
 
 # --- API IMPORT ---
-export API_ENDPOINT="designcenter.googleapis.com"
+export API_ENDPOINT="staging-designcenter.sandbox.googleapis.com"
 export PROJECT_ID="$DEST_PROJECT_ID"
 export SPACE_ID="$DEST_SPACE_ID"
 export LOCATION

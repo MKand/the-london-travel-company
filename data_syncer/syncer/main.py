@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from typing import Optional
 from syncer.sync import sync_data
 from syncer.read import read_data
+from syncer.initalise import initialise_db
 import logging
 import uvicorn
 
@@ -13,6 +14,9 @@ app = FastAPI(title="London Travel Data Sync API")
 
 class SyncRequest(BaseModel):
     db_url: Optional[str] = None
+
+class InitRequest(BaseModel):
+    admin_db_url: str
 
 @app.post("/sync")
 def trigger_sync(request: SyncRequest):
@@ -33,6 +37,15 @@ def get_metadata(request: SyncRequest):
         
     except Exception as e:
         logger.error(f"Error extracting metadata: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/init")
+def initialize_database(request: InitRequest):
+    try:
+        initialise_db(request.admin_db_url)
+        return {"status": "success", "message": f"Database initialization complete"}
+    except Exception as e:
+        logger.error(f"Error during initialization: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
