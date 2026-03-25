@@ -16,14 +16,18 @@
 
 import logging
 from google.adk.tools.mcp_tool import McpToolset, StreamableHTTPConnectionParams
+from london_agent.sub_agents.auth import get_bearer_token
 
 from london_agent.config import Config
 
 logger = logging.getLogger(__name__)
 configs = Config()
 
+token = get_bearer_token(configs.data_backend_url)
+
 search_mcp_server_url = f"{configs.data_backend_url}/mcp"
 search_mcp_tool = McpToolset(
     connection_params=StreamableHTTPConnectionParams(url=search_mcp_server_url),
-    tool_filter = ["search_with_natural_language"]
+    tool_filter = ["search_with_natural_language"],
+    headers={"Authorization": f"Bearer {token}"},
 )

@@ -47,7 +47,7 @@ curl -s -X GET \
 
 # This command reads your source file, extracts the inner object, 
 # and wraps it in the correct key name for the Import API.
-jq '{serialized_application_template: .serializedApplicationTemplate}' original-extract.json > import.json
+jq '{serialized_application_template: .serializedApplicationTemplate}' original-extract.json > import-r32.json
 
 echo "Done! You can view the output by running: cat import.json"
 
@@ -62,7 +62,7 @@ else
     echo "Bucket '$BUCKET_NAME' already exists."
 fi
 
-gsutil -m cp -r ./import.json gs://$BUCKET_NAME/templates/$SOURCE_APP_TEMPLATE/
+gsutil -m cp -r ./import-r32.json gs://$BUCKET_NAME/templates/$SOURCE_APP_TEMPLATE/
 
 echo "Cleaning Up.."
 

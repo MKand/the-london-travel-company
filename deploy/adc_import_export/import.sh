@@ -6,7 +6,7 @@ set -euo pipefail
 echo "Running import"
 
 # --- CONFIGURATION ---
-JSON_FILE="import.json"
+JSON_FILE="import-r32.json"
 OUTPUT_FILE="import_substituted.json"
 
 # --- USAGE ---
@@ -30,8 +30,9 @@ usage() {
 if [ "$#" -eq 2 ]; then
     DEST_PROJECT_ID=$1
     DEST_SPACE_ID=$2
-    SOURCE_PROJECT_ID="SOURCE_PROJECT_ID"
-    SOURCE_SPACE_ID="default-space"
+    # Dynamically extract the source project and space ID from the JSON
+    SOURCE_PROJECT_ID=$(jq -r '.serialized_application_template.uri | split("/")[1]' "$JSON_FILE")
+    SOURCE_SPACE_ID=$(jq -r '.serialized_application_template.uri | split("/")[5]' "$JSON_FILE")
 elif [ "$#" -eq 4 ]; then
     DEST_PROJECT_ID=$1
     DEST_SPACE_ID=$2
@@ -97,7 +98,7 @@ echo "Created: $OUTPUT_FILE"
 echo "------------------------------------------------"
 
 # --- API IMPORT ---
-export API_ENDPOINT="staging-designcenter.sandbox.googleapis.com"
+export API_ENDPOINT="designcenter.googleapis.com"
 export PROJECT_ID="$DEST_PROJECT_ID"
 export SPACE_ID="$DEST_SPACE_ID"
 export LOCATION
@@ -112,7 +113,7 @@ envsubst < "$OUTPUT_FILE" | curl -X POST \
 
 echo "Cleaning Up.."
 
-rm -rf $OUTPUT_FILE
+# rm -rf $OUTPUT_FILE
 
 echo ""
 echo "------------------------------------------------"
