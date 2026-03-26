@@ -33,9 +33,13 @@ PROJECT_ID= os.getenv("GOOGLE_CLOUD_PROJECT")
 LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 
 # Set the location for the Vertex AI client
+# https://docs.cloud.google.com/stackdriver/docs/instrumentation/ai-agent-adk#configure
 os.environ["GOOGLE_CLOUD_LOCATION"] = LOCATION
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "true"
 os.environ["OTEL_SERVICE_NAME"] = "cymbal-london-concierge-agent"
+os.environ["OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED"] = "true"
+os.environ["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] = "true"
+os.environ["ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS"] = "false"
 
 if PROJECT_ID == "":
     logger.error("GOOGLE_CLOUD_PROJECT is not set")
