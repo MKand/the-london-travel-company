@@ -24,7 +24,6 @@ async def call_search_agent(
     tool_context: ToolContext,
 ):
     agent_tool = AgentTool(agent=search_agent)
-
     try:
         search_agent_output = await agent_tool.run_async(
             args={"request": question}, tool_context=tool_context

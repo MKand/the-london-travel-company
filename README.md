@@ -14,11 +14,13 @@ The London Travel Company is a generative AI-powered travel assistant based on t
 ## Requirements
 
 ### Local Development
+
 - Docker and Docker Compose
 - Node.js 18+ and npm
 - A Google Cloud Project with a Service Account key downloaded as `.key.json` in the project root. (Requires roles: `roles/aiplatform.user`, `roles/monitoring.metricWriter`, `roles/logging.logWriter`, `roles/telemetry.writer`)
 
 ### Cloud Deployment
+
 - Terraform CLI installed
 - Google Cloud CLI (`gcloud`) installed and authenticated
 - Google Cloud Project with billing enabled
@@ -26,28 +28,33 @@ The London Travel Company is a generative AI-powered travel assistant based on t
 ## Running Locally
 
 1. Create a `.env` file in the root directory:
+
    ```env
    PROJECT_ID=your-gcp-project-id
    LOCATION=your-gcp-region
    ```
 
 2. Start the services using Docker Compose:
+
    ```bash
    docker-compose up -d
    ```
 
 3. Initialize the database and sync the data:
+
    ```bash
    # Initialize the database and user (requires superuser access)
-   curl -X POST http://localhost:8003/init -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://user:password@postgres:5432/postgres"}'
+   curl -X POST https://data-syncer-a8ca-432327957835.us-central1.run.app/init -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://user:password@postgres:5432/postgres"}'
    
    # Synchronize travel data
-   curl -X POST http://localhost:8003/sync -H "Content-Type: application/json" -d '{}'
+   curl -X POST https://<cloud run url>/sync -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://londondatauser:<password>>@<ip_addr>/london_travel"}'
    ```
+
    *Verify the synced metadata:*
-   ```bash
-   curl -X POST http://localhost:8003/read -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://user:password@postgres:5432/postgres"}'
-   ```
+
+```bash
+  curl -X POST https://<cloud run url>/read -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://londondatauser:<password>>@<ip_addr>/london_travel"}'
+```
 
 4. Access the application components:
    - **Frontend:** http://localhost:8080
@@ -65,6 +72,7 @@ To deploy the full architecture to a GCP project using Cloud Run and App Hub:
    ```
 
 2. Initialize and apply the configuration:
+
    ```bash
    terraform init
    terraform apply -var="project_id=your-gcp-project-id" -var="region=your-gcp-region"
