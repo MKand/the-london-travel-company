@@ -31,6 +31,5 @@ search_agent = Agent(
     tools=[
         search_mcp_tool
     ],
-    output_schema = SearchResult,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
 )
