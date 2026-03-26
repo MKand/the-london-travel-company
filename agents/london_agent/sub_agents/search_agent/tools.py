@@ -27,7 +27,7 @@ token = get_bearer_token(configs.data_backend_url)
 
 search_mcp_server_url = f"{configs.data_backend_url}/mcp"
 search_mcp_tool = McpToolset(
-    connection_params=StreamableHTTPConnectionParams(url=search_mcp_server_url),
+    connection_params=StreamableHTTPConnectionParams(url=search_mcp_server_url,
+    headers={"Authorization": f"Bearer {token}"}),
     tool_filter = ["search_with_natural_language"],
-    headers={"Authorization": f"Bearer {token}"},
 )
