@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     if DB_TYPE == "sqlite":
         SQLITE_DB_PATH: str = os.getenv("SQLITE_DB_PATH",os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "london_travel.db"))
     else:
+        print("Using postgres database")
         SQLITE_DB_PATH: str = ""
         POSTGRES_USER: str = os.getenv("POSTGRES_USER", "user")
         POSTGRES_PASSWORD: str = os.getenv("POSTGRES_PASSWORD", "password")

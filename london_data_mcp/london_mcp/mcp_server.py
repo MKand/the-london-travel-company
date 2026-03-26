@@ -50,7 +50,7 @@ def get_embedding(text: str) -> List[float]:
         raise
 
 @mcp.tool()
-async def search_with_natural_language(query: str = "fun activities", search_type: str = "all", limit: int = 5) -> List[SearchResult]:
+async def search_with_natural_language(query: str = "fun activities", search_type: str = "all", limit: int = 10) -> str:
     """Search for London locations and activities using natural language.
     
     Args:
@@ -61,7 +61,7 @@ async def search_with_natural_language(query: str = "fun activities", search_typ
     Returns:
         List[SearchResult]: A list of location or activity search results.
     """
-    logger.info(f"Received search query: {query}, with search type: {search_type}, and limit: {limit}")
+    logger.info(f"Received search query: {query}, and limit: {limit}")
     embedding = get_embedding(query)
     embedding_str = str(embedding)
         
@@ -69,48 +69,50 @@ async def search_with_natural_language(query: str = "fun activities", search_typ
     results: List[SearchResult] = []
     
     try:
-        if search_type in ["locations", "all"]:
-            # Vector search for locations
-            if settings.DB_TYPE == "postgres":
-                sql = text(f"SELECT sight_id, name, category, description, (embedding <=> :embedding) as score FROM locations ORDER BY score ASC LIMIT :limit")
-            else:
-                sql = text(f"SELECT sight_id, name, category, description, vec_distance_cosine(embedding, vec_f32(:embedding)) as score FROM locations ORDER BY score ASC LIMIT :limit")
+        # Vector search for locations
+        if settings.DB_TYPE == "postgres":
+            sql = text(f"SELECT sight_id, name, category, description, (embedding <=> :embedding) as score FROM locations ORDER BY score ASC LIMIT :limit")
+        else:
+            sql = text(f"SELECT sight_id, name, category, description, vec_distance_cosine(embedding, vec_f32(:embedding)) as score FROM locations ORDER BY score ASC LIMIT :limit")
             
-            loc_rows = db.execute(sql, {"embedding": embedding_str, "limit": limit}).fetchall()
-            for row in loc_rows:
-                results.append(LocationResult(
-                    type="location",
-                    id=row.sight_id,
-                    name=row.name,
-                    category=row.category,
-                    description=row.description,
-                    score=float(row.score)
-                ))
+        loc_rows = db.execute(sql, {"embedding": embedding_str, "limit": limit}).fetchall()
+        for row in loc_rows:
+            results.append(LocationResult(
+                type="location",
+                id=row.sight_id,
+                name=row.name,
+                category=row.category,
+                description=row.description,
+                score=float(row.score)
+            ))
 
-        if search_type in ["activities", "all"]:
-            # Vector search for activities
-            if settings.DB_TYPE == "postgres":
-                sql = text(f"SELECT activity_id, name, description, cost, duration_min, duration_max, (embedding <=> :embedding) as score FROM activities ORDER BY score ASC LIMIT :limit")
-            else:
-                sql = text(f"SELECT activity_id, name, description, cost, duration_min, duration_max, vec_distance_cosine(embedding, vec_f32(:embedding)) as score FROM activities ORDER BY score ASC LIMIT :limit")
+        # Vector search for activities
+        if settings.DB_TYPE == "postgres":
+            sql = text(f"SELECT activity_id, name, description, cost, duration_min, duration_max, (embedding <=> :embedding) as score FROM activities ORDER BY score ASC LIMIT :limit")
+        else:
+            sql = text(f"SELECT activity_id, name, description, cost, duration_min, duration_max, vec_distance_cosine(embedding, vec_f32(:embedding)) as score FROM activities ORDER BY score ASC LIMIT :limit")
             
-            act_rows = db.execute(sql, {"embedding": embedding_str, "limit": limit}).fetchall()
-            for row in act_rows:
-                results.append(ActivityResult(
-                    type="activity",
-                    id=row.activity_id,
-                    name=row.name,
-                    description=row.description,
-                    cost=float(row.cost),
-                    duration=f"{row.duration_min}-{row.duration_max} mins",
-                    score=float(row.score)
-                ))
+        act_rows = db.execute(sql, {"embedding": embedding_str, "limit": limit}).fetchall()
+        for row in act_rows:
+            results.append(ActivityResult(
+                type="activity",
+                id=row.activity_id,
+                name=row.name,
+                description=row.description,
+                cost=float(row.cost),
+                duration=f"{row.duration_min}-{row.duration_max} mins",
+                score=float(row.score)
+            ))
         
         # Sort combined results by score
         results.sort(key=lambda x: x.score)
-        logger.info(f"Results for {query} are {results[:limit]}")
-        return results[:limit]
+        logger.info(f"Total results after sorting are {len(results)}")
+        sub_results = results[:limit]
         
+        # Pydantic models are not natively JSON serializable by json.dumps, so we convert them to dicts
+        sub_results_json = json.dumps([r.model_dump() if hasattr(r, 'model_dump') else r.dict() for r in sub_results])
+        logger.info(f"Results for {query} are {sub_results_json}")
+        return sub_results_json
     except Exception as e:
         logger.error(f"Search failed: {e}")
         raise e
