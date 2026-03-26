@@ -108,6 +108,7 @@ async def search_with_natural_language(query: str = "fun activities", search_typ
         
         # Sort combined results by score
         results.sort(key=lambda x: x.score)
+        logger.info(f"Results for {query} are {results[:limit]}")
         return results[:limit]
         
     except Exception as e:

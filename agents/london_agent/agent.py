@@ -18,8 +18,8 @@ from google.adk.agents import Agent
 from london_agent.tools.tools import call_search_agent
 from google.genai import types
 from london_agent.types import AgentOutput
+from london_agent.config import configs
 
-configs = Config()
 APP_NAME=configs.app_name
 
 

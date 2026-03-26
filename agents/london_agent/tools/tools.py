@@ -12,19 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import logging
 from google.adk.tools import ToolContext
 from google.adk.tools.agent_tool import AgentTool
 from london_agent.sub_agents import search_agent
+
+logger = logging.getLogger(__name__)
 
 async def call_search_agent(
     question: str,
     tool_context: ToolContext,
 ):
-
     agent_tool = AgentTool(agent=search_agent)
 
-    search_agent_output = await agent_tool.run_async(
-        args={"request": question}, tool_context=tool_context
-    )
-    tool_context.state["search_agent_output"] = search_agent_output
-    return search_agent_output
+    try:
+        search_agent_output = await agent_tool.run_async(
+            args={"request": question}, tool_context=tool_context
+        )
+        tool_context.state["search_agent_output"] = search_agent_output
+        return search_agent_output
+    except Exception as e:
+        logger.error(f"Search agent failed: {e}")
+        return "No results found. Please try a different query."

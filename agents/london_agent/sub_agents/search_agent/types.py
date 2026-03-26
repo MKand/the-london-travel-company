@@ -6,7 +6,7 @@ class Item(BaseModel):
     description: str = Field(description="The description of the item.")
 
 class SearchResult(BaseModel):
-    items: List[Item] = Field(description="The list of items found.")
+    items: List[Item] = Field(description="The list of items found.", default=[])
     
 
 class Activity(Item):
