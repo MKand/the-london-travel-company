@@ -11,3 +11,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+import logging
+from google.adk.tools.mcp_tool import McpToolset, StreamableHTTPConnectionParams
+from london_agent.auth import get_bearer_token
+
+from london_agent.config import Config
+
+logger = logging.getLogger(__name__)
+configs = Config()
+
+token = get_bearer_token(configs.data_backend_url)
+
+search_mcp_server_url = f"{configs.data_backend_url}/mcp"
+search_mcp_tool = McpToolset(
+    connection_params=StreamableHTTPConnectionParams(url=search_mcp_server_url,
+    headers={"Authorization": f"Bearer {token}"}),
+    tool_filter = ["search_with_natural_language"],
+)

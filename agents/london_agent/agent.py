@@ -12,27 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from london_agent.config import Config
 from london_agent.prompts import return_instructions_agent
 from google.adk.agents import Agent
-from london_agent.tools.tools import call_search_agent
 from google.genai import types
 from london_agent.types import AgentOutput
+from london_agent.tools import search_mcp_tool
 from london_agent.config import configs
 
 APP_NAME=configs.app_name
-
-
 
 # Initialize the agent outside the request handler for efficiency.
 root_agent = Agent(
     model=configs.agent_settings.model,
     instruction=return_instructions_agent(),
     name=configs.agent_settings.name,
-    tools=[
-        call_search_agent,
-    ],
     output_schema = AgentOutput,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
+    tools=[
+        search_mcp_tool
+    ],
 )
 

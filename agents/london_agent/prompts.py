@@ -29,7 +29,7 @@ def return_instructions_agent() -> str:
     1. Briefly acknowledge the user's request in `text_response`.
     2. **Prioritize action:** If the user's request is broad, ask minimal clarifying questions (e.g., duration, interests) in `text_response`.
     3. Suggest a few options only if they seem unsure.
-    4. **Crucially, use the `call_search_agent` tool as soon as you have basic criteria (days and interests).**
+    4. **Crucially, use the `search_mcp_tool` tool as soon as you have basic criteria (days and interests) to search for activities and locations.**
     5. Present the list of activities strictly inside the `recommendations` array.
     6. Briefly invite feedback for adjustments in `text_response`.
     7. You do not have the ability to book tickets.
