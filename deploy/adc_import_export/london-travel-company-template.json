@@ -59,8 +59,8 @@
               "psc_enabled": false,
               "authorized_networks": [
                 {
-                  "key": "default",
-                  "value": "0.0.0.0/0"
+                  "value": "0.0.0.0/0",
+                  "key": "default"
                 }
               ]
             }
@@ -99,9 +99,9 @@
                 "key": "iam_users",
                 "value": [
                   {
+                    "id": "module.data-syncer.service_account_id.id",
                     "type": "CLOUD_IAM_SERVICE_ACCOUNT",
-                    "email": "module.data-syncer.service_account_id.email",
-                    "id": "module.data-syncer.service_account_id.id"
+                    "email": "module.data-syncer.service_account_id.email"
                   }
                 ]
               }
@@ -114,9 +114,9 @@
                 "key": "iam_users",
                 "value": [
                   {
-                    "type": "CLOUD_IAM_SERVICE_ACCOUNT",
                     "email": "module.data-mcp.service_account_id.email",
-                    "id": "module.data-mcp.service_account_id.id"
+                    "id": "module.data-mcp.service_account_id.id",
+                    "type": "CLOUD_IAM_SERVICE_ACCOUNT"
                   }
                 ]
               }
@@ -438,153 +438,6 @@
         ]
       },
       {
-        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/redis-cache",
-        "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/f034589d-3105-49ca-9398-e22415e96df4/revisions/r-11",
-        "parameters": [
-          {
-            "key": "project_id",
-            "value": "n26-learn-c2c-app-dev-1"
-          },
-          {
-            "key": "region",
-            "value": "us-central1"
-          },
-          {
-            "key": "name",
-            "value": "london-travel-redis"
-          },
-          {
-            "key": "location_id",
-            "value": "us-central1-a"
-          }
-        ],
-        "roles": [
-          "roles/compute.networkAdmin",
-          "roles/resourcemanager.projectIamAdmin",
-          "roles/serviceusage.serviceUsageAdmin",
-          "roles/redis.admin",
-          "roles/iam.serviceAccountAdmin",
-          "roles/iam.serviceAccountUser",
-          "roles/serviceusage.serviceUsageAdmin"
-        ],
-        "apis": [
-          "cloudresourcemanager.googleapis.com",
-          "iam.googleapis.com",
-          "memcache.googleapis.com",
-          "redis.googleapis.com",
-          "serviceusage.googleapis.com"
-        ],
-        "connectionsParameters": [
-          {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/redis-cache"
-          }
-        ],
-        "componentParameterSchema": [
-          {
-            "key": "project_id",
-            "isRequired": true,
-            "type": "string"
-          },
-          {
-            "key": "region",
-            "isRequired": true,
-            "type": "string"
-          },
-          {
-            "key": "name",
-            "isRequired": true,
-            "type": "string"
-          },
-          {
-            "key": "display_name",
-            "type": "string"
-          },
-          {
-            "key": "tier",
-            "defaultValue": "STANDARD_HA",
-            "type": "string"
-          },
-          {
-            "key": "memory_size_gb",
-            "defaultValue": 1,
-            "type": "number"
-          },
-          {
-            "key": "redis_version",
-            "type": "string"
-          },
-          {
-            "key": "connect_mode",
-            "type": "string"
-          },
-          {
-            "key": "read_replicas_mode",
-            "defaultValue": "READ_REPLICAS_DISABLED",
-            "type": "string"
-          },
-          {
-            "key": "replica_count",
-            "type": "number"
-          },
-          {
-            "key": "authorized_network",
-            "type": "string"
-          },
-          {
-            "key": "enable_apis",
-            "defaultValue": true,
-            "type": "bool"
-          },
-          {
-            "key": "location_id",
-            "type": "string"
-          },
-          {
-            "key": "alternative_location_id",
-            "type": "string"
-          },
-          {
-            "key": "redis_configs",
-            "defaultValue": {},
-            "type": "map(any)"
-          },
-          {
-            "key": "reserved_ip_range",
-            "type": "string"
-          },
-          {
-            "key": "secondary_ip_range",
-            "type": "string"
-          },
-          {
-            "key": "labels",
-            "type": "map(string)"
-          },
-          {
-            "key": "auth_enabled",
-            "defaultValue": false,
-            "type": "bool"
-          },
-          {
-            "key": "transit_encryption_mode",
-            "defaultValue": "SERVER_AUTHENTICATION",
-            "type": "string"
-          },
-          {
-            "key": "maintenance_policy",
-            "type": "object({\n    description = optional(string)\n    day         = string\n    start_time = object({\n      hours   = number\n      minutes = number\n      seconds = number\n      nanos   = number\n    })\n  })"
-          },
-          {
-            "key": "customer_managed_key",
-            "type": "string"
-          },
-          {
-            "key": "persistence_config",
-            "type": "object({\n    persistence_mode    = string\n    rdb_snapshot_period = string\n  })"
-          }
-        ]
-      },
-      {
         "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/db-credentials-secret",
         "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/33bdf948-a847-4f9d-b514-0b3ad17eefff/revisions/r-10",
         "parameters": [
@@ -741,11 +594,11 @@
                   "name": "http1"
                 },
                 "resources": {
-                  "cpu_idle": true,
-                  "startup_cpu_boost": false
+                  "startup_cpu_boost": false,
+                  "cpu_idle": true
                 },
                 "container_name": "service-container",
-                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/frontend:v3.2"
+                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/frontend:v3.6"
               }
             ]
           },
@@ -764,8 +617,8 @@
             "value": {
               "egress": "PRIVATE_RANGES_ONLY",
               "network_interfaces": {
-                "subnetwork": "default",
-                "network": "default"
+                "network": "default",
+                "subnetwork": "default"
               }
             }
           }
@@ -1012,30 +865,35 @@
             "key": "containers",
             "value": [
               {
-                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/agent:v3.2",
+                "container_name": "service",
+                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/agent:v3.6",
                 "env_vars": {
+                  "GOOGLE_CLOUD_LOCATION": "us-central1",
+                  "GOOGLE_CLOUD_PROJECT": "n26-learn-c2c-app-dev-1",
                   "GOOGLE_GENAI_USE_VERTEXAI": "true",
                   "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT": "true",
-                  "OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED": "true",
-                  "GOOGLE_CLOUD_LOCATION": "us-central1",
-                  "GOOGLE_CLOUD_PROJECT": "n26-learn-c2c-app-dev-1"
+                  "OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED": "true"
                 },
                 "ports": {
                   "name": "http1",
                   "container_port": 8000
                 },
                 "resources": {
-                  "cpu_idle": true,
-                  "startup_cpu_boost": false
-                },
-                "container_name": "service"
+                  "startup_cpu_boost": false,
+                  "cpu_idle": true
+                }
               }
             ]
           },
           {
             "key": "service_account_project_roles",
             "value": [
-              "roles/monitoring.metricWriter"
+              "roles/monitoring.metricWriter",
+              "roles/aiplatform.user",
+              "roles/cloudtrace.agent",
+              "roles/logging.logWriter",
+              "roles/telemetry.writer",
+              "roles/serviceusage.serviceUsageConsumer"
             ]
           },
           {
@@ -1047,39 +905,26 @@
           {
             "key": "vpc_access",
             "value": {
+              "egress": "PRIVATE_RANGES_ONLY",
               "network_interfaces": {
-                "network": "default",
-                "subnetwork": "default"
-              },
-              "egress": "PRIVATE_RANGES_ONLY"
+                "subnetwork": "default",
+                "network": "default"
+              }
             }
           },
           {
             "key": "enable_prometheus_sidecar",
             "value": false
+          },
+          {
+            "key": "template_scaling",
+            "value": {
+              "max_instance_count": 5,
+              "min_instance_count": 1
+            }
           }
         ],
         "connections": [
-          {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/redis-cache",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/redis-cache",
-            "sourceComponentParameters": [
-              {
-                "key": "containers[0].env_vars",
-                "value": {
-                  "redis_cache_REDIS_PORT": "module.redis-cache.env_vars.REDIS_PORT",
-                  "redis_cache_REDIS_AUTH_STRING": "module.redis-cache.auth_string",
-                  "redis_cache_REDIS_HOST": "module.redis-cache.host"
-                }
-              },
-              {
-                "key": "service_account_project_roles",
-                "value": [
-                  "roles/redis.editor"
-                ]
-              }
-            ]
-          },
           {
             "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/vertex-ai-1",
             "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/vertex-ai-1",
@@ -1138,25 +983,6 @@
           "storage-api.googleapis.com"
         ],
         "connectionsParameters": [
-          {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/redis-cache",
-            "parameters": [
-              {
-                "key": "containers[0].env_vars",
-                "value": {
-                  "redis_cache_REDIS_HOST": "module.redis-cache.host",
-                  "redis_cache_REDIS_PORT": "module.redis-cache.env_vars.REDIS_PORT",
-                  "redis_cache_REDIS_AUTH_STRING": "module.redis-cache.auth_string"
-                }
-              },
-              {
-                "key": "service_account_project_roles",
-                "value": [
-                  "roles/redis.editor"
-                ]
-              }
-            ]
-          },
           {
             "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/vertex-ai-1",
             "parameters": [
@@ -1372,18 +1198,15 @@
             "key": "containers",
             "value": [
               {
-                "resources": {
-                  "cpu_idle": true,
-                  "startup_cpu_boost": false
-                },
                 "container_name": "server",
-                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_syncer:v3.2",
+                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_syncer:v3.6",
                 "env_vars": {
-                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address",
-                  "POSTGRES_USER": "londondatauser",
                   "GOOGLE_CLOUD_LOCATION": "us-central1",
                   "GOOGLE_CLOUD_PROJECT": "n26-learn-c2c-app-dev-1",
-                  "POSTGRES_DB": "london_travel"
+                  "POSTGRES_DB": "london_travel",
+                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address",
+                  "POSTGRES_USER": "londondatauser",
+                  "EMBEDDING_MODEL": "text-embedding-005"
                 },
                 "volume_mounts": [
                   {
@@ -1392,8 +1215,12 @@
                   }
                 ],
                 "ports": {
-                  "container_port": 8001,
-                  "name": "http1"
+                  "name": "http1",
+                  "container_port": 8001
+                },
+                "resources": {
+                  "startup_cpu_boost": false,
+                  "cpu_idle": true
                 }
               }
             ]
@@ -1401,7 +1228,11 @@
           {
             "key": "service_account_project_roles",
             "value": [
-              "roles/cloudsql.client"
+              "roles/cloudsql.client",
+              "roles/logging.logWriter",
+              "roles/cloudtrace.agent",
+              "roles/monitoring.metricWriter",
+              "roles/telemetry.writer"
             ]
           },
           {
@@ -1413,11 +1244,11 @@
           {
             "key": "vpc_access",
             "value": {
+              "egress": "PRIVATE_RANGES_ONLY",
               "network_interfaces": {
-                "network": "default",
-                "subnetwork": "default"
-              },
-              "egress": "PRIVATE_RANGES_ONLY"
+                "subnetwork": "default",
+                "network": "default"
+              }
             }
           },
           {
@@ -1464,17 +1295,17 @@
               {
                 "key": "containers[0].env_vars",
                 "value": {
+                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
                   "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
-                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address"
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
                 }
               },
               {
                 "key": "containers[0].volume_mounts",
                 "value": [
                   {
-                    "name": "cloudsql",
-                    "mount_path": "/cloudsql"
+                    "mount_path": "/cloudsql",
+                    "name": "cloudsql"
                   }
                 ]
               },
@@ -1567,9 +1398,9 @@
               {
                 "key": "containers[0].env_vars",
                 "value": {
-                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
                   "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
+                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address"
                 }
               },
               {
@@ -1782,14 +1613,15 @@
                   "startup_cpu_boost": false
                 },
                 "container_name": "server",
-                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_mcp:v3.2",
+                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_mcp:v3.6",
                 "env_vars": {
-                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address",
-                  "POSTGRES_USER": "londondatauser",
                   "DB_TYPE": "postgres",
                   "GOOGLE_CLOUD_LOCATION": "us-central1",
+                  "EMBEDDING_MODEL": "text-embedding-005",
                   "GOOGLE_CLOUD_PROJECT": "n26-learn-c2c-app-dev-1",
-                  "POSTGRES_DB": "london_travel"
+                  "POSTGRES_DB": "london_travel",
+                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address",
+                  "POSTGRES_USER": "londondatauser"
                 },
                 "volume_mounts": [
                   {
@@ -1798,8 +1630,8 @@
                   }
                 ],
                 "ports": {
-                  "name": "http1",
-                  "container_port": 8002
+                  "container_port": 8002,
+                  "name": "http1"
                 }
               }
             ]
@@ -1807,7 +1639,11 @@
           {
             "key": "service_account_project_roles",
             "value": [
-              "roles/cloudsql.client"
+              "roles/cloudsql.client",
+              "roles/monitoring.metricWriter",
+              "roles/cloudtrace.agent",
+              "roles/logging.logWriter",
+              "roles/telemetry.writer"
             ]
           },
           {
@@ -1828,12 +1664,12 @@
             "key": "volumes",
             "value": [
               {
-                "name": "cloudsql",
                 "cloud_sql_instance": {
                   "instances": [
                     "module.postgresql-db.instance_connection_name"
                   ]
-                }
+                },
+                "name": "cloudsql"
               }
             ]
           }
@@ -1864,9 +1700,9 @@
               {
                 "key": "containers[0].env_vars",
                 "value": {
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
                   "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
-                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
+                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name"
                 }
               },
               {
@@ -1897,9 +1733,9 @@
                 "key": "iam_users",
                 "value": [
                   {
+                    "type": "CLOUD_IAM_SERVICE_ACCOUNT",
                     "email": "module.data-mcp.service_account_id.email",
-                    "id": "module.data-mcp.service_account_id.id",
-                    "type": "CLOUD_IAM_SERVICE_ACCOUNT"
+                    "id": "module.data-mcp.service_account_id.id"
                   }
                 ]
               }
@@ -1967,9 +1803,9 @@
               {
                 "key": "containers[0].env_vars",
                 "value": {
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
                   "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
-                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name"
+                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
                 }
               },
               {
@@ -2172,11 +2008,11 @@
           {
             "key": "cdn_policy",
             "value": {
-              "signed_url_cache_max_age_sec": "0",
               "default_ttl": 3600,
               "max_ttl": 86400,
               "client_ttl": 3600,
-              "cache_mode": "CACHE_ALL_STATIC"
+              "cache_mode": "CACHE_ALL_STATIC",
+              "signed_url_cache_max_age_sec": "0"
             }
           }
         ],
@@ -2189,10 +2025,10 @@
                 "key": "serverless_neg_backends",
                 "value": [
                   {
-                    "service_name": "module.vue-frontend.service_name",
                     "service_version": "",
                     "type": "cloud-run",
-                    "region": "module.vue-frontend.location"
+                    "region": "module.vue-frontend.location",
+                    "service_name": "module.vue-frontend.service_name"
                   }
                 ]
               }
@@ -2225,10 +2061,10 @@
                 "key": "serverless_neg_backends",
                 "value": [
                   {
-                    "region": "module.vue-frontend.location",
-                    "service_name": "module.vue-frontend.service_name",
                     "service_version": "",
-                    "type": "cloud-run"
+                    "type": "cloud-run",
+                    "region": "module.vue-frontend.location",
+                    "service_name": "module.vue-frontend.service_name"
                   }
                 ]
               }
@@ -2346,11 +2182,11 @@
           {
             "key": "cdn_policy",
             "defaultValue": {
+              "default_ttl": 3600,
               "max_ttl": 86400,
               "signed_url_cache_max_age_sec": "0",
               "cache_mode": "CACHE_ALL_STATIC",
-              "client_ttl": 3600,
-              "default_ttl": 3600
+              "client_ttl": 3600
             },
             "type": "object({\n    cache_mode                      = optional(string)\n    signed_url_cache_max_age_sec    = optional(string)\n    default_ttl                     = optional(number)\n    max_ttl                         = optional(number)\n    client_ttl                      = optional(number)\n    negative_caching                = optional(bool)\n    serve_while_stale               = optional(number)\n    bypass_cache_on_request_headers = optional(list(string))\n    negative_caching_policy = optional(object({\n      code = optional(number)\n      ttl  = optional(number)\n    }))\n    cache_key_policy = optional(object({\n      include_host           = optional(bool)\n      include_protocol       = optional(bool)\n      include_query_string   = optional(bool)\n      query_string_blacklist = optional(list(string))\n      query_string_whitelist = optional(list(string))\n      include_http_headers   = optional(list(string))\n      include_named_cookies  = optional(list(string))\n    }))\n  })"
           },

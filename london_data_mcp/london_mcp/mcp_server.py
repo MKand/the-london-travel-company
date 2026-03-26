@@ -51,14 +51,16 @@ def get_embedding(text: str) -> List[float]:
 
 @mcp.tool()
 async def search_with_natural_language(query: str = "fun activities", limit: int = 10) -> str:
-    """Search for London locations and activities using natural language.
+    """Search a curated vector database of London locations, attractions, and activities using semantic natural language queries.
+    
+    Use this tool whenever you need to find specific types of places in London for a user's itinerary (e.g., 'quiet coffee shops', 'historical museums', 'family-friendly parks').
     
     Args:
-        query: The natural language query to search for.
-        limit: The maximum number of results to return. Defaults to 10. This needs to be proportional to the number of days.
+        query (str): A detailed natural language description of what you are looking for. The more descriptive the query, the better the semantic match (e.g., 'romantic dinner spots with a view of the Thames' rather than just 'restaurants').
+        limit (int): The maximum number of results to retrieve. Default is 10. You should dynamically adjust this based on the user's itinerary length (e.g., request ~3-5 items per planned day to ensure you have enough options to build a full schedule).
             
     Returns:
-        List[SearchResult]: A list of location or activity search results.
+        str: A JSON-formatted string containing a list of search results, including venue names, descriptions, and metadata.
     """
     logger.info(f"Received search query: {query}, and limit: {limit}")
     embedding = get_embedding(query)
