@@ -35,6 +35,7 @@ LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 # Set the location for the Vertex AI client
 os.environ["GOOGLE_CLOUD_LOCATION"] = LOCATION
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "true"
+os.environ["OTEL_SERVICE_NAME"] = "cymbal-london-concierge-agent"
 
 if PROJECT_ID == "":
     logger.error("GOOGLE_CLOUD_PROJECT is not set")

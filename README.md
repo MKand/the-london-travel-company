@@ -44,10 +44,14 @@ The London Travel Company is a generative AI-powered travel assistant based on t
 
    ```bash
    # Initialize the database and user (requires superuser access)
-   curl -X POST https://data-syncer-a8ca-432327957835.us-central1.run.app/init -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://user:password@postgres:5432/postgres"}'
+   curl -X POST http://<cloud run url>/init -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://londondatauser:<password>@postgres:5432/postgres"}'
+
+   curl -X POST http://localhost:8003/init -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://user:password@postgres:5432/postgres"}'
    
    # Synchronize travel data
    curl -X POST https://<cloud run url>/sync -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://londondatauser:<password>>@<ip_addr>/london_travel"}'
+
+   curl -X POST http://localhost:8003/sync -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://user:password@postgres:5432/london_travel"}'
    ```
 
    *Verify the synced metadata:*
@@ -77,3 +81,20 @@ To deploy the full architecture to a GCP project using Cloud Run and App Hub:
    terraform init
    terraform apply -var="project_id=your-gcp-project-id" -var="region=your-gcp-region"
    ```
+
+Importing the MCP server to the registry
+
+Registry link https://pantheon.corp.google.com/agent-management/agent-registry?e=AgentManagementLaunch::AgentManagementEnabled&project=$PROJECT_ID
+
+
+ADK: API Registry: https://google.github.io/adk-docs/integrations/api-registry/#use-with-agent
+
+
+
+# Deploy to CR for testing
+
+gcloud run deploy agents --region=us-central1 --source ./agents --env-vars-file=.agent.env --port=8000 --allow-unauthenticated --service-account="agent-backend-a8ca-us-centr-sa@n26-learn-c2c-app-dev-1.iam.gserviceaccount.com" --project="n26-learn-c2c-app-dev-1"
+
+gcloud run deploy mcpserver --region=us-central1 --source ./london_data_mcp --env-vars-file=.mcp.env --port=8002 --allow-unauthenticated --service-account="data-mcp-a8ca-us-central1-sa@n26-learn-c2c-app-dev-1.iam.gserviceaccount.com" --project="n26-learn-c2c-app-dev-1"
+
+

@@ -50,13 +50,12 @@ def get_embedding(text: str) -> List[float]:
         raise
 
 @mcp.tool()
-async def search_with_natural_language(query: str = "fun activities", search_type: str = "all", limit: int = 10) -> str:
+async def search_with_natural_language(query: str = "fun activities", limit: int = 10) -> str:
     """Search for London locations and activities using natural language.
     
     Args:
         query: The natural language query to search for.
-        search_type: The type of results to return ('locations', 'activities', or 'all'). Defaults to 'all'.
-        limit: The maximum number of results to return. Defaults to 5.
+        limit: The maximum number of results to return. Defaults to 10. This needs to be proportional to the number of days.
             
     Returns:
         List[SearchResult]: A list of location or activity search results.

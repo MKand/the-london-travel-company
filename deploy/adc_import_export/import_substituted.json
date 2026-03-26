@@ -1,11 +1,11 @@
 {
   "serialized_application_template": {
-    "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company",
+    "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template",
     "displayName": "The London Travel Company Architecture",
     "description": "Architecture for The London Travel Company including Vue 3 frontend, FastAPI backend, Data Syncer, Data MCP, Global LB, Cloud SQL PostgreSQL, and Redis Cache.",
     "components": [
       {
-        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/postgresql-db",
+        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/postgresql-db",
         "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/45be1bc2-89bc-477b-9b5d-64c41ff3b146/revisions/r-11",
         "parameters": [
           {
@@ -29,6 +29,14 @@
             "value": "ENTERPRISE"
           },
           {
+            "key": "db_name",
+            "value": "london_travel"
+          },
+          {
+            "key": "user_name",
+            "value": "londondatauser"
+          },
+          {
             "key": "data_cache_enabled",
             "value": false
           },
@@ -46,15 +54,15 @@
           {
             "key": "ip_configuration",
             "value": {
+              "ipv4_enabled": true,
+              "enable_private_path_for_google_cloud_services": false,
               "psc_enabled": false,
               "authorized_networks": [
                 {
-                  "key": "default",
-                  "value": "0.0.0.0/0"
+                  "value": "0.0.0.0/0",
+                  "key": "default"
                 }
-              ],
-              "ipv4_enabled": true,
-              "enable_private_path_for_google_cloud_services": false
+              ]
             }
           }
         ],
@@ -82,33 +90,33 @@
         ],
         "connectionsParameters": [
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/db-credentials-secret/connections/postgresql-db"
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/db-credentials-secret/connections/postgresql-db"
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-syncer/connections/postgresql-db",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-syncer/connections/postgresql-db",
             "parameters": [
               {
                 "key": "iam_users",
                 "value": [
                   {
-                    "type": "CLOUD_IAM_SERVICE_ACCOUNT",
                     "email": "module.data-syncer.service_account_id.email",
-                    "id": "module.data-syncer.service_account_id.id"
+                    "id": "module.data-syncer.service_account_id.id",
+                    "type": "CLOUD_IAM_SERVICE_ACCOUNT"
                   }
                 ]
               }
             ]
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-mcp/connections/postgresql-db",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-mcp/connections/postgresql-db",
             "parameters": [
               {
                 "key": "iam_users",
                 "value": [
                   {
-                    "type": "CLOUD_IAM_SERVICE_ACCOUNT",
                     "email": "module.data-mcp.service_account_id.email",
-                    "id": "module.data-mcp.service_account_id.id"
+                    "id": "module.data-mcp.service_account_id.id",
+                    "type": "CLOUD_IAM_SERVICE_ACCOUNT"
                   }
                 ]
               }
@@ -430,7 +438,7 @@
         ]
       },
       {
-        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/redis-cache",
+        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/redis-cache",
         "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/f034589d-3105-49ca-9398-e22415e96df4/revisions/r-11",
         "parameters": [
           {
@@ -468,7 +476,7 @@
         ],
         "connectionsParameters": [
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/fastapi-backend/connections/redis-cache"
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/redis-cache"
           }
         ],
         "componentParameterSchema": [
@@ -577,7 +585,7 @@
         ]
       },
       {
-        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/db-credentials-secret",
+        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/db-credentials-secret",
         "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/33bdf948-a847-4f9d-b514-0b3ad17eefff/revisions/r-10",
         "parameters": [
           {
@@ -591,8 +599,8 @@
         ],
         "connections": [
           {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/db-credentials-secret/connections/data-syncer",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-syncer",
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/db-credentials-secret/connections/data-syncer",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-syncer",
             "destinationComponentParameters": [
               {
                 "key": "containers[0].env_secret_vars",
@@ -609,8 +617,8 @@
             ]
           },
           {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/db-credentials-secret/connections/data-mcp",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-mcp",
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/db-credentials-secret/connections/data-mcp",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-mcp",
             "destinationComponentParameters": [
               {
                 "key": "containers[0].env_secret_vars",
@@ -627,8 +635,8 @@
             ]
           },
           {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/db-credentials-secret/connections/postgresql-db",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/postgresql-db",
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/db-credentials-secret/connections/postgresql-db",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/postgresql-db",
             "sourceComponentParameters": [
               {
                 "key": "secret_data",
@@ -651,13 +659,13 @@
         ],
         "connectionsParameters": [
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/db-credentials-secret/connections/data-syncer"
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/db-credentials-secret/connections/data-syncer"
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/db-credentials-secret/connections/data-mcp"
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/db-credentials-secret/connections/data-mcp"
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/db-credentials-secret/connections/postgresql-db",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/db-credentials-secret/connections/postgresql-db",
             "parameters": [
               {
                 "key": "secret_data",
@@ -709,7 +717,7 @@
         ]
       },
       {
-        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/vue-frontend",
+        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/vue-frontend",
         "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/1b5e09c8-780f-484e-b8ed-c7178f4e4342/revisions/r-18",
         "parameters": [
           {
@@ -728,15 +736,15 @@
             "key": "containers",
             "value": [
               {
+                "resources": {
+                  "startup_cpu_boost": false,
+                  "cpu_idle": true
+                },
                 "container_name": "service-container",
                 "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/frontend:v3",
                 "ports": {
                   "name": "http1",
-                  "container_port": 8080
-                },
-                "resources": {
-                  "cpu_idle": true,
-                  "startup_cpu_boost": false
+                  "container_port": 80
                 }
               }
             ]
@@ -744,12 +752,28 @@
           {
             "key": "ingress",
             "value": "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
+          },
+          {
+            "key": "members",
+            "value": [
+              "allUsers"
+            ]
+          },
+          {
+            "key": "vpc_access",
+            "value": {
+              "egress": "PRIVATE_RANGES_ONLY",
+              "network_interfaces": {
+                "subnetwork": "default",
+                "network": "default"
+              }
+            }
           }
         ],
         "connections": [
           {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/vue-frontend/connections/fastapi-backend",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/fastapi-backend",
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/vue-frontend/connections/fastapi-backend",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend",
             "sourceComponentParameters": [
               {
                 "key": "containers[0].env_vars",
@@ -788,7 +812,7 @@
         ],
         "connectionsParameters": [
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/vue-frontend/connections/fastapi-backend",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/vue-frontend/connections/fastapi-backend",
             "parameters": [
               {
                 "key": "containers[0].env_vars",
@@ -805,7 +829,7 @@
             ]
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/global-lb-backend/connections/vue-frontend"
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/global-lb-backend/connections/vue-frontend"
           }
         ],
         "componentParameterSchema": [
@@ -969,7 +993,7 @@
         ]
       },
       {
-        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/fastapi-backend",
+        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend",
         "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/1b5e09c8-780f-484e-b8ed-c7178f4e4342/revisions/r-18",
         "parameters": [
           {
@@ -988,22 +1012,22 @@
             "key": "containers",
             "value": [
               {
+                "container_name": "service",
+                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/agent:v3",
+                "env_vars": {
+                  "GOOGLE_CLOUD_LOCATION": "us-central1",
+                  "GOOGLE_CLOUD_PROJECT": "n26-learn-c2c-app-dev-1",
+                  "GOOGLE_GENAI_USE_VERTEXAI": "true",
+                  "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT": "true",
+                  "OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED": "true"
+                },
                 "ports": {
                   "container_port": 8000,
                   "name": "http1"
                 },
                 "resources": {
-                  "startup_cpu_boost": false,
-                  "cpu_idle": true
-                },
-                "container_name": "service",
-                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/agent:v3",
-                "env_vars": {
-                  "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT": "true",
-                  "OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED": "true",
-                  "GOOGLE_CLOUD_LOCATION": "us-central1",
-                  "GOOGLE_CLOUD_PROJECT": "n26-learn-c2c-app-dev-1",
-                  "GOOGLE_GENAI_USE_VERTEXAI": "true"
+                  "cpu_idle": true,
+                  "startup_cpu_boost": false
                 }
               }
             ]
@@ -1015,14 +1039,30 @@
             ]
           },
           {
-            "key": "ingress",
-            "value": "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
+            "key": "members",
+            "value": [
+              "allUsers"
+            ]
+          },
+          {
+            "key": "vpc_access",
+            "value": {
+              "network_interfaces": {
+                "subnetwork": "default",
+                "network": "default"
+              },
+              "egress": "PRIVATE_RANGES_ONLY"
+            }
+          },
+          {
+            "key": "enable_prometheus_sidecar",
+            "value": false
           }
         ],
         "connections": [
           {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/fastapi-backend/connections/redis-cache",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/redis-cache",
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/redis-cache",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/redis-cache",
             "sourceComponentParameters": [
               {
                 "key": "containers[0].env_vars",
@@ -1041,8 +1081,8 @@
             ]
           },
           {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/fastapi-backend/connections/vertex-ai-1",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/vertex-ai-1",
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/vertex-ai-1",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/vertex-ai-1",
             "sourceComponentParameters": [
               {
                 "key": "service_account_project_roles",
@@ -1059,8 +1099,8 @@
             ]
           },
           {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/fastapi-backend/connections/data-mcp",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-mcp",
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/data-mcp",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-mcp",
             "sourceComponentParameters": [
               {
                 "key": "containers[0].env_vars",
@@ -1099,14 +1139,14 @@
         ],
         "connectionsParameters": [
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/fastapi-backend/connections/redis-cache",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/redis-cache",
             "parameters": [
               {
                 "key": "containers[0].env_vars",
                 "value": {
-                  "redis_cache_REDIS_AUTH_STRING": "module.redis-cache.auth_string",
                   "redis_cache_REDIS_HOST": "module.redis-cache.host",
-                  "redis_cache_REDIS_PORT": "module.redis-cache.env_vars.REDIS_PORT"
+                  "redis_cache_REDIS_PORT": "module.redis-cache.env_vars.REDIS_PORT",
+                  "redis_cache_REDIS_AUTH_STRING": "module.redis-cache.auth_string"
                 }
               },
               {
@@ -1118,7 +1158,7 @@
             ]
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/fastapi-backend/connections/vertex-ai-1",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/vertex-ai-1",
             "parameters": [
               {
                 "key": "service_account_project_roles",
@@ -1135,7 +1175,7 @@
             ]
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/fastapi-backend/connections/data-mcp",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/data-mcp",
             "parameters": [
               {
                 "key": "containers[0].env_vars",
@@ -1313,7 +1353,7 @@
         ]
       },
       {
-        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-syncer",
+        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-syncer",
         "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/1b5e09c8-780f-484e-b8ed-c7178f4e4342/revisions/r-18",
         "parameters": [
           {
@@ -1332,14 +1372,13 @@
             "key": "containers",
             "value": [
               {
-                "container_name": "server",
                 "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_syncer:v3.1",
                 "env_vars": {
-                  "POSTGRES_USER": "user",
+                  "POSTGRES_USER": "londondatauser",
                   "GOOGLE_CLOUD_LOCATION": "us-central1",
                   "GOOGLE_CLOUD_PROJECT": "n26-learn-c2c-app-dev-1",
                   "POSTGRES_DB": "london_travel",
-                  "POSTGRES_HOST": "/cloudsql/module.postgresql-db.instance_connection_name"
+                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address"
                 },
                 "volume_mounts": [
                   {
@@ -1348,13 +1387,14 @@
                   }
                 ],
                 "ports": {
-                  "container_port": 8001,
-                  "name": "http1"
+                  "name": "http1",
+                  "container_port": 8001
                 },
                 "resources": {
                   "cpu_idle": true,
                   "startup_cpu_boost": false
-                }
+                },
+                "container_name": "server"
               }
             ]
           },
@@ -1400,8 +1440,8 @@
         ],
         "connections": [
           {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-syncer/connections/vertex-ai-1",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/vertex-ai-1",
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-syncer/connections/vertex-ai-1",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/vertex-ai-1",
             "sourceComponentParameters": [
               {
                 "key": "service_account_project_roles",
@@ -1418,23 +1458,23 @@
             ]
           },
           {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-syncer/connections/postgresql-db",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/postgresql-db",
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-syncer/connections/postgresql-db",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/postgresql-db",
             "sourceComponentParameters": [
               {
                 "key": "containers[0].env_vars",
                 "value": {
-                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
                   "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
+                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address"
                 }
               },
               {
                 "key": "containers[0].volume_mounts",
                 "value": [
                   {
-                    "name": "cloudsql",
-                    "mount_path": "/cloudsql"
+                    "mount_path": "/cloudsql",
+                    "name": "cloudsql"
                   }
                 ]
               },
@@ -1457,9 +1497,9 @@
                 "key": "iam_users",
                 "value": [
                   {
+                    "type": "CLOUD_IAM_SERVICE_ACCOUNT",
                     "email": "module.data-syncer.service_account_id.email",
-                    "id": "module.data-syncer.service_account_id.id",
-                    "type": "CLOUD_IAM_SERVICE_ACCOUNT"
+                    "id": "module.data-syncer.service_account_id.id"
                   }
                 ]
               }
@@ -1488,7 +1528,7 @@
         ],
         "connectionsParameters": [
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/db-credentials-secret/connections/data-syncer",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/db-credentials-secret/connections/data-syncer",
             "parameters": [
               {
                 "key": "containers[0].env_secret_vars",
@@ -1505,7 +1545,7 @@
             ]
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-syncer/connections/vertex-ai-1",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-syncer/connections/vertex-ai-1",
             "parameters": [
               {
                 "key": "service_account_project_roles",
@@ -1522,14 +1562,14 @@
             ]
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-syncer/connections/postgresql-db",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-syncer/connections/postgresql-db",
             "parameters": [
               {
                 "key": "containers[0].env_vars",
                 "value": {
-                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
                   "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
+                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address"
                 }
               },
               {
@@ -1718,7 +1758,7 @@
         ]
       },
       {
-        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-mcp",
+        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-mcp",
         "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/1b5e09c8-780f-484e-b8ed-c7178f4e4342/revisions/r-18",
         "parameters": [
           {
@@ -1737,30 +1777,30 @@
             "key": "containers",
             "value": [
               {
+                "ports": {
+                  "name": "http1",
+                  "container_port": 8002
+                },
+                "resources": {
+                  "cpu_idle": true,
+                  "startup_cpu_boost": false
+                },
                 "container_name": "server",
                 "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_mcp:v3.1",
                 "env_vars": {
-                  "POSTGRES_DB": "london_travel",
-                  "POSTGRES_HOST": "/cloudsql/module.postgresql-db.instance_connection_name",
-                  "POSTGRES_USER": "user",
+                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address",
+                  "POSTGRES_USER": "londondatauser",
                   "DB_TYPE": "postgres",
                   "GOOGLE_CLOUD_LOCATION": "us-central1",
-                  "GOOGLE_CLOUD_PROJECT": "n26-learn-c2c-app-dev-1"
+                  "GOOGLE_CLOUD_PROJECT": "n26-learn-c2c-app-dev-1",
+                  "POSTGRES_DB": "london_travel"
                 },
                 "volume_mounts": [
                   {
-                    "mount_path": "/cloudsql",
-                    "name": "cloudsql"
+                    "name": "cloudsql",
+                    "mount_path": "/cloudsql"
                   }
-                ],
-                "ports": {
-                  "container_port": 8002,
-                  "name": "http1"
-                },
-                "resources": {
-                  "startup_cpu_boost": false,
-                  "cpu_idle": true
-                }
+                ]
               }
             ]
           },
@@ -1771,17 +1811,19 @@
             ]
           },
           {
-            "key": "ingress",
-            "value": "INGRESS_TRAFFIC_INTERNAL_ONLY"
+            "key": "members",
+            "value": [
+              "allUsers"
+            ]
           },
           {
             "key": "vpc_access",
             "value": {
-              "egress": "PRIVATE_RANGES_ONLY",
               "network_interfaces": {
                 "subnetwork": "default",
                 "network": "default"
-              }
+              },
+              "egress": "PRIVATE_RANGES_ONLY"
             }
           },
           {
@@ -1804,8 +1846,8 @@
         ],
         "connections": [
           {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-mcp/connections/vertex-ai-1",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/vertex-ai-1",
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-mcp/connections/vertex-ai-1",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/vertex-ai-1",
             "sourceComponentParameters": [
               {
                 "key": "service_account_project_roles",
@@ -1822,15 +1864,15 @@
             ]
           },
           {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-mcp/connections/postgresql-db",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/postgresql-db",
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-mcp/connections/postgresql-db",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/postgresql-db",
             "sourceComponentParameters": [
               {
                 "key": "containers[0].env_vars",
                 "value": {
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
                   "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
-                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
+                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name"
                 }
               },
               {
@@ -1861,9 +1903,9 @@
                 "key": "iam_users",
                 "value": [
                   {
+                    "type": "CLOUD_IAM_SERVICE_ACCOUNT",
                     "email": "module.data-mcp.service_account_id.email",
-                    "id": "module.data-mcp.service_account_id.id",
-                    "type": "CLOUD_IAM_SERVICE_ACCOUNT"
+                    "id": "module.data-mcp.service_account_id.id"
                   }
                 ]
               }
@@ -1892,7 +1934,7 @@
         ],
         "connectionsParameters": [
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/db-credentials-secret/connections/data-mcp",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/db-credentials-secret/connections/data-mcp",
             "parameters": [
               {
                 "key": "containers[0].env_secret_vars",
@@ -1909,7 +1951,7 @@
             ]
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-mcp/connections/vertex-ai-1",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-mcp/connections/vertex-ai-1",
             "parameters": [
               {
                 "key": "service_account_project_roles",
@@ -1926,14 +1968,14 @@
             ]
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-mcp/connections/postgresql-db",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-mcp/connections/postgresql-db",
             "parameters": [
               {
                 "key": "containers[0].env_vars",
                 "value": {
+                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
                   "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
-                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
-                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name"
+                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address"
                 }
               },
               {
@@ -2122,7 +2164,7 @@
         ]
       },
       {
-        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/global-lb-backend",
+        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/global-lb-backend",
         "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/c9b4428c-ce25-49d4-8a2e-1e9d376c89b8/revisions/r-6",
         "parameters": [
           {
@@ -2136,17 +2178,17 @@
         ],
         "connections": [
           {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/global-lb-backend/connections/vue-frontend",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/vue-frontend",
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/global-lb-backend/connections/vue-frontend",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/vue-frontend",
             "sourceComponentParameters": [
               {
                 "key": "serverless_neg_backends",
                 "value": [
                   {
-                    "service_name": "module.vue-frontend.service_name",
                     "service_version": "",
                     "type": "cloud-run",
-                    "region": "module.vue-frontend.location"
+                    "region": "module.vue-frontend.location",
+                    "service_name": "module.vue-frontend.service_name"
                   }
                 ]
               }
@@ -2173,23 +2215,23 @@
         ],
         "connectionsParameters": [
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/global-lb-backend/connections/vue-frontend",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/global-lb-backend/connections/vue-frontend",
             "parameters": [
               {
                 "key": "serverless_neg_backends",
                 "value": [
                   {
-                    "region": "module.vue-frontend.location",
                     "service_name": "module.vue-frontend.service_name",
                     "service_version": "",
-                    "type": "cloud-run"
+                    "type": "cloud-run",
+                    "region": "module.vue-frontend.location"
                   }
                 ]
               }
             ]
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/lb-frontend-1/connections/global-lb-backend"
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/lb-frontend-1/connections/global-lb-backend"
           }
         ],
         "componentParameterSchema": [
@@ -2300,11 +2342,11 @@
           {
             "key": "cdn_policy",
             "defaultValue": {
-              "default_ttl": 3600,
-              "max_ttl": 86400,
               "signed_url_cache_max_age_sec": "0",
               "cache_mode": "CACHE_ALL_STATIC",
-              "client_ttl": 3600
+              "client_ttl": 3600,
+              "default_ttl": 3600,
+              "max_ttl": 86400
             },
             "type": "object({\n    cache_mode                      = optional(string)\n    signed_url_cache_max_age_sec    = optional(string)\n    default_ttl                     = optional(number)\n    max_ttl                         = optional(number)\n    client_ttl                      = optional(number)\n    negative_caching                = optional(bool)\n    serve_while_stale               = optional(number)\n    bypass_cache_on_request_headers = optional(list(string))\n    negative_caching_policy = optional(object({\n      code = optional(number)\n      ttl  = optional(number)\n    }))\n    cache_key_policy = optional(object({\n      include_host           = optional(bool)\n      include_protocol       = optional(bool)\n      include_query_string   = optional(bool)\n      query_string_blacklist = optional(list(string))\n      query_string_whitelist = optional(list(string))\n      include_http_headers   = optional(list(string))\n      include_named_cookies  = optional(list(string))\n    }))\n  })"
           },
@@ -2328,8 +2370,8 @@
             "key": "host_path_mappings",
             "defaultValue": [
               {
-                "host": "*",
-                "path": "/*"
+                "path": "/*",
+                "host": "*"
               }
             ],
             "type": "list(object({\n    host = string\n    path = string\n  }))"
@@ -2368,7 +2410,7 @@
         ]
       },
       {
-        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/lb-frontend-1",
+        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/lb-frontend-1",
         "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/cf725072-9484-4182-b51c-fc80206b84fb/revisions/r-7",
         "parameters": [
           {
@@ -2382,8 +2424,8 @@
         ],
         "connections": [
           {
-            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/lb-frontend-1/connections/global-lb-backend",
-            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/global-lb-backend",
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/lb-frontend-1/connections/global-lb-backend",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/global-lb-backend",
             "sourceComponentParameters": [
               {
                 "key": "url_map_input",
@@ -2408,7 +2450,7 @@
         ],
         "connectionsParameters": [
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/lb-frontend-1/connections/global-lb-backend",
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/lb-frontend-1/connections/global-lb-backend",
             "parameters": [
               {
                 "key": "url_map_input",
@@ -2561,7 +2603,7 @@
         ]
       },
       {
-        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/vertex-ai-1",
+        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/vertex-ai-1",
         "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/bb2398d9-999e-4a43-bc25-56c857e2ec18/revisions/r-5",
         "parameters": [
           {
@@ -2605,13 +2647,13 @@
         ],
         "connectionsParameters": [
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/fastapi-backend/connections/vertex-ai-1"
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/vertex-ai-1"
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-syncer/connections/vertex-ai-1"
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-syncer/connections/vertex-ai-1"
           },
           {
-            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company/components/data-mcp/connections/vertex-ai-1"
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/data-mcp/connections/vertex-ai-1"
           }
         ],
         "componentParameterSchema": [

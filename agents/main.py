@@ -36,14 +36,8 @@ logger = logging.getLogger(__name__)
 
 # OTEL Configuration
 OTEL_SERVICE_NAME = os.getenv("OTEL_SERVICE_NAME", "london-travel-agent")
-OTEL_EXPORTER_OTLP_ENDPOINT = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "https://telemetry.googleapis.com")
-OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT = os.getenv("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "true").lower() in ('true', '1', 't', 'yes', 'y')
-ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS=os.getenv("ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS", "false").lower() in ('true', '1', 't', 'yes', 'y')
-OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=os.getenv("OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED", "true").lower() in ('true', '1', 't', 'yes', 'y')
-OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=os.getenv("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "true").lower() in ('true', '1', 't', 'yes', 'y')
 
 os.environ["OTEL_SERVICE_NAME"] = OTEL_SERVICE_NAME
-os.environ["OTEL_EXPORTER_OTLP_ENDPOINT"] = OTEL_EXPORTER_OTLP_ENDPOINT
 os.environ["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] = str(OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT)
 os.environ["ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS"] = str(ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS)
 os.environ["OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED"] = str(OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED)
@@ -64,9 +58,10 @@ app: FastAPI = get_fast_api_app(
 HTTPXClientInstrumentor().instrument()
 FastAPIInstrumentor.instrument_app(app)
 
+app.title = "Cymbal London Concierge"
 
 @app.get("/health")
-async def read_root():
+async def health_check():
     return "OK"
 
 
