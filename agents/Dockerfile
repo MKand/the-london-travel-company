@@ -16,11 +16,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy only dependency files first for layer caching
-COPY pyproject.toml uv.lock ./
+COPY pyproject.toml ./
 
 # Install dependencies
 # --no-install-project skips installing the current package (only dependencies)
-RUN uv sync --frozen --no-cache --no-install-project
+RUN uv sync --no-cache --no-install-project
 
 # Copy the rest of the code
 COPY . /app

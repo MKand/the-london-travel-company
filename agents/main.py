@@ -20,7 +20,6 @@ from google.adk.cli.fast_api import get_fast_api_app
 from fastapi import FastAPI
 from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
-
 import london_agent # doing to make errors importing the agent appear explicity
 
 # Set up Cloud Logging for GCP

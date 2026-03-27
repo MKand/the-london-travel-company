@@ -27,10 +27,15 @@ EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", 'text-embedding-005')
 DEBUG_STATE = os.getenv("DEBUG_STATE", "false").lower() in ('true', '1', 't', 'yes', 'y')
 EMBEDDING_DIMENSION = os.getenv("EMBEDDING_DIMENSION", 768)
 LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", 'gemini-2.5-flash')
+DATASET_ID = os.environ.get("BIG_QUERY_DATASET_ID", "agent_telemetry")
 
 # Google Cloud Configuration
 PROJECT_ID= os.getenv("GOOGLE_CLOUD_PROJECT")
 LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
+
+
+MODEL_ARMOR_TEMPLATE_NAME = os.getenv("MODEL_ARMOR_TEMPLATE_NAME", "london_travel_agent_template")
+FULL_TEMPLATE_NAME = f"projects/{PROJECT_ID}/locations/{LOCATION}/templates/{MODEL_ARMOR_TEMPLATE_NAME}"
 
 # Set the location for the Vertex AI client
 # https://docs.cloud.google.com/stackdriver/docs/instrumentation/ai-agent-adk#configure
@@ -63,6 +68,8 @@ class Config(BaseSettings):
     data_backend_url: str = DATA_BACKEND_URL
     agent_settings: AgentModel = Field(default_factory=AgentModel) 
     genai_use_vertexai: str = Field(default="1") 
+    model_armor_template_name: str = Field(default=FULL_TEMPLATE_NAME)
+    bq_dataset_id: str = Field(default=DATASET_ID)
 
 try:
     configs = Config()
