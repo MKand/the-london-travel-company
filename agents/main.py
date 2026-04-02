@@ -42,8 +42,8 @@ app: FastAPI = get_fast_api_app(
     agents_dir=AGENT_DIR,
     allow_origins=ALLOWED_ORIGINS,
     web=True,
-    trace_to_cloud=True,
-    otel_to_cloud=False,
+    trace_to_cloud=False,
+    otel_to_cloud=True,
 )
 
 HTTPXClientInstrumentor().instrument()
