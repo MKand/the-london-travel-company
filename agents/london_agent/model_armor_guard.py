@@ -133,9 +133,10 @@ class ModelArmorGuard:
         return None
 
 
-def create_model_armor_guard(project_id: str = None, location: str = None, template_name: str = None) -> ModelArmorGuard:
+def create_model_armor_guard(project_id: str = None, location: str = None) -> ModelArmorGuard:
     location = location or configs.location
-    template_name = template_name or configs.model_armor_template_name
+    template_name = configs.model_armor_template_name
+    logger.info(f"Using Model Armor template: {template_name}")
     if not template_name:
         raise ValueError("TEMPLATE_NAME not set. Create a Model Armor template first.")
     return ModelArmorGuard(template_name=template_name, location=location, block_on_match=True)

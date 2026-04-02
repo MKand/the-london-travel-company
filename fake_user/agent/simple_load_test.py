@@ -10,11 +10,13 @@ import os
 import json
 import aiohttp
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
+import logging
 from google import genai
+from fastapi import FastAPI
+import uvicorn
 from agent.scenarios import get_random_prompt_vars, should_end_conversation
 from agent.prompts import LOAD_TESTER_SYSTEM_PROMPT
-import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -125,33 +127,92 @@ async def run_conversation(client: aiohttp.ClientSession, base_url: str) -> int:
         
 
 
-async def main():
-    logger.info(f"Starting load tester")
-    logger.info(f"London Agent: {LONDON_AGENT_URL}")
-    logger.info(f"Started at: {datetime.now().isoformat()}")
-    logger.info("Press Ctrl+C to stop\n")
-    
-    total_conversations = 0
-    total_turns = 0
-    
+class LoadTestStats:
+    def __init__(self):
+        self.events = [] # List of {"time": datetime, "type": str, "status": str, "turns": int}
+
+    def track(self, event_type: str, status: str, turns: int = 0):
+        self.events.append({
+            "time": datetime.now(),
+            "type": event_type,
+            "status": status,
+            "turns": turns
+        })
+
+    def get_summary(self, hours: int = 2):
+        cutoff = datetime.now() - timedelta(hours=hours)
+        filtered = [e for e in self.events if e["time"] > cutoff]
+        
+        successes = len([e for e in filtered if e["status"] == "success"])
+        failures = len([e for e in filtered if e["status"] == "failure"])
+        turns = sum([e["turns"] for e in filtered])
+        
+        return {
+            "period_hours": hours,
+            "conversations": len(filtered),
+            "successes": successes,
+            "failures": failures,
+            "total_turns": turns
+        }
+
+stats = LoadTestStats()
+simulation_task = None
+
+app = FastAPI()
+
+async def simulation_loop():
+    logger.info(f"Starting load tester loop")
     while True:
         try:
             async with aiohttp.ClientSession() as client:
                 turns = await run_conversation(client, LONDON_AGENT_URL)
-                time.sleep(1)
-                total_conversations += 1
-                total_turns += turns
-                if total_conversations % 10 == 0:
-                    logger.info(f"\n[{datetime.now().strftime('%H:%M:%S')}] Stats: {total_conversations} convs, {total_turns} turns\n")
-                    
-        except KeyboardInterrupt:
-            break
+                if turns > 0:
+                    stats.track("conversation", "success", turns)
+                else:
+                    stats.track("conversation", "failure", 0)
+                await asyncio.sleep(1)
         except Exception as e:
             logger.error(f"Conversation error: {e}")
+            stats.track("conversation", "failure", 0)
             await asyncio.sleep(1)
-    
-    logger.info(f"\nFinal: {total_conversations} conversations, {total_turns} turns")
 
+@app.get("/")
+async def root():
+    return {"message": "Fake User Metadata Server running"}
+
+@app.get("/status")
+async def get_status():
+    summary = stats.get_summary()
+    is_running = simulation_task is not None and not simulation_task.done()
+    return {
+        "status": "running" if is_running else "stopped",
+        "stats_last_2_hours": summary
+    }
+
+@app.post("/start")
+async def start():
+    global simulation_task
+    if simulation_task and not simulation_task.done():
+        return {"message": "Simulation already running"}
+    simulation_task = asyncio.create_task(simulation_loop())
+    logger.info("Simulation task started")
+    return {"message": "Simulation started"}
+
+@app.post("/stop")
+async def stop():
+    global simulation_task
+    if simulation_task and not simulation_task.done():
+        simulation_task.cancel()
+        try:
+            await simulation_task
+        except asyncio.CancelledError:
+            pass
+        simulation_task = None
+        logger.info("Simulation task stopped")
+        return {"message": "Simulation stopped"}
+    return {"message": "Simulation not running"}
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    port = int(os.getenv("PORT", 8080))
+    logger.info(f"Running FastAPI on port {port}")
+    uvicorn.run(app, host="0.0.0.0", port=port)

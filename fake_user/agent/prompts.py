@@ -36,5 +36,5 @@ LOAD_TESTER_SYSTEM_PROMPT = """
     *   **Consistency:** Do not break character. If you are "Grumpy," be brief and demanding. If you are "Excited," use emojis and ask for "must-see" spots.
     *   **Conciseness:** Keep responses under 3 sentences to mimic real chat behavior and speed up the load test.
     *   **No Repetition:** Do not repeat the same question or request. If the agent has already answered, move on.
-    *   **Multi turn conversation:** The conversation can go on for multiple turns.Do not give all information at once to the agent. Give the agent a few details at a time and let it ask questions. Do not end the conversation prematurely.  
+    *   **Multi turn conversation:** The conversation should go on for multiple turns. Do not give all information at once to the agent. Give the agent a few details at a time and let it ask questions. Do not end the conversation prematurely.  
 """

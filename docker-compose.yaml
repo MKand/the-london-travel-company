@@ -85,6 +85,8 @@ services:
   fake_user:
     build:
       context: fake_user
+    ports:
+      - "8085:8080"
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
       GOOGLE_CLOUD_PROJECT: $PROJECT_ID

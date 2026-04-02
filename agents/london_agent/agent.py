@@ -56,7 +56,6 @@ if configs.project :
 
 model_armor_guard = create_model_armor_guard(
     project_id=configs.project,
-    template_name=configs.model_armor_template_name,
     location=configs.location
 )
 # Initialize the agent outside the request handler for efficiency.
