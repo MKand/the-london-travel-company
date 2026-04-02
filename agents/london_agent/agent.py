@@ -67,7 +67,7 @@ root_agent = Agent(
     output_schema = AgentOutput,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
     tools=[
-        # search_mcp_tool
+        search_mcp_tool
     ],
     before_model_callback=model_armor_guard.before_model_callback,
     after_model_callback=model_armor_guard.after_model_callback,

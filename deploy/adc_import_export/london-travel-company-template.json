@@ -14,7 +14,7 @@
           },
           {
             "key": "name",
-            "value": "london-travel-db"
+            "value": "rag-db"
           },
           {
             "key": "database_version",
@@ -59,8 +59,8 @@
               "psc_enabled": false,
               "authorized_networks": [
                 {
-                  "value": "0.0.0.0/0",
-                  "key": "default"
+                  "key": "default",
+                  "value": "0.0.0.0/0"
                 }
               ]
             }
@@ -99,9 +99,9 @@
                 "key": "iam_users",
                 "value": [
                   {
+                    "email": "module.data-syncer.service_account_id.email",
                     "id": "module.data-syncer.service_account_id.id",
-                    "type": "CLOUD_IAM_SERVICE_ACCOUNT",
-                    "email": "module.data-syncer.service_account_id.email"
+                    "type": "CLOUD_IAM_SERVICE_ACCOUNT"
                   }
                 ]
               }
@@ -114,9 +114,9 @@
                 "key": "iam_users",
                 "value": [
                   {
+                    "type": "CLOUD_IAM_SERVICE_ACCOUNT",
                     "email": "module.data-mcp.service_account_id.email",
-                    "id": "module.data-mcp.service_account_id.id",
-                    "type": "CLOUD_IAM_SERVICE_ACCOUNT"
+                    "id": "module.data-mcp.service_account_id.id"
                   }
                 ]
               }
@@ -447,7 +447,7 @@
           },
           {
             "key": "name",
-            "value": "london-travel-db-credentials"
+            "value": "agent-db-credentials"
           }
         ],
         "connections": [
@@ -589,16 +589,16 @@
             "key": "containers",
             "value": [
               {
-                "ports": {
-                  "container_port": 80,
-                  "name": "http1"
-                },
                 "resources": {
                   "startup_cpu_boost": false,
                   "cpu_idle": true
                 },
                 "container_name": "service-container",
-                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/frontend:v3.6"
+                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/frontend:v4",
+                "ports": {
+                  "container_port": 80,
+                  "name": "http1"
+                }
               }
             ]
           },
@@ -615,11 +615,11 @@
           {
             "key": "vpc_access",
             "value": {
-              "egress": "PRIVATE_RANGES_ONLY",
               "network_interfaces": {
-                "network": "default",
-                "subnetwork": "default"
-              }
+                "subnetwork": "default",
+                "network": "default"
+              },
+              "egress": "PRIVATE_RANGES_ONLY"
             }
           }
         ],
@@ -865,8 +865,12 @@
             "key": "containers",
             "value": [
               {
+                "resources": {
+                  "cpu_idle": true,
+                  "startup_cpu_boost": false
+                },
                 "container_name": "service",
-                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/agent:v3.6",
+                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/agent:v4",
                 "env_vars": {
                   "GOOGLE_CLOUD_LOCATION": "us-central1",
                   "GOOGLE_CLOUD_PROJECT": "n26-learn-c2c-app-dev-1",
@@ -877,10 +881,6 @@
                 "ports": {
                   "name": "http1",
                   "container_port": 8000
-                },
-                "resources": {
-                  "startup_cpu_boost": false,
-                  "cpu_idle": true
                 }
               }
             ]
@@ -893,7 +893,10 @@
               "roles/cloudtrace.agent",
               "roles/logging.logWriter",
               "roles/telemetry.writer",
-              "roles/serviceusage.serviceUsageConsumer"
+              "roles/serviceusage.serviceUsageConsumer",
+              "roles/bigquery.jobUser",
+              "roles/bigquery.dataEditor",
+              "roles/modelarmor.user"
             ]
           },
           {
@@ -960,6 +963,29 @@
                 ]
               }
             ]
+          },
+          {
+            "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/connection-1",
+            "destinationComponentUri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/big-query-1",
+            "sourceComponentParameters": [
+              {
+                "key": "containers[0].env_vars",
+                "value": {
+                  "big_query_1_BIGQUERY_MATERIALIZED_VIEWS": "module.big-query-1.env_vars.BIGQUERY_MATERIALIZED_VIEWS",
+                  "big_query_1_BIGQUERY_ROUTINES": "module.big-query-1.env_vars.BIGQUERY_ROUTINES",
+                  "big_query_1_BIGQUERY_TABLES": "module.big-query-1.env_vars.BIGQUERY_TABLES",
+                  "big_query_1_BIGQUERY_VIEWS": "module.big-query-1.env_vars.BIGQUERY_VIEWS",
+                  "big_query_1_BIGQUERY_DATASET": "module.big-query-1.env_vars.BIGQUERY_DATASET",
+                  "big_query_1_BIGQUERY_EXTERNAL_TABLES": "module.big-query-1.env_vars.BIGQUERY_EXTERNAL_TABLES"
+                }
+              },
+              {
+                "key": "service_account_project_roles",
+                "value": [
+                  "roles/bigquery.dataEditor"
+                ]
+              }
+            ]
           }
         ],
         "roles": [
@@ -1013,6 +1039,28 @@
                 "key": "service_account_project_roles",
                 "value": [
                   "roles/run.invoker"
+                ]
+              }
+            ]
+          },
+          {
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/connection-1",
+            "parameters": [
+              {
+                "key": "containers[0].env_vars",
+                "value": {
+                  "big_query_1_BIGQUERY_VIEWS": "module.big-query-1.env_vars.BIGQUERY_VIEWS",
+                  "big_query_1_BIGQUERY_DATASET": "module.big-query-1.env_vars.BIGQUERY_DATASET",
+                  "big_query_1_BIGQUERY_EXTERNAL_TABLES": "module.big-query-1.env_vars.BIGQUERY_EXTERNAL_TABLES",
+                  "big_query_1_BIGQUERY_MATERIALIZED_VIEWS": "module.big-query-1.env_vars.BIGQUERY_MATERIALIZED_VIEWS",
+                  "big_query_1_BIGQUERY_ROUTINES": "module.big-query-1.env_vars.BIGQUERY_ROUTINES",
+                  "big_query_1_BIGQUERY_TABLES": "module.big-query-1.env_vars.BIGQUERY_TABLES"
+                }
+              },
+              {
+                "key": "service_account_project_roles",
+                "value": [
+                  "roles/bigquery.dataEditor"
                 ]
               }
             ]
@@ -1198,15 +1246,13 @@
             "key": "containers",
             "value": [
               {
-                "container_name": "server",
-                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_syncer:v3.6",
                 "env_vars": {
+                  "POSTGRES_USER": "londondatauser",
+                  "EMBEDDING_MODEL": "text-embedding-005",
                   "GOOGLE_CLOUD_LOCATION": "us-central1",
                   "GOOGLE_CLOUD_PROJECT": "n26-learn-c2c-app-dev-1",
                   "POSTGRES_DB": "london_travel",
-                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address",
-                  "POSTGRES_USER": "londondatauser",
-                  "EMBEDDING_MODEL": "text-embedding-005"
+                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address"
                 },
                 "volume_mounts": [
                   {
@@ -1215,13 +1261,15 @@
                   }
                 ],
                 "ports": {
-                  "name": "http1",
-                  "container_port": 8001
+                  "container_port": 8001,
+                  "name": "http1"
                 },
                 "resources": {
                   "startup_cpu_boost": false,
                   "cpu_idle": true
-                }
+                },
+                "container_name": "server",
+                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_syncer:v4"
               }
             ]
           },
@@ -1246,8 +1294,8 @@
             "value": {
               "egress": "PRIVATE_RANGES_ONLY",
               "network_interfaces": {
-                "subnetwork": "default",
-                "network": "default"
+                "network": "default",
+                "subnetwork": "default"
               }
             }
           },
@@ -1259,12 +1307,12 @@
             "key": "volumes",
             "value": [
               {
-                "name": "cloudsql",
                 "cloud_sql_instance": {
                   "instances": [
                     "module.postgresql-db.instance_connection_name"
                   ]
-                }
+                },
+                "name": "cloudsql"
               }
             ]
           }
@@ -1328,9 +1376,9 @@
                 "key": "iam_users",
                 "value": [
                   {
+                    "type": "CLOUD_IAM_SERVICE_ACCOUNT",
                     "email": "module.data-syncer.service_account_id.email",
-                    "id": "module.data-syncer.service_account_id.id",
-                    "type": "CLOUD_IAM_SERVICE_ACCOUNT"
+                    "id": "module.data-syncer.service_account_id.id"
                   }
                 ]
               }
@@ -1398,9 +1446,9 @@
               {
                 "key": "containers[0].env_vars",
                 "value": {
+                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
                   "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
-                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address"
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
                 }
               },
               {
@@ -1602,27 +1650,12 @@
           },
           {
             "key": "service_name",
-            "value": "data-mcp"
+            "value": "mcp-server"
           },
           {
             "key": "containers",
             "value": [
               {
-                "resources": {
-                  "cpu_idle": true,
-                  "startup_cpu_boost": false
-                },
-                "container_name": "server",
-                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_mcp:v3.6",
-                "env_vars": {
-                  "DB_TYPE": "postgres",
-                  "GOOGLE_CLOUD_LOCATION": "us-central1",
-                  "EMBEDDING_MODEL": "text-embedding-005",
-                  "GOOGLE_CLOUD_PROJECT": "n26-learn-c2c-app-dev-1",
-                  "POSTGRES_DB": "london_travel",
-                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address",
-                  "POSTGRES_USER": "londondatauser"
-                },
                 "volume_mounts": [
                   {
                     "name": "cloudsql",
@@ -1632,6 +1665,21 @@
                 "ports": {
                   "container_port": 8002,
                   "name": "http1"
+                },
+                "resources": {
+                  "cpu_idle": true,
+                  "startup_cpu_boost": false
+                },
+                "container_name": "server",
+                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_mcp:v4",
+                "env_vars": {
+                  "POSTGRES_USER": "londondatauser",
+                  "DB_TYPE": "postgres",
+                  "GOOGLE_CLOUD_LOCATION": "us-central1",
+                  "EMBEDDING_MODEL": "text-embedding-005",
+                  "GOOGLE_CLOUD_PROJECT": "n26-learn-c2c-app-dev-1",
+                  "POSTGRES_DB": "london_travel",
+                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address"
                 }
               }
             ]
@@ -1649,11 +1697,11 @@
           {
             "key": "vpc_access",
             "value": {
-              "egress": "PRIVATE_RANGES_ONLY",
               "network_interfaces": {
                 "network": "default",
                 "subnetwork": "default"
-              }
+              },
+              "egress": "PRIVATE_RANGES_ONLY"
             }
           },
           {
@@ -1664,12 +1712,12 @@
             "key": "volumes",
             "value": [
               {
+                "name": "cloudsql",
                 "cloud_sql_instance": {
                   "instances": [
                     "module.postgresql-db.instance_connection_name"
                   ]
-                },
-                "name": "cloudsql"
+                }
               }
             ]
           }
@@ -1700,9 +1748,9 @@
               {
                 "key": "containers[0].env_vars",
                 "value": {
+                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
                   "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
-                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
-                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name"
+                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address"
                 }
               },
               {
@@ -1733,9 +1781,9 @@
                 "key": "iam_users",
                 "value": [
                   {
+                    "id": "module.data-mcp.service_account_id.id",
                     "type": "CLOUD_IAM_SERVICE_ACCOUNT",
-                    "email": "module.data-mcp.service_account_id.email",
-                    "id": "module.data-mcp.service_account_id.id"
+                    "email": "module.data-mcp.service_account_id.email"
                   }
                 ]
               }
@@ -1803,9 +1851,9 @@
               {
                 "key": "containers[0].env_vars",
                 "value": {
-                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
                   "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
+                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address"
                 }
               },
               {
@@ -2008,11 +2056,11 @@
           {
             "key": "cdn_policy",
             "value": {
-              "default_ttl": 3600,
-              "max_ttl": 86400,
               "client_ttl": 3600,
               "cache_mode": "CACHE_ALL_STATIC",
-              "signed_url_cache_max_age_sec": "0"
+              "signed_url_cache_max_age_sec": "0",
+              "default_ttl": 3600,
+              "max_ttl": 86400
             }
           }
         ],
@@ -2025,10 +2073,10 @@
                 "key": "serverless_neg_backends",
                 "value": [
                   {
+                    "service_name": "module.vue-frontend.service_name",
                     "service_version": "",
                     "type": "cloud-run",
-                    "region": "module.vue-frontend.location",
-                    "service_name": "module.vue-frontend.service_name"
+                    "region": "module.vue-frontend.location"
                   }
                 ]
               }
@@ -2061,10 +2109,10 @@
                 "key": "serverless_neg_backends",
                 "value": [
                   {
-                    "service_version": "",
                     "type": "cloud-run",
                     "region": "module.vue-frontend.location",
-                    "service_name": "module.vue-frontend.service_name"
+                    "service_name": "module.vue-frontend.service_name",
+                    "service_version": ""
                   }
                 ]
               }
@@ -2182,11 +2230,11 @@
           {
             "key": "cdn_policy",
             "defaultValue": {
-              "default_ttl": 3600,
               "max_ttl": 86400,
               "signed_url_cache_max_age_sec": "0",
               "cache_mode": "CACHE_ALL_STATIC",
-              "client_ttl": 3600
+              "client_ttl": 3600,
+              "default_ttl": 3600
             },
             "type": "object({\n    cache_mode                      = optional(string)\n    signed_url_cache_max_age_sec    = optional(string)\n    default_ttl                     = optional(number)\n    max_ttl                         = optional(number)\n    client_ttl                      = optional(number)\n    negative_caching                = optional(bool)\n    serve_while_stale               = optional(number)\n    bypass_cache_on_request_headers = optional(list(string))\n    negative_caching_policy = optional(object({\n      code = optional(number)\n      ttl  = optional(number)\n    }))\n    cache_key_policy = optional(object({\n      include_host           = optional(bool)\n      include_protocol       = optional(bool)\n      include_query_string   = optional(bool)\n      query_string_blacklist = optional(list(string))\n      query_string_whitelist = optional(list(string))\n      include_http_headers   = optional(list(string))\n      include_named_cookies  = optional(list(string))\n    }))\n  })"
           },
@@ -2210,8 +2258,8 @@
             "key": "host_path_mappings",
             "defaultValue": [
               {
-                "host": "*",
-                "path": "/*"
+                "path": "/*",
+                "host": "*"
               }
             ],
             "type": "list(object({\n    host = string\n    path = string\n  }))"
@@ -2526,6 +2574,270 @@
             "key": "disable_dependent_services",
             "defaultValue": true,
             "type": "bool"
+          }
+        ]
+      },
+      {
+        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/big-query-1",
+        "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/19fab523-f5fd-4b7f-85f5-525b7d1c0db2/revisions/r-7",
+        "parameters": [
+          {
+            "key": "dataset_id",
+            "value": "agent_telemetry"
+          },
+          {
+            "key": "project_id",
+            "value": "n26-learn-c2c-app-dev-1"
+          },
+          {
+            "key": "access",
+            "value": [
+              {
+                "special_group": "projectOwners",
+                "role": "roles/bigquery.dataOwner"
+              }
+            ]
+          }
+        ],
+        "roles": [
+          "roles/bigquery.admin",
+          "roles/storage.admin",
+          "roles/cloudkms.cryptoKeyEncrypterDecrypter",
+          "roles/serviceusage.serviceUsageAdmin"
+        ],
+        "apis": [
+          "bigquery.googleapis.com",
+          "bigquerystorage.googleapis.com",
+          "cloudkms.googleapis.com",
+          "cloudresourcemanager.googleapis.com",
+          "iam.googleapis.com"
+        ],
+        "connectionsParameters": [
+          {
+            "connection": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/fastapi-backend/connections/connection-1"
+          }
+        ],
+        "componentParameterSchema": [
+          {
+            "key": "dataset_id",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "dataset_name",
+            "type": "string"
+          },
+          {
+            "key": "description",
+            "type": "string"
+          },
+          {
+            "key": "location",
+            "defaultValue": "US",
+            "type": "string"
+          },
+          {
+            "key": "delete_contents_on_destroy",
+            "type": "bool"
+          },
+          {
+            "key": "deletion_protection",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "default_table_expiration_ms",
+            "type": "number"
+          },
+          {
+            "key": "default_partition_expiration_ms",
+            "type": "number"
+          },
+          {
+            "key": "max_time_travel_hours",
+            "type": "number"
+          },
+          {
+            "key": "storage_billing_model",
+            "type": "string"
+          },
+          {
+            "key": "project_id",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "encryption_key",
+            "type": "string"
+          },
+          {
+            "key": "dataset_labels",
+            "defaultValue": {},
+            "type": "map(string)"
+          },
+          {
+            "key": "resource_tags",
+            "defaultValue": {},
+            "type": "map(string)"
+          },
+          {
+            "key": "access",
+            "defaultValue": [
+              {
+                "special_group": "projectOwners",
+                "role": "roles/bigquery.dataOwner"
+              }
+            ],
+            "type": "any"
+          },
+          {
+            "key": "tables",
+            "defaultValue": [],
+            "type": "list(object({\n    table_id                 = string,\n    description              = optional(string),\n    table_name               = optional(string),\n    schema                   = string,\n    clustering               = optional(list(string), []),\n    require_partition_filter = optional(bool),\n    time_partitioning = optional(object({\n      expiration_ms = string,\n      field         = string,\n      type          = string,\n    }), null),\n    range_partitioning = optional(object({\n      field = string,\n      range = object({\n        start    = string,\n        end      = string,\n        interval = string,\n      }),\n    }), null),\n    expiration_time     = optional(string, null),\n    deletion_protection = optional(bool),\n    labels              = optional(map(string), {}),\n  }))"
+          },
+          {
+            "key": "views",
+            "defaultValue": [],
+            "type": "list(object({\n    view_id        = string,\n    description    = optional(string),\n    query          = string,\n    use_legacy_sql = bool,\n    labels         = optional(map(string), {}),\n  }))"
+          },
+          {
+            "key": "materialized_views",
+            "defaultValue": [],
+            "type": "list(object({\n    view_id             = string,\n    description         = optional(string),\n    query               = string,\n    enable_refresh      = bool,\n    refresh_interval_ms = string,\n    clustering          = optional(list(string), []),\n    time_partitioning = optional(object({\n      expiration_ms            = string,\n      field                    = string,\n      type                     = string,\n      require_partition_filter = bool,\n    }), null),\n    range_partitioning = optional(object({\n      field = string,\n      range = object({\n        start    = string,\n        end      = string,\n        interval = string,\n      }),\n    }), null),\n    expiration_time = optional(string, null),\n    max_staleness   = optional(string),\n    labels          = optional(map(string), {}),\n  }))"
+          },
+          {
+            "key": "external_tables",
+            "defaultValue": [],
+            "type": "list(object({\n    table_id              = string,\n    description           = optional(string),\n    autodetect            = bool,\n    compression           = string,\n    ignore_unknown_values = bool,\n    max_bad_records       = number,\n    schema                = string,\n    source_format         = string,\n    source_uris           = list(string),\n    csv_options = object({\n      quote                 = string,\n      allow_jagged_rows     = bool,\n      allow_quoted_newlines = bool,\n      encoding              = string,\n      field_delimiter       = string,\n      skip_leading_rows     = number,\n    }),\n    google_sheets_options = object({\n      range             = string,\n      skip_leading_rows = number,\n    }),\n    hive_partitioning_options = object({\n      mode              = string,\n      source_uri_prefix = string,\n    }),\n    expiration_time     = optional(string, null),\n    max_staleness       = optional(string),\n    deletion_protection = optional(bool),\n    labels              = optional(map(string), {}),\n  }))"
+          },
+          {
+            "key": "routines",
+            "defaultValue": [],
+            "type": "list(object({\n    routine_id      = string,\n    routine_type    = string,\n    language        = string,\n    definition_body = string,\n    return_type     = string,\n    description     = string,\n    arguments = optional(list(object({\n      name          = string,\n      data_type     = string,\n      argument_kind = string,\n      mode          = string,\n    })), []),\n  }))"
+          }
+        ]
+      },
+      {
+        "uri": "projects/n26-learn-c2c-app-dev-1/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-company-template/components/model-armor-template-1",
+        "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/googlespace-model-armor-template-214hh8/revisions/r-1",
+        "parameters": [
+          {
+            "key": "template_id",
+            "value": "agent_model_armor_template"
+          },
+          {
+            "key": "location",
+            "value": "us-central1"
+          },
+          {
+            "key": "project_id",
+            "value": "n26-learn-c2c-app-dev-1"
+          },
+          {
+            "key": "enable_malicious_uri_filter_settings",
+            "value": true
+          },
+          {
+            "key": "rai_filters",
+            "value": {
+              "harassment": "LOW_AND_ABOVE",
+              "dangerous": "MEDIUM_AND_ABOVE",
+              "sexually_explicit": "HIGH",
+              "hate_speech": "MEDIUM_AND_ABOVE"
+            }
+          },
+          {
+            "key": "pi_and_jailbreak_filter_settings",
+            "value": "LOW_AND_ABOVE"
+          },
+          {
+            "key": "sdp_settings",
+            "value": {
+              "basic_config_filter_enforcement": true
+            }
+          },
+          {
+            "key": "metadata_configs",
+            "value": {
+              "log_sanitize_operations": false,
+              "log_template_operations": false,
+              "ignore_partial_invocation_failures": false,
+              "enable_multi_language_detection": true
+            }
+          }
+        ],
+        "roles": [
+          "roles/aiplatform.admin",
+          "roles/compute.admin",
+          "roles/compute.networkAdmin",
+          "roles/notebooks.admin",
+          "roles/iam.securityAdmin",
+          "roles/iam.serviceAccountAdmin",
+          "roles/iam.serviceAccountUser",
+          "roles/cloudkms.admin",
+          "roles/iam.roleAdmin",
+          "roles/storage.admin",
+          "roles/cloudkms.cryptoKeyEncrypterDecrypter",
+          "roles/modelarmor.admin",
+          "roles/modelarmor.floorSettingsAdmin",
+          "roles/serviceusage.serviceUsageAdmin"
+        ],
+        "apis": [
+          "cloudresourcemanager.googleapis.com",
+          "serviceusage.googleapis.com",
+          "iamcredentials.googleapis.com",
+          "iam.googleapis.com",
+          "cloudbilling.googleapis.com",
+          "cloudkms.googleapis.com",
+          "servicenetworking.googleapis.com",
+          "secretmanager.googleapis.com",
+          "notebooks.googleapis.com",
+          "aiplatform.googleapis.com",
+          "iap.googleapis.com",
+          "modelarmor.googleapis.com",
+          "dlp.googleapis.com"
+        ],
+        "componentParameterSchema": [
+          {
+            "key": "template_id",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "location",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "project_id",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "labels",
+            "defaultValue": {},
+            "type": "map(string)"
+          },
+          {
+            "key": "enable_malicious_uri_filter_settings",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "rai_filters",
+            "type": "object({\n    dangerous         = optional(string)\n    sexually_explicit = optional(string)\n    hate_speech       = optional(string)\n    harassment        = optional(string)\n  })"
+          },
+          {
+            "key": "sdp_settings",
+            "type": "object({\n    basic_config_filter_enforcement = optional(bool, false)\n    advanced_config = optional(object({\n      inspect_template    = optional(string)\n      deidentify_template = optional(string)\n    }))\n  })"
+          },
+          {
+            "key": "pi_and_jailbreak_filter_settings",
+            "type": "string"
+          },
+          {
+            "key": "metadata_configs",
+            "type": "object({\n    enforcement_type                         = optional(string, \"\")\n    enable_multi_language_detection          = optional(bool)\n    log_sanitize_operations                  = optional(bool, false)\n    log_template_operations                  = optional(bool, false)\n    ignore_partial_invocation_failures       = optional(bool, false)\n    custom_prompt_safety_error_code          = optional(string)\n    custom_prompt_safety_error_message       = optional(string)\n    custom_llm_response_safety_error_message = optional(string)\n    custom_llm_response_safety_error_code    = optional(string)\n  })"
           }
         ]
       }
