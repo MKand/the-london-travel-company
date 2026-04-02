@@ -86,21 +86,4 @@ Importing the MCP server to the registry
 
 Registry link https://pantheon.corp.google.com/agent-management/agent-registry?e=AgentManagementLaunch::AgentManagementEnabled&project=$PROJECT_ID
 
-
 ADK: API Registry: https://google.github.io/adk-docs/integrations/api-registry/#use-with-agent
-
-
-
-# Deploy to CR for testing
-
-gcloud run deploy agents --region=us-central1 --source ./agents --env-vars-file=.agent.env --port=8000 --allow-unauthenticated --service-account="agent-backend-a8ca-us-centr-sa@n26-learn-c2c-app-dev-1.iam.gserviceaccount.com" --project="n26-learn-c2c-app-dev-1"
-
-gcloud run deploy mcpserver --region=us-central1 --source ./london_data_mcp --env-vars-file=.mcp.env --port=8002 --allow-unauthenticated --service-account="data-mcp-a8ca-us-central1-sa@n26-learn-c2c-app-dev-1.iam.gserviceaccount.com" --project="n26-learn-c2c-app-dev-1"
-
-
-POSTGRES_HOST=/cloudsql/n26-learn-c2c-app-dev-1:us-central1:london-travel-db-fbb3
-
-   curl -X POST https://data-syncer-fbb3-432327957835.us-central1.run.app/sync -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://londondatauser:ePVMVR4h2ZsKaaQ9RfKxUyDsi7TmGLPO@34.60.53.51/london_travel"}'
-
-    curl -X POST https://data-syncer-fbb3-432327957835.us-central1.run.app/read -H "Content-Type: application/json" -d '{"db_url": "postgresql://londondatauser:ePVMVR4h2ZsKaaQ9RfKxUyDsi7TmGLPO@POSTGRES_HOST=/cloudsql/n26-learn-c2c-app-dev-1:us-central1:london-travel-db-fbb3
-/london_travel"}'
