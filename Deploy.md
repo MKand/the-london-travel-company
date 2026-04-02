@@ -268,6 +268,43 @@ After deployment, services will be available at:
 
 ---
 
+## Deploy Load Tester (User Simulator) (Optional)
+
+The load tester runs a background loop to simulate user conversations. For it to run continuously in the background, it must be deployed without CPU throttling.
+
+```bash
+# 1. Get the Agent URL (replace 'agents' if your service name differs)
+AGENT_URL=$(gcloud run services describe agents --region=$LOCATION --project=$PROJECT_ID --format="value(status.url)")
+
+# 2. Deploy the Simulator
+gcloud run deploy user-simulator \
+  --image ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/london-travel-agency/user_simulator:latest \
+  --region $LOCATION \
+  --project $PROJECT_ID \
+  --min-instances 1 \
+  --no-cpu-throttling \
+  --port 8080 \
+  --set-env-vars "LONDON_AGENT_URL=${AGENT_URL}" \
+  --allow-unauthenticated
+```
+
+Wait for the service to deploy. Once deployed, you can start the simulation by calling the `/start` endpoint:
+
+```bash
+SIMULATOR_URL=$(gcloud run services describe user-simulator --region=$LOCATION --project=$PROJECT_ID --format="value(status.url)")
+
+# Start the simulation
+curl -X POST ${SIMULATOR_URL}/start
+```
+
+And check status:
+
+```bash
+curl ${SIMULATOR_URL}/status
+```
+
+---
+
 ## Troubleshooting
 
 ### Check Cloud Run services
