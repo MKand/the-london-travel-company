@@ -21,7 +21,11 @@ from agent.prompts import LOAD_TESTER_SYSTEM_PROMPT
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-genai_client = genai.Client()
+genai_client = genai.Client(
+    project=os.getenv("GOOGLE_CLOUD_PROJECT"),
+    location=os.getenv("GOOGLE_CLOUD_LOCATION"),
+    vertexai=True
+)
 
 
 LONDON_AGENT_URL = os.getenv("LONDON_AGENT_URL", "http://localhost:8001") # Using host port 8001 by default

@@ -278,13 +278,13 @@ AGENT_URL=$(gcloud run services describe agents --region=$LOCATION --project=$PR
 
 # 2. Deploy the Simulator
 gcloud run deploy user-simulator \
-  --image ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/london-travel-agency/user_simulator:latest \
+  --source ./fake_user \
   --region $LOCATION \
   --project $PROJECT_ID \
   --min-instances 1 \
   --no-cpu-throttling \
   --port 8080 \
-  --set-env-vars "LONDON_AGENT_URL=${AGENT_URL}" \
+  --set-env-vars "LONDON_AGENT_URL=${AGENT_URL},GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${LOCATION}" \
   --allow-unauthenticated
 ```
 
