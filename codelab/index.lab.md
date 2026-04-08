@@ -119,19 +119,6 @@ displayName: default-space
 enableGcpSharedTemplates: true
 name: projects/your-project-id/locations/us-central1/spaces/default-space
 ```
-
-### ADC Catalogs
-
-A Catalog allows you to store and share app templates across different Spaces. ADC includes a default-catalog that starts empty. Catalogs are a critical feature for enterprises as they enable architecture governance by providing a standard set of patterns for use across an organization.
-
-### Templates
-
-Templates define blueprints for application infrastructure stored in Terraform format. You can find templates in three locations:
-
-- **Google Templates**: Predefined, Google-opinionated architectures. The goal is to provide a rich repository of Well-Architected patterns, driving re-use of opinionated best practices.
-- **Shared Templates**: Templates shared with your space from across your organization.
-- **Templates**: Custom blueprints created within your specific space.
-
 ---
 
 ## Assemble the Template
@@ -229,6 +216,23 @@ The Load Balancer exposes your frontend to the public internet. In ADC, this is 
 5. Connect the `galb-frontend` to `galb-backend`, by dragging a connection from the `galb-frontend` to the `galb-backend`.
 
    ![App Template](./img/dir/5_app_template.png)
+
+---
+
+### Share the Template in the Catalog
+
+A **Catalog** allows you to share app templates across different Spaces, enabling architecture governance. A catalog acts as a central repository for templates that are created and approved for sharing by the platform team. Sharing catalogs between spaces avoids duplicated effort for common projects, and streamlines startup times.
+
+Now, add your template to the catalog:
+
+1. Click the **Catalogs** tab.
+2. Click **Add Templates** and select the `simple-3-tier-agentic-app` template.
+3. Click **Add to Catalog**.
+
+   ![Add to Catalog](./img/dir/5b_add_to_catalog.png)
+
+> You can find templates in three locations: **Google Templates** (predefined patterns), **Shared Templates** (shared across your organization), and **Templates** (custom blueprints in your space).
+
 ---
 
 ## Deploy the Application
@@ -237,7 +241,7 @@ Duration: 15:00
 
 Now it is time to play the role of an app developer who wants to use this template to deploy the `cymbal-london-concierge` application.
 
-1. In the App Design Centre console, with the template open, click on  'Configure an app' button.
+1. In the App Design Centre console, reopen the template in the **Templates** tab, and click on **Configure app** button.
 
    ![Configure an app](./img/dir/6_configure_an_app.png)
 
@@ -357,7 +361,7 @@ Duration: 05:00
 
 ![Dashboard](./img/dir/16_app_monitoring_dashboard.png)
 
-5. Take some time to explore the telemetry data for the application. You can also view the logs and traces for the application to understand the application's behavior.
+5. **Guided Exploration**: Ask the agent a specific question in the app (e.g., "What are the best places to visit in London?"). Then, go back to the Observability console and view the **Traces** list. Find the trace corresponding to your request. Click on it to see the detailed waterfall view. Notice how you can see the time spent in the frontend, the agent backend, and the calls to Vertex AI. This allows you to identify exactly where latency is introduced.
 
 ---
 
