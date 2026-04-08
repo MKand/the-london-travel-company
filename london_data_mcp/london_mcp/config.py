@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     # GCP configuration
     PROJECT_ID: Optional[str] = os.getenv("GOOGLE_CLOUD_PROJECT")
     LOCATION: str = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
-    EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "text-embedding-004")
+    EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "text-embedding-005")
     
     # Matching Engine / Embedding configuration
     MAX_ROWS: int = 5
