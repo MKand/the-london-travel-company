@@ -183,8 +183,9 @@ This is the FastAPI application that orchestrates the agentic behavior.
 
 5. Under **Show advanced settings**, Set the **Members** to: `allUsers`.
 6. Under **Show advanced settings**, Set the **VPC ACCESS**, set the **Egress** to: `PRIVATE_RANGES_ONLY`. 
-7. Connect the `agent-backend` to `data-mcp-server`, by dragging a connection from the `agent-backend` to the `data-mcp-server`.
-8. Click **Save**.
+7. Optionally, under **Show advanced settings**, uncheck **Enable Prometheus Sidecar**.
+8. Connect the `agent-backend` to `data-mcp-server`, by dragging a connection from the `agent-backend` to the `data-mcp-server`.
+9. Click **Save**.
 
 
 ### 4. Add the Frontend
@@ -196,10 +197,13 @@ The front end UI.
 3. Under **Show advanced settings**, uncheck **Create Service Account**
 4. Under **Show advanced settings**, Set the **Ingress** to: `INGRESS_TRAFFIC_INTERNAL_LOADBALANCER`. **Compliance Config:** Direct public access to the frontend container is blocked, forcing traffic through the load balancer.
 5. Under **Show advanced settings**, Set the **Members** to: `allUsers`.
-7. Click **Save**.
-6. Connect the `frontend` to `agent-backend`, by dragging a connection from the `frontend` to the `agent-backend`.
 
    ![Frontend](./img/dir/4d_configure_frontend.png)
+
+6. Optionally, under **Show advanced settings**, uncheck **Enable Prometheus Sidecar**.
+7. Click **Save**.
+8. Connect the `frontend` to `agent-backend`, by dragging a connection from the `frontend` to the `agent-backend`.
+
 
 ### 5. Add a vertex AI component
 
@@ -234,6 +238,7 @@ Duration: 15:00
 Now it is time to play the role of an app developer who wants to use this template to deploy the `cymbal-london-concierge` application.
 
 1. In the App Design Centre console, with the template open, click on  'Configure an app' button.
+
    ![Configure an app](./img/dir/6_configure_an_app.png)
 
 2. Click **Create new application**.
@@ -342,17 +347,18 @@ Duration: 05:00
 
 ![App Hub](./img/dir/14_view_in_apphub.png)
 
-2. This will open up the app in App Hub. App Hub is a central place to view and manage all your applications. Creating an app using App Design Centre automatically creates an app in App Hub. You should see all the workloads and services that make up the application listed here. Instead of viewing the resources in the cloud as individual resources, you can view them as a part of a single application. 
+2. This will open up the app in App Hub. App Hub is a central place to view and manage all your applications, transitioning you from a resource-centric to an **application-centric** view. Creating an app using App Design Centre automatically creates an app in App Hub. You should see all the workloads and services that make up the application listed here. Instead of viewing the resources in the cloud as individual resources, you can view them as a part of a single application, simplifying management and governance.
 
 ![App Hub](./img/dir/15_apphub.png)
 
 3. Click on the **View in Observability** button. This should open up the application in the Observability console. 
 
-4. Open the **Dashboard view**. The dashboard gives you an overview of the application's performance and health. It provides metrics such as the 4 golden signals: request rate, error rate, latency, and saturation. You can also view **Logs** and **Traces** for the application. 
+4. Open the **Dashboard view**. The dashboard gives you an overview of the application's performance and health by providing metrics such as the 4 golden signals: request rate, error rate, latency, and saturation. This application-centric monitoring is crucial for maintaining reliability. You can also view **Logs** and **Traces** for the application, allowing you to correlate signals and pinpoint bottlenecks. This is especially important in a complex agentic application like this, where slow responses from Vertex AI or the Data MCP server can degrade the user experience.
 
 ![Dashboard](./img/dir/16_app_monitoring_dashboard.png)
 
- 
+5. Take some time to explore the telemetry data for the application. You can also view the logs and traces for the application to understand the application's behavior.
+
 ---
 
 ## Congratulations
@@ -364,7 +370,12 @@ Congratulations! You have deployed a 3-tier application architecture using App D
 - How to visually assemble a cloud architecture using ADC.
 - How to set up ADC and enable APIs via UI.
 - How to deploy applications using ADC.
+- How to use App Hub for an application-centric view of your resources.
+- How to monitor application health using the Observability Dashboard.
 
 #### Reference docs
 
-- [App Design Centre Documentation](https://cloud.google.com/app-design-centre/docs)
+- [App Design Centre Documentation](https://docs.cloud.google.com/application-design-center/docs/overview)
+- [App Hub Documentation](https://docs.cloud.google.com/app-hub/docs/overview)
+- [Application Monitoring](https://docs.cloud.google.com/stackdriver/docs/observability/about-application-monitoring)
+
