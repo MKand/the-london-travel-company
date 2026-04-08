@@ -87,3 +87,7 @@ Importing the MCP server to the registry
 Registry link https://pantheon.corp.google.com/agent-management/agent-registry?e=AgentManagementLaunch::AgentManagementEnabled&project=$PROJECT_ID
 
 ADK: API Registry: https://google.github.io/adk-docs/integrations/api-registry/#use-with-agent
+
+
+
+curl -X POST https://data-syncer-afb6-206797735871.us-central1.run.app/sync -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://londondatauser:isUGKUcc9J1h9mIKceX08qrG5x2NmDQm@136.116.116.120/london_travel"}'

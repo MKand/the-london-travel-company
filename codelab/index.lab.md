@@ -199,7 +199,7 @@ The front end UI.
 7. Click **Save**.
 6. Connect the `frontend` to `agent-backend`, by dragging a connection from the `frontend` to the `agent-backend`.
 
-![Frontend](./img/dir/4d_configure_frontend.png)
+   ![Frontend](./img/dir/4d_configure_frontend.png)
 
 ### 5. Add a vertex AI component
 
@@ -224,17 +224,17 @@ The Load Balancer exposes your frontend to the public internet. In ADC, this is 
 4. Click **Add Connection** and connect it to `galb-backend`.
 5. Connect the `galb-frontend` to `galb-backend`, by dragging a connection from the `galb-frontend` to the `galb-backend`.
 
-![App Template](./img/dir/5_app_template.png)
+   ![App Template](./img/dir/5_app_template.png)
 ---
 
 ## Deploy the Application
 
-Duration: 10:00
+Duration: 15:00
 
-Once assembled, the app team can use this generic template to deploy the `cymbal-london-concierge` application.
+Now it is time to play the role of an app developer who wants to use this template to deploy the `cymbal-london-concierge` application.
 
 1. In the App Design Centre console, with the template open, click on  'Configure an app' button.
-![Configure an app](./img/dir/6_configure_an_app.png)
+   ![Configure an app](./img/dir/6_configure_an_app.png)
 
 2. Click **Create new application**.
 3. Configure the Application:
@@ -256,7 +256,7 @@ Once assembled, the app team can use this generic template to deploy the `cymbal
    3. Set the **Container Image** to:
    `us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/frontend:codelab-c2c6-v1`
 
-   ![Changing Container Image](./img/dir/8a_configure_frontend.png)
+      ![Changing Container Image](./img/dir/8a_configure_frontend.png)
 
    4. Set the port `http1` to `80`.
    5. Set the following **Environment Variables**:
@@ -294,7 +294,7 @@ Once assembled, the app team can use this generic template to deploy the `cymbal
 
 9. Click on the **Code** button on the top of the page to view the terraform code for the application. You can also download the terraform code for the application by clicking on the **Get Code** button to store it in your code base.
 
-![App Template](./img/dir/8b_code.png)
+   ![App Template](./img/dir/8b_code.png)
 
 10. Click on the **Deploy** button on the top right corner of the page to deploy the application.
 
@@ -304,13 +304,21 @@ Once assembled, the app team can use this generic template to deploy the `cymbal
 
 12. Once the service account is created, the page will refresh and you will see the Select Service Account with a checkmark next to it. 
 
-![Service Account Created](./img/dir/10a_service_account_created.png)
+   ![Service Account Created](./img/dir/10a_service_account_created.png)
 
 13. Then click **Deploy** at the bottom of the page.
 
-13. It will take a few minutes to complete. Once the deployment is complete, you will see a green checkmark next to each component. You can also check the status of the deployment by clicking on the **Link to logs** button which will open the cloud build logs.
+14. It will take a few minutes to complete. Once the deployment is complete, you will see a green checkmark next to each component. You can also check the status of the deployment by clicking on the **Link to logs** button which will open the cloud build logs. It might take a few minutes for the button to show up.
 
-![Deployment Logs](10c_logs.png)
+   ![Deployment Logs](./img/dir/10b_logs.png)
+
+15. You can view the cloud build logs to see the status of the deployment or if there are any errors that may occur while deploying the application. You can also directly go to the cloud build logs by searching for **Cloud Build** in the Google Cloud console and clicking on **History**. The application will take about 5-8 minutes to deploy.
+
+   ![Cloud Build](./img/dir/10c_cloudbuild.png)
+
+16. Once the deployment is complete, you will see a green checkmark next to the **Deployment status** field. 
+
+   ![Deployment Complete](./img/dir/11_deployed.png)
 
 ---
 
@@ -318,36 +326,33 @@ Once assembled, the app team can use this generic template to deploy the `cymbal
 
 Duration: 05:00
 
-Let's test if the agent is alive. Since the frontend uses internal ingress, we will verify the frontend through the load balancer for this lab. Given that it is a Global Load Balancer, it will take a few minutes (upto 10 minutes) to propagate the changes globally.
+Let's test if the agent is alive. In the **outputs** section of the deployment details page, you will see the URL of the frontend component. Copy that URL and paste it in your browser. Make sure you use *http* and not *https*. Also accept any warnings you may get in the browser because the frontend is using http. 
 
+1. Chat with the app and ask it to create an itinerary for a trip to London. 
 
-
-```bash
-AGENT_URL=$(gcloud run services describe agent-backend --region=us-central1 --format="value(status.url)")
-
-curl ${AGENT_URL}/health
-```
-
-You should see output: `OK`.
-
-Now, test the agent with a chat prompt:
-
-```bash
-curl -X POST ${AGENT_URL}/chat \
-  -H "Content-Type: application/json" \
-  -d '{"message": "What are the top attractions in London?"}'
-```
+![Frontend ](./img/dir/13_app.png)
 
 ---
 
-## Clean Up
+## App Hub and Application Monitoring
 
 Duration: 05:00
 
-To avoid ongoing charges, delete the resources created.
+1. In the App Design Centre console, click on the **View app in App Hub** button on the top right corner of the page. 
 
-You can delete the deployment from the App Design Centre console or by deleting the project if you created one for this lab.
+![App Hub](./img/dir/14_view_in_apphub.png)
 
+2. This will open up the app in App Hub. App Hub is a central place to view and manage all your applications. Creating an app using App Design Centre automatically creates an app in App Hub. You should see all the workloads and services that make up the application listed here. Instead of viewing the resources in the cloud as individual resources, you can view them as a part of a single application. 
+
+![App Hub](./img/dir/15_apphub.png)
+
+3. Click on the **View in Observability** button. This should open up the application in the Observability console. 
+
+4. Open the **Dashboard view**. The dashboard gives you an overview of the application's performance and health. It provides metrics such as the 4 golden signals: request rate, error rate, latency, and saturation. You can also view **Logs** and **Traces** for the application. 
+
+![Dashboard](./img/dir/16_app_monitoring_dashboard.png)
+
+ 
 ---
 
 ## Congratulations
