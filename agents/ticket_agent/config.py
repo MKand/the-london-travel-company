@@ -29,15 +29,11 @@ DATASET_ID = os.environ.get("BIG_QUERY_DATASET_ID", "agent_telemetry")
 PROJECT_ID= os.getenv("GOOGLE_CLOUD_PROJECT")
 LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 
-
-MODEL_ARMOR_TEMPLATE_NAME = os.getenv("MODEL_ARMOR_TEMPLATE_NAME", "london_travel_agent_template")
-FULL_TEMPLATE_NAME = f"projects/{PROJECT_ID}/locations/{LOCATION}/templates/{MODEL_ARMOR_TEMPLATE_NAME}"
-
 # Set the location for the Vertex AI client
 # https://docs.cloud.google.com/stackdriver/docs/instrumentation/ai-agent-adk#configure
 os.environ["GOOGLE_CLOUD_LOCATION"] = LOCATION
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "true"
-os.environ["OTEL_SERVICE_NAME"] = "cymbal-london-concierge-agent"
+os.environ["OTEL_SERVICE_NAME"] = "ticket-agent"
 os.environ["OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED"] = "true"
 os.environ["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] = "true"
 os.environ["ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS"] = "false"
@@ -52,15 +48,15 @@ session_service = InMemorySessionService()
 
 class AgentModel(BaseModel):
     """Agent model settings."""
-    name: str = Field(default="london_holiday_agent")
+    name: str = Field(default="ticket_agent")
     model: str = Field(default=LLM_MODEL_NAME)
 
 class Config(BaseSettings):
-    """Configuration settings for the london holiday agent."""
-    embedding_model_name: str = EMBEDDING_MODEL_NAME
+    """Configuration settings for the ticket agent."""
+    embedding_model_name: str = EMBEDDING_MODEL_NAME # Preserving potential bug as in original
     project: str = PROJECT_ID
     location:str = LOCATION
-    app_name: str = "Cymbal London Concierge"
+    app_name: str = "Cymbal London Ticket Agent"
     data_backend_url: str = DATA_BACKEND_URL
     agent_settings: AgentModel = Field(default_factory=AgentModel) 
     genai_use_vertexai: str = Field(default="1") 

@@ -1,0 +1,13 @@
+google-cloud-aiplatform>=1.140.0
+google-adk[a2a,otel-gcp]==1.26.0
+google-cloud-logging>=3.13.0
+google-cloud-modelarmor
+pydantic>=2.12.5
+pydantic-settings>=2.12.0
+python-dotenv>=1.2.1
+uvicorn>=0.40.0
+opentelemetry-instrumentation-fastapi>=0.59b0
+opentelemetry-instrumentation-httpx>=0.59b0
+httpx>=0.28.1
+opentelemetry-api>=1.38.0
+opentelemetry-exporter-gcp-trace>=1.11.0

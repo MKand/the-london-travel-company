@@ -20,7 +20,7 @@ from google.adk.cli.fast_api import get_fast_api_app
 from fastapi import FastAPI
 from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
-import london_agent # doing to make errors importing the agent appear explicity
+import agent # doing to make errors importing the agent appear explicity
 
 # Set up Cloud Logging for GCP
 # This ensures that standard Python logging.ERROR etc. map correctly to GCP severity
@@ -49,7 +49,7 @@ app: FastAPI = get_fast_api_app(
 HTTPXClientInstrumentor().instrument()
 FastAPIInstrumentor.instrument_app(app)
 
-app.title = "Cymbal London Concierge"
+app.title = "Cymbal London Ticket Agent"
 
 @app.get("/health")
 async def health_check():
