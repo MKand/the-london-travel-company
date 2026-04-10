@@ -23,7 +23,7 @@ usage() {
     echo "Example (defaults): $0 my-dest-123 my-dest-space"
     exit 1
 }
-JSON_FILE="london-travel-company-template.json"
+JSON_FILE="6_london-travel-agent-template.json"
 OUTPUT_FILE="import_substituted.json"
 
 
@@ -88,15 +88,15 @@ echo "  Space:       $SOURCE_SPACE_ID -> $DEST_SPACE_ID"
 echo "  Location:    $LOCATION"
 echo "  Template ID: $APPLICATION_TEMPLATE_ID"
 
-# # Perform substitutions
-# sed "s|projects/${SOURCE_PROJECT_ID}|projects/${DEST_PROJECT_ID}|g" "$JSON_FILE" | \
-# sed "s|/spaces/${SOURCE_SPACE_ID}|/spaces/${DEST_SPACE_ID}|g" | \
-# sed "s|SOURCE_PROJECT_ID|${DEST_PROJECT_ID}|g" > "$OUTPUT_FILE"
+# Perform substitutions
+sed "s|projects/${SOURCE_PROJECT_ID}|projects/${DEST_PROJECT_ID}|g" "$JSON_FILE" | \
+sed "s|/spaces/${SOURCE_SPACE_ID}|/spaces/${DEST_SPACE_ID}|g" | \
+sed "s|SOURCE_PROJECT_ID|${DEST_PROJECT_ID}|g" > "$OUTPUT_FILE"
 
-# echo "------------------------------------------------"
-# echo "Substitution complete."
-# echo "Created: $OUTPUT_FILE"
-# echo "------------------------------------------------"
+echo "------------------------------------------------"
+echo "Substitution complete."
+echo "Created: $OUTPUT_FILE"
+echo "------------------------------------------------"
 
 # --- API IMPORT ---
 export API_ENDPOINT="designcenter.googleapis.com"
