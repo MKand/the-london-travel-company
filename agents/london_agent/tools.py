@@ -29,3 +29,4 @@ search_mcp_tool = McpToolset(
     headers={"Authorization": f"Bearer {token}"}),
     tool_filter = ["search_with_natural_language"],
 )
+

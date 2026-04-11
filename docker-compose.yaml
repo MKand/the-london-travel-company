@@ -11,30 +11,28 @@ services:
       GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
       GOOGLE_CLOUD_PROJECT: $PROJECT_ID
       GOOGLE_CLOUD_LOCATION: $LOCATION
-      GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
       DATA_BACKEND_URL: "http://data_mcp:8002"
-      OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT: "true"
-      OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED: "true"
+      AGENT_ENGINE_ID: "projects/qwiklabs-gcp-01-86960e134c68/locations/us-central1/reasoningEngines/3717941944475713536"
     volumes:
       - .key.json:/app/.key.json:ro
 
-  ticket_agent:
-    build:
-      context: agents 
-      dockerfile: Dockerfile
-      args:
-        - AGENT_NAME=ticket_agent
-    ports:
-      - "8002:8000"
-    environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
-      GOOGLE_CLOUD_PROJECT: $PROJECT_ID
-      GOOGLE_CLOUD_LOCATION: $LOCATION
-      GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
-      OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT: "true"
-      OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED: "true"
-    volumes:
-      - .key.json:/app/.key.json:ro
+  # ticket_agent:
+  #   build:
+  #     context: agents 
+  #     dockerfile: Dockerfile
+  #     args:
+  #       - AGENT_NAME=ticket_agent
+  #   # ports:
+  #   #   - "8002:8000"
+  #   environment:
+  #     GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
+  #     GOOGLE_CLOUD_PROJECT: $PROJECT_ID
+  #     GOOGLE_CLOUD_LOCATION: $LOCATION
+  #     GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
+  #     OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT: "true"
+  #     OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED: "true"
+  #   volumes:
+  #     - .key.json:/app/.key.json:ro
 
   data_mcp:
     build:
@@ -57,25 +55,25 @@ services:
     depends_on:
       - postgres
 
-  syncer:
-    build:
-      context: data_syncer
-      dockerfile: Dockerfile
-    ports:
-      - "8003:8001"
-    environment:
-      GOOGLE_APPLICATION_CREDENTIALS: "/app/.key.json"
-      GOOGLE_CLOUD_PROJECT: "${PROJECT_ID}"
-      GOOGLE_CLOUD_LOCATION: "${LOCATION}"
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: "london_travel"
-      POSTGRES_HOST: "postgres"
-      POSTGRES_PORT: "5432"
-    volumes:
-      - .key.json:/app/.key.json:ro
-    depends_on:
-      - postgres
+  # syncer:
+  #   build:
+  #     context: data_syncer
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8003:8001"
+  #   environment:
+  #     GOOGLE_APPLICATION_CREDENTIALS: "/app/.key.json"
+  #     GOOGLE_CLOUD_PROJECT: "${PROJECT_ID}"
+  #     GOOGLE_CLOUD_LOCATION: "${LOCATION}"
+  #     POSTGRES_USER: "user"
+  #     POSTGRES_PASSWORD: "password"
+  #     POSTGRES_DB: "london_travel"
+  #     POSTGRES_HOST: "postgres"
+  #     POSTGRES_PORT: "5432"
+  #   volumes:
+  #     - .key.json:/app/.key.json:ro
+  #   depends_on:
+  #     - postgres
 
   postgres:
     image: pgvector/pgvector:pg16
@@ -91,31 +89,31 @@ services:
       timeout: 5s
       retries: 5
 
-  frontend:
-    build:
-      context: frontend
-      dockerfile: Dockerfile
-    ports:
-      - "8080:80"
-    environment:
-      - API_BASE_URL=http://localhost:8001
-    depends_on:
-      - london_agent
-      - ticket_agent
+  # frontend:
+  #   build:
+  #     context: frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8080:80"
+  #   environment:
+  #     - API_BASE_URL=http://localhost:8001
+  #   depends_on:
+  #     - london_agent
+  #     - ticket_agent
 
-  fake_user:
-    build:
-      context: fake_user
-    ports:
-      - "8085:8080"
-    environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
-      GOOGLE_CLOUD_PROJECT: $PROJECT_ID
-      GOOGLE_CLOUD_LOCATION: $LOCATION
-      GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
-      LONDON_AGENT_URL: "http://london_agent:8000"
-    volumes:
-      - .key.json:/app/.key.json:ro
-    depends_on:
-      - london_agent
-      - ticket_agent
+  # fake_user:
+  #   build:
+  #     context: fake_user
+  #   ports:
+  #     - "8085:8080"
+  #   environment:
+  #     GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
+  #     GOOGLE_CLOUD_PROJECT: $PROJECT_ID
+  #     GOOGLE_CLOUD_LOCATION: $LOCATION
+  #     GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
+  #     LONDON_AGENT_URL: "http://london_agent:8000"
+  #   volumes:
+  #     - .key.json:/app/.key.json:ro
+  #   depends_on:
+  #     - london_agent
+  #     - ticket_agent

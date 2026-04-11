@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 from typing import Optional
+import google.auth
 import os
 
 class Settings(BaseSettings):
@@ -21,6 +22,9 @@ class Settings(BaseSettings):
     LOCATION: str = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
     EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "text-embedding-005")
     
+    if PROJECT_ID is None:
+        _,PROJECT_ID = google.auth.default()
+        
     # Matching Engine / Embedding configuration
     MAX_ROWS: int = 5
     

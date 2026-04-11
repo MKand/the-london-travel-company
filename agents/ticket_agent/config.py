@@ -16,14 +16,12 @@ import os
 import logging
 from pydantic_settings import BaseSettings
 from pydantic import BaseModel, Field, ValidationError
-from google.adk.sessions import InMemorySessionService
-
+import google.auth
 
 logger = logging.getLogger(__name__)
 
 # Default values for the agent
 LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", 'gemini-2.5-flash')
-DATASET_ID = os.environ.get("BIG_QUERY_DATASET_ID", "agent_telemetry")
 
 # Google Cloud Configuration
 PROJECT_ID= os.getenv("GOOGLE_CLOUD_PROJECT")
@@ -39,12 +37,9 @@ os.environ["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] = "true"
 os.environ["ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS"] = "false"
 
 if PROJECT_ID == "":
-    logger.error("GOOGLE_CLOUD_PROJECT is not set")
-    raise ValueError("GOOGLE_CLOUD_PROJECT is not set")
+    _, PROJECT_ID = google.auth.default()
+    logger.info(f"GOOGLE_CLOUD_PROJECT is not set, using default: {PROJECT_ID}")
 
-# Database Configuration
-DATA_BACKEND_URL = os.environ.get("DATA_BACKEND_URL", "http://localhost:8002")
-session_service = InMemorySessionService()
 
 class AgentModel(BaseModel):
     """Agent model settings."""

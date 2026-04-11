@@ -15,41 +15,61 @@
 import os
 import uvicorn
 import logging
-from google.cloud import logging as cloud_logging
 from google.adk.cli.fast_api import get_fast_api_app
 from fastapi import FastAPI
 from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
-import london_agent.agent # doing to make errors importing the agent appear explicity
+from a2a.server.apps import A2AFastAPIApplication
+from a2a.server.request_handlers import DefaultRequestHandler
+from a2a.server.tasks import InMemoryTaskStore
+from a2a.types import AgentCapabilities, AgentCard
+from google.adk.a2a.executor.a2a_agent_executor import A2aAgentExecutor
+from google.adk.a2a.utils.agent_card_builder import AgentCardBuilder
+from contextlib import asynccontextmanager
+from collections.abc import AsyncIterator
 
-# Set up Cloud Logging for GCP
-# This ensures that standard Python logging.ERROR etc. map correctly to GCP severity
-try:
-    client = cloud_logging.Client()
-    client.setup_logging()
-except Exception:
-    # Fallback to standard logging if credentials aren't found or initialization fails
-    logging.basicConfig(level=logging.INFO)
+from a2a.utils.constants import (
+    AGENT_CARD_WELL_KNOWN_PATH,
+    EXTENDED_AGENT_CARD_PATH,
+)
+from google.adk.artifacts import GcsArtifactService, InMemoryArtifactService
+from google.adk.runners import Runner
+from google.adk.sessions import VertexAiSessionService, InMemorySessionService
+from google.adk.memory import VertexAiMemoryBankService, InMemoryMemoryService
+from london_agent.utils import setup_logging, setup_telemetry
+from london_agent.config import configs
+from london_agent.agent import adk_app
 
-logger = logging.getLogger(__name__)
 
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_ORIGINS = ["*"]
 
+setup_logging()
+
+# Artifact bucket for ADK (created by Terraform, passed via env var)
+artifact_service = (
+    GcsArtifactService(bucket_name=configs.logs_bucket_name)
+    if configs.logs_bucket_name
+    else InMemoryArtifactService()
+)
+
+if configs.use_agent_engine:
+    session_service = VertexAiSessionService(project=configs.project_id, location=configs.location, agent_engine_id=configs.agent_engine_id)
+    memory_service = VertexAiMemoryBankService(project=configs.project_id, location=configs.location, agent_engine_id=configs.agent_engine_id)
+else:
+    session_service = InMemorySessionService()
+    memory_service = InMemoryMemoryService()
 
 # Call the function to get the FastAPI app instance
 app: FastAPI = get_fast_api_app(
     agents_dir=os.path.dirname(AGENT_DIR),
     allow_origins=ALLOWED_ORIGINS,
+    session_service_uri=configs.session_service_uri,
+    memory_service_uri=configs.memory_service_uri,
     web=True,
     trace_to_cloud=True,
     otel_to_cloud=False,
 )
-
-HTTPXClientInstrumentor().instrument()
-FastAPIInstrumentor.instrument_app(app)
-
-app.title = "Cymbal London Concierge"
 
 @app.get("/health")
 async def health_check():
@@ -57,4 +77,4 @@ async def health_check():
 
 
 if __name__ == "__main__":
-   uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+   uvicorn.run(app, host="0.0.0.0", port=int(configs.port))

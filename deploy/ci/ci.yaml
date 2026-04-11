@@ -18,7 +18,7 @@ tags:
 
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  id: "build-agent-image"
+  id: "build-london-agent-image"
   waitFor: ['-']
   dir: './agents'
   entrypoint: "sh"
@@ -27,20 +27,46 @@ steps:
     - -c
     - |
       docker build \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:lab-${SHORT_SHA}" \
-         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:${_IMAGE_TAG}" \
-         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:${_IMAGE_TAG}" \
+         --build-arg AGENT_NAME=london_agent \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/london_agent:lab-${SHORT_SHA}" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/london_agent:${_IMAGE_TAG}" \
+         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/london_agent:${_IMAGE_TAG}" \
          .
 - name: 'gcr.io/cloud-builders/docker'
-  id: "push-agent-image"
-  waitFor: [build-agent-image]
+  id: "push-london-agent-image"
+  waitFor: [build-london-agent-image]
   entrypoint: "sh"
   args:
     - -xe 
     - -c
     - |
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:lab-${SHORT_SHA}' && \
-      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/agent:${_IMAGE_TAG}'
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/london_agent:lab-${SHORT_SHA}' && \
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/london_agent:${_IMAGE_TAG}'
+- name: 'gcr.io/cloud-builders/docker'
+  id: "build-ticket-agent-image"
+  waitFor: ['-']
+  dir: './agents'
+  entrypoint: "sh"
+  args:
+    - -xe 
+    - -c
+    - |
+      docker build \
+         --build-arg AGENT_NAME=ticket_agent \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/ticket_agent:lab-${SHORT_SHA}" \
+         -t "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/ticket_agent:${_IMAGE_TAG}" \
+         --cache-from "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/ticket_agent:${_IMAGE_TAG}" \
+         .
+- name: 'gcr.io/cloud-builders/docker'
+  id: "push-ticket-agent-image"
+  waitFor: [build-ticket-agent-image]
+  entrypoint: "sh"
+  args:
+    - -xe 
+    - -c
+    - |
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/ticket_agent:lab-${SHORT_SHA}' && \
+      docker push '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/london-travel-agency/ticket_agent:${_IMAGE_TAG}'
 - name: 'gcr.io/cloud-builders/docker'
   id: "build-frontend-image"
   waitFor: ['-']

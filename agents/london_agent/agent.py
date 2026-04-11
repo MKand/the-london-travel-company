@@ -15,6 +15,8 @@
 from google.adk.agents import Agent
 from google.adk.apps import App
 from google.genai import types
+from google.adk.tools import load_memory # Tool to query memory
+
 import google.auth
 from london_agent.types import AgentOutput
 from london_agent.tools import search_mcp_tool
@@ -43,13 +45,15 @@ root_agent = Agent(
     output_schema = AgentOutput,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
     tools=[
-        search_mcp_tool
+        search_mcp_tool, load_memory
     ],
     before_model_callback=model_armor_guard.before_model_callback,
     after_model_callback=model_armor_guard.after_model_callback,
 )
 # --- Create the App ---
-app = App(
+adk_app = App(
     name="london_agent",
     root_agent=root_agent,
 )
+
+
