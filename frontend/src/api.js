@@ -3,12 +3,8 @@ const AGENT_NAME = 'london_agent';
 
 export const DEFAULT_USER_ID = 'u_123';
 
-export function generateNewSessionId() {
-  return 's_' + Date.now();
-}
-
-export async function createSession(sessionId) {
-  const response = await fetch(`${API_BASE_URL}/apps/${AGENT_NAME}/users/${DEFAULT_USER_ID}/sessions/${sessionId}`, {
+export async function createSession() {
+  const response = await fetch(`${API_BASE_URL}/apps/${AGENT_NAME}/users/${DEFAULT_USER_ID}/sessions`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({}),

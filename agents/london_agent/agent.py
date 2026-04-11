@@ -15,7 +15,7 @@
 from google.adk.agents import Agent
 from google.adk.apps import App
 from google.genai import types
-from google.adk.tools import load_memory # Tool to query memory
+from google.adk.tools import load_memory
 
 import google.auth
 from london_agent.types import AgentOutput
@@ -31,11 +31,7 @@ logger = logging.getLogger(__name__)
 
 APP_NAME=configs.app_name
 
-model_armor_guard = create_model_armor_guard(
-    project_id=configs.project_id,
-    template_name=configs.model_armor_template_name,
-    location=configs.location
-)
+model_armor_guard = create_model_armor_guard()
 
 # Initialize the agent outside the request handler for efficiency.
 root_agent = Agent(

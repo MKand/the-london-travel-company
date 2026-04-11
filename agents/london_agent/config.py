@@ -29,7 +29,6 @@ PROJECT_ID= os.getenv("GOOGLE_CLOUD_PROJECT")
 LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 
 MODEL_ARMOR_TEMPLATE_NAME = os.getenv("MODEL_ARMOR_TEMPLATE_NAME", "london_travel_agent_template")
-FULL_TEMPLATE_NAME = f"projects/{PROJECT_ID}/locations/{LOCATION}/templates/{MODEL_ARMOR_TEMPLATE_NAME}"
 
 LOGS_BUCKET_NAME = os.environ.get("LOGS_BUCKET_NAME")
 
@@ -75,7 +74,7 @@ class Config(BaseSettings):
     app_name: str = "Cymbal London Concierge"
     data_backend_url: str = DATA_BACKEND_URL
     agent_settings: AgentModel = Field(default_factory=AgentModel) 
-    model_armor_template_name: str = Field(default=FULL_TEMPLATE_NAME)
+    model_armor_template_name: str = Field(default=MODEL_ARMOR_TEMPLATE_NAME)
     bq_dataset_id: str = Field(default=DATASET_ID)
     use_agent_engine: bool = Field(default=USE_AGENT_ENGINE)
     agent_engine_id: str = Field(default=AGENT_ENGINE_ID)

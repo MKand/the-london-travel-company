@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
-import { createSession, sendMessage, generateNewSessionId } from '../api'
+import { createSession, sendMessage } from '../api'
 import { marked } from 'marked'
 
 const messages = ref([])
@@ -8,7 +8,7 @@ const emit = defineEmits(['itinerary-updated'])
 const userInput = ref('')
 const isLoading = ref(false)
 const scrollContainer = ref(null)
-const sessionId = ref(generateNewSessionId())
+const sessionId = ref('')
 
 const loadingMessages = [
   "Cymbal is curating your journey...",
@@ -30,7 +30,8 @@ const scrollToBottom = async () => {
 
 const initializeSession = async () => {
   try {
-    await createSession(sessionId.value)
+    const session = await createSession()
+    sessionId.value = session.id
   } catch (err) {
     console.error('Failed to initialize session:', err)
   }
@@ -39,7 +40,6 @@ const initializeSession = async () => {
 onMounted(initializeSession)
 
 const clearSession = async () => {
-  sessionId.value = generateNewSessionId()
   messages.value = []
   await initializeSession()
 }

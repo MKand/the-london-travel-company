@@ -46,17 +46,17 @@ async def run_conversation(client: aiohttp.ClientSession, base_url: str) -> int:
     
     conversation_history = []
     
-    session_id = f"test_s_{int(datetime.now().timestamp())}_{random.randint(1000, 9999)}"
     agent_name = "london_agent"
     user_id = prompt_vars['name']
     
-        
-    create_session_endpoint = f"{base_url}/apps/{agent_name}/users/{user_id}/sessions/{session_id}"
+    create_session_endpoint = f"{base_url}/apps/{agent_name}/users/{user_id}/sessions"
     try:
         async with client.post(create_session_endpoint, json={}) as resp:
             if resp.status != 200:
                 logger.error(f"Failed to create session: {resp.status}")
                 return 0
+            resp_json = await resp.json()
+            session_id = resp_json["id"]
     except Exception as e:
         logger.error(f"Error creating session: {e}")
         return 0
