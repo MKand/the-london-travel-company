@@ -26,6 +26,7 @@ LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", 'gemini-2.5-flash')
 # Google Cloud Configuration
 PROJECT_ID= os.getenv("GOOGLE_CLOUD_PROJECT")
 LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
+PORT=os.getenv("PORT", "8000")
 
 # Set the location for the Vertex AI client
 # https://docs.cloud.google.com/stackdriver/docs/instrumentation/ai-agent-adk#configure
@@ -52,6 +53,7 @@ class Config(BaseSettings):
     location:str = Field(default=LOCATION)
     app_name: str = "Cymbal London Ticket Agent"
     agent_settings: AgentModel = Field(default_factory=AgentModel) 
+    port: int = Field(default=PORT)
 
 try:
     configs = Config()

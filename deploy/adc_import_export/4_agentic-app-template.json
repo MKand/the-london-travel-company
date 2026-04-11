@@ -111,8 +111,8 @@
             "key": "access",
             "defaultValue": [
               {
-                "special_group": "projectOwners",
-                "role": "roles/bigquery.dataOwner"
+                "role": "roles/bigquery.dataOwner",
+                "special_group": "projectOwners"
               }
             ],
             "type": "any"
@@ -169,8 +169,8 @@
             "key": "vpc_access",
             "value": {
               "network_interfaces": {
-                "subnetwork": "default",
-                "network": "default"
+                "network": "default",
+                "subnetwork": "default"
               },
               "egress": "PRIVATE_RANGES_ONLY"
             }
@@ -195,12 +195,6 @@
             "key": "containers",
             "value": [
               {
-                "volume_mounts": [
-                  {
-                    "name": "cloudsql",
-                    "mount_path": "/cloudsql"
-                  }
-                ],
                 "ports": {
                   "container_port": 8001,
                   "name": "http1"
@@ -212,13 +206,19 @@
                 "container_name": "server",
                 "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_syncer:v4",
                 "env_vars": {
+                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address",
                   "POSTGRES_USER": "londondatauser",
                   "EMBEDDING_MODEL": "text-embedding-005",
                   "GOOGLE_CLOUD_LOCATION": "us-central1",
                   "GOOGLE_CLOUD_PROJECT": "qwiklabs-gcp-01-86960e134c68",
-                  "POSTGRES_DB": "london_travel",
-                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address"
-                }
+                  "POSTGRES_DB": "london_travel"
+                },
+                "volume_mounts": [
+                  {
+                    "mount_path": "/cloudsql",
+                    "name": "cloudsql"
+                  }
+                ]
               }
             ]
           },
@@ -244,9 +244,9 @@
               {
                 "key": "containers[0].env_vars",
                 "value": {
+                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
                   "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
-                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address"
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
                 }
               },
               {
@@ -339,8 +339,8 @@
                 "key": "containers[0].volume_mounts",
                 "value": [
                   {
-                    "mount_path": "/cloudsql",
-                    "name": "cloudsql"
+                    "name": "cloudsql",
+                    "mount_path": "/cloudsql"
                   }
                 ]
               },
@@ -540,23 +540,21 @@
             "key": "containers",
             "value": [
               {
-                "ports": {
-                  "name": "http1",
-                  "container_port": 8000
-                },
-                "resources": {
-                  "startup_cpu_boost": false,
-                  "cpu_idle": true
-                },
-                "container_name": "service",
                 "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/agent:v4",
                 "env_vars": {
-                  "OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED": "true",
-                  "GOOGLE_CLOUD_LOCATION": "us-central1",
-                  "GOOGLE_CLOUD_PROJECT": "qwiklabs-gcp-01-86960e134c68",
-                  "GOOGLE_GENAI_USE_VERTEXAI": "true",
-                  "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT": "true"
-                }
+                  "MODEL_ARMOR_TEMPLATE_NAME": "module.model-armor-template-1.template_id",
+                  "AGENT_ENGINE_ID": "module.agent-engine-1.reasoning_engine_id",
+                  "LOGS_BUCKET_NAME": "module.cloud-storage-1.name"
+                },
+                "ports": {
+                  "container_port": 8000,
+                  "name": "http1"
+                },
+                "resources": {
+                  "cpu_idle": true,
+                  "startup_cpu_boost": false
+                },
+                "container_name": "service"
               }
             ]
           },
@@ -583,11 +581,11 @@
           {
             "key": "vpc_access",
             "value": {
-              "egress": "PRIVATE_RANGES_ONLY",
               "network_interfaces": {
                 "subnetwork": "default",
                 "network": "default"
-              }
+              },
+              "egress": "PRIVATE_RANGES_ONLY"
             }
           },
           {
@@ -597,8 +595,8 @@
           {
             "key": "template_scaling",
             "value": {
-              "max_instance_count": 5,
-              "min_instance_count": 1
+              "min_instance_count": 1,
+              "max_instance_count": 5
             }
           }
         ],
@@ -640,6 +638,27 @@
                 "key": "service_account_project_roles",
                 "value": [
                   "roles/bigquery.dataEditor"
+                ]
+              }
+            ]
+          },
+          {
+            "uri": "projects/qwiklabs-gcp-01-86960e134c68/locations/us-central1/spaces/default-space/applicationTemplates/agentic-app-template/components/fastapi-backend/connections/connection-2",
+            "destinationComponentUri": "projects/qwiklabs-gcp-01-86960e134c68/locations/us-central1/spaces/default-space/applicationTemplates/agentic-app-template/components/cloud-storage-1",
+            "sourceComponentParameters": [
+              {
+                "key": "volumes[0].gcs.bucket",
+                "value": "module.cloud-storage-1.name"
+              }
+            ],
+            "destinationComponentParameters": [
+              {
+                "key": "iam_members",
+                "value": [
+                  {
+                    "member": "module.fastapi-backend.service_account_id.member",
+                    "role": "roles/storage.objectAdmin"
+                  }
                 ]
               }
             ]
@@ -702,6 +721,15 @@
                 "value": [
                   "roles/bigquery.dataEditor"
                 ]
+              }
+            ]
+          },
+          {
+            "connection": "projects/qwiklabs-gcp-01-86960e134c68/locations/us-central1/spaces/default-space/applicationTemplates/agentic-app-template/components/fastapi-backend/connections/connection-2",
+            "parameters": [
+              {
+                "key": "volumes[0].gcs.bucket",
+                "value": "module.cloud-storage-1.name"
               }
             ]
           }
@@ -887,23 +915,20 @@
             "value": [
               {
                 "env_vars": {
-                  "GOOGLE_CLOUD_PROJECT": "qwiklabs-gcp-01-86960e134c68",
-                  "POSTGRES_DB": "london_travel",
                   "POSTGRES_HOST": "module.postgresql-db.public_ip_address",
                   "POSTGRES_USER": "londondatauser",
                   "DB_TYPE": "postgres",
-                  "GOOGLE_CLOUD_LOCATION": "us-central1",
-                  "EMBEDDING_MODEL": "text-embedding-005"
+                  "POSTGRES_DB": "london_travel"
                 },
                 "volume_mounts": [
                   {
-                    "name": "cloudsql",
-                    "mount_path": "/cloudsql"
+                    "mount_path": "/cloudsql",
+                    "name": "cloudsql"
                   }
                 ],
                 "ports": {
-                  "name": "http1",
-                  "container_port": 8002
+                  "container_port": 8002,
+                  "name": "http1"
                 },
                 "resources": {
                   "cpu_idle": true,
@@ -930,8 +955,8 @@
             "value": {
               "egress": "PRIVATE_RANGES_ONLY",
               "network_interfaces": {
-                "network": "default",
-                "subnetwork": "default"
+                "subnetwork": "default",
+                "network": "default"
               }
             }
           },
@@ -961,17 +986,17 @@
               {
                 "key": "containers[0].env_vars",
                 "value": {
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
                   "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
-                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name"
+                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
                 }
               },
               {
                 "key": "containers[0].volume_mounts",
                 "value": [
                   {
-                    "name": "cloudsql",
-                    "mount_path": "/cloudsql"
+                    "mount_path": "/cloudsql",
+                    "name": "cloudsql"
                   }
                 ]
               },
@@ -994,9 +1019,9 @@
                 "key": "iam_users",
                 "value": [
                   {
-                    "id": "module.data-mcp.service_account_id.id",
                     "type": "CLOUD_IAM_SERVICE_ACCOUNT",
-                    "email": "module.data-mcp.service_account_id.email"
+                    "email": "module.data-mcp.service_account_id.email",
+                    "id": "module.data-mcp.service_account_id.id"
                   }
                 ]
               }
@@ -1056,8 +1081,8 @@
                 "key": "containers[0].volume_mounts",
                 "value": [
                   {
-                    "mount_path": "/cloudsql",
-                    "name": "cloudsql"
+                    "name": "cloudsql",
+                    "mount_path": "/cloudsql"
                   }
                 ]
               },
@@ -1287,6 +1312,7 @@
           {
             "key": "ip_configuration",
             "value": {
+              "enable_private_path_for_google_cloud_services": false,
               "psc_enabled": false,
               "authorized_networks": [
                 {
@@ -1294,8 +1320,7 @@
                   "key": "default"
                 }
               ],
-              "ipv4_enabled": true,
-              "enable_private_path_for_google_cloud_services": false
+              "ipv4_enabled": true
             }
           }
         ],
@@ -1332,9 +1357,9 @@
                 "key": "iam_users",
                 "value": [
                   {
-                    "type": "CLOUD_IAM_SERVICE_ACCOUNT",
                     "email": "module.data-syncer.service_account_id.email",
-                    "id": "module.data-syncer.service_account_id.id"
+                    "id": "module.data-syncer.service_account_id.id",
+                    "type": "CLOUD_IAM_SERVICE_ACCOUNT"
                   }
                 ]
               }
@@ -1347,9 +1372,9 @@
                 "key": "iam_users",
                 "value": [
                   {
-                    "email": "module.data-mcp.service_account_id.email",
                     "id": "module.data-mcp.service_account_id.id",
-                    "type": "CLOUD_IAM_SERVICE_ACCOUNT"
+                    "type": "CLOUD_IAM_SERVICE_ACCOUNT",
+                    "email": "module.data-mcp.service_account_id.email"
                   }
                 ]
               }
@@ -1844,10 +1869,10 @@
           {
             "key": "metadata_configs",
             "value": {
+              "enable_multi_language_detection": true,
               "log_sanitize_operations": false,
               "log_template_operations": false,
-              "ignore_partial_invocation_failures": false,
-              "enable_multi_language_detection": true
+              "ignore_partial_invocation_failures": false
             }
           }
         ],
@@ -1946,16 +1971,16 @@
             "key": "containers",
             "value": [
               {
-                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/frontend:v4",
-                "ports": {
-                  "container_port": 80,
-                  "name": "http1"
-                },
                 "resources": {
                   "cpu_idle": true,
                   "startup_cpu_boost": false
                 },
-                "container_name": "service-container"
+                "container_name": "service-container",
+                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/frontend:v4",
+                "ports": {
+                  "name": "http1",
+                  "container_port": 80
+                }
               }
             ]
           },
@@ -1968,11 +1993,11 @@
           {
             "key": "vpc_access",
             "value": {
-              "egress": "PRIVATE_RANGES_ONLY",
               "network_interfaces": {
                 "network": "default",
                 "subnetwork": "default"
-              }
+              },
+              "egress": "PRIVATE_RANGES_ONLY"
             }
           }
         ],
@@ -2196,12 +2221,167 @@
         ]
       },
       {
+        "uri": "projects/qwiklabs-gcp-01-86960e134c68/locations/us-central1/spaces/default-space/applicationTemplates/agentic-app-template/components/cloud-storage-1",
+        "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/4091786e-4547-4ab9-b510-b17834685912/revisions/r-11",
+        "parameters": [
+          {
+            "key": "project_id",
+            "value": "qwiklabs-gcp-01-86960e134c68"
+          },
+          {
+            "key": "location",
+            "value": "us-central1"
+          },
+          {
+            "key": "name",
+            "value": "logs-storage-bucket"
+          }
+        ],
+        "roles": [
+          "roles/storage.admin",
+          "roles/iam.serviceAccountUser",
+          "roles/cloudkms.admin",
+          "roles/logging.logWriter",
+          "roles/serviceusage.serviceUsageAdmin"
+        ],
+        "apis": [
+          "cloudkms.googleapis.com",
+          "iam.googleapis.com",
+          "storage.googleapis.com"
+        ],
+        "connectionsParameters": [
+          {
+            "connection": "projects/qwiklabs-gcp-01-86960e134c68/locations/us-central1/spaces/default-space/applicationTemplates/agentic-app-template/components/fastapi-backend/connections/connection-2",
+            "parameters": [
+              {
+                "key": "iam_members",
+                "value": [
+                  {
+                    "member": "module.fastapi-backend.service_account_id.member",
+                    "role": "roles/storage.objectAdmin"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "componentParameterSchema": [
+          {
+            "key": "project_id",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "location",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "name",
+            "isRequired": true,
+            "type": "string"
+          },
+          {
+            "key": "force_destroy",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "iam_members",
+            "defaultValue": [],
+            "type": "list(object({\n    role   = string\n    member = string\n  }))"
+          },
+          {
+            "key": "storage_class",
+            "type": "string"
+          },
+          {
+            "key": "labels",
+            "type": "map(string)"
+          },
+          {
+            "key": "bucket_policy_only",
+            "defaultValue": true,
+            "type": "bool"
+          },
+          {
+            "key": "versioning",
+            "defaultValue": true,
+            "type": "bool"
+          },
+          {
+            "key": "autoclass",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "hierarchical_namespace",
+            "defaultValue": false,
+            "type": "bool"
+          },
+          {
+            "key": "retention_policy",
+            "type": "object({\n    is_locked        = optional(bool)\n    retention_period = number\n  })"
+          },
+          {
+            "key": "custom_placement_config",
+            "type": "object({\n    data_locations = list(string)\n  })"
+          },
+          {
+            "key": "cors",
+            "defaultValue": [],
+            "type": "list(object({\n    origin          = optional(list(string))\n    method          = optional(list(string))\n    response_header = optional(list(string))\n    max_age_seconds = optional(number)\n  }))"
+          },
+          {
+            "key": "encryption",
+            "type": "object({\n    default_kms_key_name = string\n  })"
+          },
+          {
+            "key": "lifecycle_rules",
+            "defaultValue": [],
+            "type": "list(object({\n    # Object with keys:\n    # - type - The type of the action of this Lifecycle Rule. Supported values: Delete and SetStorageClass.\n    # - storage_class - (Required if action type is SetStorageClass) The target Storage Class of objects affected by this Lifecycle Rule.\n    action = object({\n      type          = string\n      storage_class = optional(string)\n    })\n\n    # Object with keys:\n    # - age - (Optional) Minimum age of an object in days to satisfy this condition.\n    # - send_age_if_zero - (Optional) While set true, num_newer_versions value will be sent in the request even for zero value of the field.\n    # - created_before - (Optional) Creation date of an object in RFC 3339 (e.g. 2017-06-13) to satisfy this condition.\n    # - with_state - (Optional) Match to live and/or archived objects. Supported values include: \"LIVE\", \"ARCHIVED\", \"ANY\".\n    # - matches_storage_class - (Optional) Storage Class of objects to satisfy this condition. Supported values include: MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE, STANDARD, DURABLE_REDUCED_AVAILABILITY.\n    # - matches_prefix - (Optional) One or more matching name prefixes to satisfy this condition.\n    # - matches_suffix - (Optional) One or more matching name suffixes to satisfy this condition\n    # - num_newer_versions - (Optional) Relevant only for versioned objects. The number of newer versions of an object to satisfy this condition.\n    # - custom_time_before - (Optional) A date in the RFC 3339 format YYYY-MM-DD. This condition is satisfied when the customTime metadata for the object is set to an earlier date than the date used in this lifecycle condition.\n    # - days_since_custom_time - (Optional) Days since the date set in the customTime metadata for the object.\n    # - days_since_noncurrent_time - (Optional) Relevant only for versioned objects. Number of days elapsed since the noncurrent timestamp of an object.\n    # - noncurrent_time_before - (Optional) Relevant only for versioned objects. The date in RFC 3339 (e.g. 2017-06-13) when the object became nonconcurrent.\n    condition = object({\n      age                        = optional(number)\n      send_age_if_zero           = optional(bool)\n      created_before             = optional(string)\n      with_state                 = optional(string)\n      matches_storage_class      = optional(string)\n      matches_prefix             = optional(string)\n      matches_suffix             = optional(string)\n      num_newer_versions         = optional(number)\n      custom_time_before         = optional(string)\n      days_since_custom_time     = optional(number)\n      days_since_noncurrent_time = optional(number)\n      noncurrent_time_before     = optional(string)\n    })\n  }))"
+          },
+          {
+            "key": "log_bucket",
+            "type": "string"
+          },
+          {
+            "key": "log_object_prefix",
+            "type": "string"
+          },
+          {
+            "key": "website",
+            "defaultValue": {},
+            "type": "object({\n    main_page_suffix = optional(string)\n    not_found_page   = optional(string)\n  })"
+          },
+          {
+            "key": "public_access_prevention",
+            "defaultValue": "inherited",
+            "type": "string"
+          },
+          {
+            "key": "soft_delete_policy",
+            "defaultValue": {},
+            "type": "object({\n    retention_duration_seconds = optional(number)\n  })"
+          },
+          {
+            "key": "internal_encryption_config",
+            "defaultValue": {},
+            "type": "object({\n    create_encryption_key          = optional(bool, false)\n    prevent_destroy                = optional(bool, false)\n    key_destroy_scheduled_duration = optional(string, null)\n    key_rotation_period            = optional(string, \"7776000s\")\n  })"
+          },
+          {
+            "key": "ip_filter",
+            "type": "object({\n    mode = string\n    public_network_source = optional(object({\n      allowed_ip_cidr_ranges = list(string)\n    }))\n    vpc_network_sources = optional(list(object({\n      network                = string\n      allowed_ip_cidr_ranges = list(string)\n    })))\n    allow_cross_org_vpcs           = optional(bool)\n    allow_all_service_agent_access = optional(bool)\n  })"
+          }
+        ]
+      },
+      {
         "uri": "projects/qwiklabs-gcp-01-86960e134c68/locations/us-central1/spaces/default-space/applicationTemplates/agentic-app-template/components/agent-engine-1",
         "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/googlespace-vertex-ai-agent-engine-1sx3p0y/revisions/r-4",
         "parameters": [
           {
             "key": "display_name",
-            "value": "agent-engine-1"
+            "value": "agent-engine-vertex-services"
           },
           {
             "key": "project_id",
