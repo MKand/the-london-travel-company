@@ -48,8 +48,8 @@ class AgentModel(BaseModel):
 
 class Config(BaseSettings):
     """Configuration settings for the ticket agent."""
-    project: str = PROJECT_ID
-    location:str = LOCATION
+    project: str = Field(default=PROJECT_ID)
+    location:str = Field(default=LOCATION)
     app_name: str = "Cymbal London Ticket Agent"
     agent_settings: AgentModel = Field(default_factory=AgentModel) 
 
