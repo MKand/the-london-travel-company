@@ -17,8 +17,6 @@ from google.adk.agents import Agent
 from google.adk.apps import App
 from google.genai import types
 import google.auth
-from ticket_agent.types import AgentOutput
-from ticket_agent.tools import search_mcp_tool
 from ticket_agent.config import configs
 import logging
 
@@ -32,11 +30,7 @@ root_agent = Agent(
     model=configs.agent_settings.model,
     instruction=return_instructions_agent(),
     name=configs.agent_settings.name,
-    output_schema = AgentOutput,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
-    tools=[
-        search_mcp_tool
-    ],
 )
 # --- Create the App ---
 app = App(

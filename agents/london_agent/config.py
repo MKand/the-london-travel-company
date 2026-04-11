@@ -57,13 +57,11 @@ class AgentModel(BaseModel):
 
 class Config(BaseSettings):
     """Configuration settings for the london holiday agent."""
-    embedding_model_name: str = EMBEDDING_MODEL_NAME
-    project: str = PROJECT_ID
+    project_id: str = PROJECT_ID
     location:str = LOCATION
     app_name: str = "Cymbal London Concierge"
     data_backend_url: str = DATA_BACKEND_URL
     agent_settings: AgentModel = Field(default_factory=AgentModel) 
-    genai_use_vertexai: str = Field(default="1") 
     model_armor_template_name: str = Field(default=FULL_TEMPLATE_NAME)
     bq_dataset_id: str = Field(default=DATASET_ID)
 

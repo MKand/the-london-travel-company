@@ -20,7 +20,7 @@ from google.adk.cli.fast_api import get_fast_api_app
 from fastapi import FastAPI
 from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
-import agent # doing to make errors importing the agent appear explicity
+import ticket_agent.agent # doing to make errors importing the agent appear explicity
 
 # Set up Cloud Logging for GCP
 # This ensures that standard Python logging.ERROR etc. map correctly to GCP severity
@@ -39,7 +39,7 @@ ALLOWED_ORIGINS = ["*"]
 
 # Call the function to get the FastAPI app instance
 app: FastAPI = get_fast_api_app(
-    agents_dir=AGENT_DIR,
+    agents_dir=os.path.dirname(AGENT_DIR),
     allow_origins=ALLOWED_ORIGINS,
     web=True,
     trace_to_cloud=False,

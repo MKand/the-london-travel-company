@@ -39,11 +39,11 @@ ALLOWED_ORIGINS = ["*"]
 
 # Call the function to get the FastAPI app instance
 app: FastAPI = get_fast_api_app(
-    agents_dir=AGENT_DIR,
+    agents_dir=os.path.dirname(AGENT_DIR),
     allow_origins=ALLOWED_ORIGINS,
     web=True,
-    trace_to_cloud=False,
-    otel_to_cloud=True,
+    trace_to_cloud=True,
+    otel_to_cloud=False,
 )
 
 HTTPXClientInstrumentor().instrument()

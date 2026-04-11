@@ -4,7 +4,7 @@ The London Travel Company is a generative AI-powered travel assistant based on t
 
 ## Folder Structure
 
-- `agents/`: The main FastAPI backend containing the hierarchical AI agents (Root Agent and Database Search Sub-Agent).
+- `agents/`: The main FastAPI backend containing the hierarchical AI agents (london agent and ticket agent).
 - `frontend/`: The Vue 3 frontend application built with Vite and Tailwind CSS.
 - `london_data_mcp/`: The Data MCP Server built to query the PostgreSQL database.
 - `data_syncer/`: A FastAPI service that synchronizes initial travel data into the database.
@@ -82,12 +82,10 @@ To deploy the full architecture to a GCP project using Cloud Run and App Hub:
    terraform apply -var="project_id=your-gcp-project-id" -var="region=your-gcp-region"
    ```
 
-Importing the MCP server to the registry
+## Importing the MCP server to the registry
 
 Registry link https://pantheon.corp.google.com/agent-management/agent-registry?e=AgentManagementLaunch::AgentManagementEnabled&project=$PROJECT_ID
 
 ADK: API Registry: https://google.github.io/adk-docs/integrations/api-registry/#use-with-agent
 
 
-
-curl -X POST https://data-syncer-afb6-206797735871.us-central1.run.app/sync -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://londondatauser:isUGKUcc9J1h9mIKceX08qrG5x2NmDQm@136.116.116.120/london_travel"}'
