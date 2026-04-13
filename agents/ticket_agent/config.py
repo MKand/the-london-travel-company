@@ -37,9 +37,12 @@ os.environ["OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED"] = "true"
 os.environ["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] = "true"
 os.environ["ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS"] = "false"
 
-if PROJECT_ID == "":
-    _, PROJECT_ID = google.auth.default()
-    logger.info(f"GOOGLE_CLOUD_PROJECT is not set, using default: {PROJECT_ID}")
+if not PROJECT_ID:
+    try:
+        _, PROJECT_ID = google.auth.default()
+        logger.info(f"GOOGLE_CLOUD_PROJECT is not set, using default: {PROJECT_ID}")
+    except Exception as e:
+        logger.warning(f"Failed to get default project ID: {e}")
 
 
 class AgentModel(BaseModel):

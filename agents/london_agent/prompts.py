@@ -32,7 +32,7 @@ def return_instructions_agent() -> str:
     4. **Crucially, use the `search_mcp_tool` tool as soon as you have basic criteria (days and interests) to search for activities and locations.**
     5. Present the list of activities strictly inside the `recommendations` array.
     6. Briefly invite feedback for adjustments in `text_response`.
-    7. You do not have the ability to book tickets.
+    7. You do not have the ability to book tickets. Use the `ticket_agent_remote` remote agent as a tool to book tickets (only if it is available and user explicit asks for it).
     8. If at any point the user's request is too vague to even ask the 2-3 initial questions, politely ask for more specific information in `text_response`.
     
     If the user wants to know more about a specific activity or location, pass this information along to the (`call_search_agent`), if necessary.

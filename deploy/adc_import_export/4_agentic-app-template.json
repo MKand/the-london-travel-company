@@ -20,8 +20,8 @@
             "key": "access",
             "value": [
               {
-                "role": "roles/bigquery.dataOwner",
-                "special_group": "projectOwners"
+                "special_group": "projectOwners",
+                "role": "roles/bigquery.dataOwner"
               }
             ]
           }
@@ -149,6 +149,49 @@
         "sharedTemplateRevisionUri": "projects/gcpdesigncenter/locations/us-central1/spaces/googlespace/sharedTemplates/1b5e09c8-780f-484e-b8ed-c7178f4e4342/revisions/r-18",
         "parameters": [
           {
+            "key": "project_id",
+            "value": "qwiklabs-gcp-01-86960e134c68"
+          },
+          {
+            "key": "location",
+            "value": "us-central1"
+          },
+          {
+            "key": "service_name",
+            "value": "data-syncer"
+          },
+          {
+            "key": "containers",
+            "value": [
+              {
+                "resources": {
+                  "startup_cpu_boost": false,
+                  "cpu_idle": true
+                },
+                "container_name": "server",
+                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_syncer:v4",
+                "env_vars": {
+                  "GOOGLE_CLOUD_PROJECT": "qwiklabs-gcp-01-86960e134c68",
+                  "POSTGRES_DB": "london_travel",
+                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address",
+                  "POSTGRES_USER": "londondatauser",
+                  "EMBEDDING_MODEL": "text-embedding-005",
+                  "GOOGLE_CLOUD_LOCATION": "us-central1"
+                },
+                "volume_mounts": [
+                  {
+                    "mount_path": "/cloudsql",
+                    "name": "cloudsql"
+                  }
+                ],
+                "ports": {
+                  "container_port": 8001,
+                  "name": "http1"
+                }
+              }
+            ]
+          },
+          {
             "key": "service_account_project_roles",
             "value": [
               "roles/cloudsql.client",
@@ -180,58 +223,15 @@
             "value": false
           },
           {
-            "key": "project_id",
-            "value": "qwiklabs-gcp-01-86960e134c68"
-          },
-          {
-            "key": "location",
-            "value": "us-central1"
-          },
-          {
-            "key": "service_name",
-            "value": "data-syncer"
-          },
-          {
-            "key": "containers",
-            "value": [
-              {
-                "ports": {
-                  "container_port": 8001,
-                  "name": "http1"
-                },
-                "resources": {
-                  "startup_cpu_boost": false,
-                  "cpu_idle": true
-                },
-                "container_name": "server",
-                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_syncer:v4",
-                "env_vars": {
-                  "POSTGRES_HOST": "module.postgresql-db.public_ip_address",
-                  "POSTGRES_USER": "londondatauser",
-                  "EMBEDDING_MODEL": "text-embedding-005",
-                  "GOOGLE_CLOUD_LOCATION": "us-central1",
-                  "GOOGLE_CLOUD_PROJECT": "qwiklabs-gcp-01-86960e134c68",
-                  "POSTGRES_DB": "london_travel"
-                },
-                "volume_mounts": [
-                  {
-                    "mount_path": "/cloudsql",
-                    "name": "cloudsql"
-                  }
-                ]
-              }
-            ]
-          },
-          {
             "key": "volumes",
             "value": [
               {
+                "name": "cloudsql",
                 "cloud_sql_instance": {
                   "instances": [
                     "module.postgresql-db.instance_connection_name"
                   ]
-                },
-                "name": "cloudsql"
+                }
               }
             ]
           }
@@ -253,8 +253,8 @@
                 "key": "containers[0].volume_mounts",
                 "value": [
                   {
-                    "name": "cloudsql",
-                    "mount_path": "/cloudsql"
+                    "mount_path": "/cloudsql",
+                    "name": "cloudsql"
                   }
                 ]
               },
@@ -277,9 +277,9 @@
                 "key": "iam_users",
                 "value": [
                   {
-                    "id": "module.data-syncer.service_account_id.id",
                     "type": "CLOUD_IAM_SERVICE_ACCOUNT",
-                    "email": "module.data-syncer.service_account_id.email"
+                    "email": "module.data-syncer.service_account_id.email",
+                    "id": "module.data-syncer.service_account_id.id"
                   }
                 ]
               }
@@ -330,9 +330,9 @@
               {
                 "key": "containers[0].env_vars",
                 "value": {
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
                   "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
-                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name"
+                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
                 }
               },
               {
@@ -540,21 +540,22 @@
             "key": "containers",
             "value": [
               {
+                "container_name": "service",
                 "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/agent:v4",
                 "env_vars": {
                   "MODEL_ARMOR_TEMPLATE_NAME": "module.model-armor-template-1.template_id",
                   "AGENT_ENGINE_ID": "module.agent-engine-1.reasoning_engine_id",
-                  "LOGS_BUCKET_NAME": "module.cloud-storage-1.name"
+                  "LOGS_BUCKET_NAME": "module.cloud-storage-1.name",
+                  "GOOGLE_CLOUD_PROJECT": "qwiklabs-gcp-01-86960e134c68"
                 },
                 "ports": {
                   "container_port": 8000,
                   "name": "http1"
                 },
                 "resources": {
-                  "cpu_idle": true,
-                  "startup_cpu_boost": false
-                },
-                "container_name": "service"
+                  "startup_cpu_boost": false,
+                  "cpu_idle": true
+                }
               }
             ]
           },
@@ -595,8 +596,8 @@
           {
             "key": "template_scaling",
             "value": {
-              "min_instance_count": 1,
-              "max_instance_count": 5
+              "max_instance_count": 5,
+              "min_instance_count": 1
             }
           }
         ],
@@ -626,12 +627,12 @@
               {
                 "key": "containers[0].env_vars",
                 "value": {
-                  "big_query_1_BIGQUERY_VIEWS": "module.big-query-1.env_vars.BIGQUERY_VIEWS",
                   "big_query_1_BIGQUERY_DATASET": "module.big-query-1.env_vars.BIGQUERY_DATASET",
                   "big_query_1_BIGQUERY_EXTERNAL_TABLES": "module.big-query-1.env_vars.BIGQUERY_EXTERNAL_TABLES",
                   "big_query_1_BIGQUERY_MATERIALIZED_VIEWS": "module.big-query-1.env_vars.BIGQUERY_MATERIALIZED_VIEWS",
                   "big_query_1_BIGQUERY_ROUTINES": "module.big-query-1.env_vars.BIGQUERY_ROUTINES",
-                  "big_query_1_BIGQUERY_TABLES": "module.big-query-1.env_vars.BIGQUERY_TABLES"
+                  "big_query_1_BIGQUERY_TABLES": "module.big-query-1.env_vars.BIGQUERY_TABLES",
+                  "big_query_1_BIGQUERY_VIEWS": "module.big-query-1.env_vars.BIGQUERY_VIEWS"
                 }
               },
               {
@@ -918,12 +919,13 @@
                   "POSTGRES_HOST": "module.postgresql-db.public_ip_address",
                   "POSTGRES_USER": "londondatauser",
                   "DB_TYPE": "postgres",
+                  "GOOGLE_CLOUD_PROJECT": "qwiklabs-gcp-01-86960e134c68",
                   "POSTGRES_DB": "london_travel"
                 },
                 "volume_mounts": [
                   {
-                    "mount_path": "/cloudsql",
-                    "name": "cloudsql"
+                    "name": "cloudsql",
+                    "mount_path": "/cloudsql"
                   }
                 ],
                 "ports": {
@@ -931,8 +933,8 @@
                   "name": "http1"
                 },
                 "resources": {
-                  "cpu_idle": true,
-                  "startup_cpu_boost": false
+                  "startup_cpu_boost": false,
+                  "cpu_idle": true
                 },
                 "container_name": "server",
                 "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/data_mcp:v4"
@@ -953,11 +955,11 @@
           {
             "key": "vpc_access",
             "value": {
-              "egress": "PRIVATE_RANGES_ONLY",
               "network_interfaces": {
                 "subnetwork": "default",
                 "network": "default"
-              }
+              },
+              "egress": "PRIVATE_RANGES_ONLY"
             }
           },
           {
@@ -968,12 +970,12 @@
             "key": "volumes",
             "value": [
               {
-                "name": "cloudsql",
                 "cloud_sql_instance": {
                   "instances": [
                     "module.postgresql-db.instance_connection_name"
                   ]
-                }
+                },
+                "name": "cloudsql"
               }
             ]
           }
@@ -986,17 +988,17 @@
               {
                 "key": "containers[0].env_vars",
                 "value": {
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
                   "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
-                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
+                  "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name"
                 }
               },
               {
                 "key": "containers[0].volume_mounts",
                 "value": [
                   {
-                    "mount_path": "/cloudsql",
-                    "name": "cloudsql"
+                    "name": "cloudsql",
+                    "mount_path": "/cloudsql"
                   }
                 ]
               },
@@ -1019,9 +1021,9 @@
                 "key": "iam_users",
                 "value": [
                   {
+                    "id": "module.data-mcp.service_account_id.id",
                     "type": "CLOUD_IAM_SERVICE_ACCOUNT",
-                    "email": "module.data-mcp.service_account_id.email",
-                    "id": "module.data-mcp.service_account_id.id"
+                    "email": "module.data-mcp.service_account_id.email"
                   }
                 ]
               }
@@ -1072,9 +1074,9 @@
               {
                 "key": "containers[0].env_vars",
                 "value": {
+                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address",
                   "postgresql_db_CLOUD_SQL_DATABASE_CONNECTION_NAME": "module.postgresql-db.instance_connection_name",
-                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME",
-                  "POSTGRES_HOST": "module.postgresql-db.instance_first_ip_address"
+                  "POSTGRES_DB": "module.postgresql-db.env_vars.CLOUD_SQL_DATABASE_NAME"
                 }
               },
               {
@@ -1305,14 +1307,13 @@
           {
             "key": "backup_configuration",
             "value": {
-              "point_in_time_recovery_enabled": false,
-              "enabled": false
+              "enabled": false,
+              "point_in_time_recovery_enabled": false
             }
           },
           {
             "key": "ip_configuration",
             "value": {
-              "enable_private_path_for_google_cloud_services": false,
               "psc_enabled": false,
               "authorized_networks": [
                 {
@@ -1320,7 +1321,8 @@
                   "key": "default"
                 }
               ],
-              "ipv4_enabled": true
+              "ipv4_enabled": true,
+              "enable_private_path_for_google_cloud_services": false
             }
           }
         ],
@@ -1869,10 +1871,10 @@
           {
             "key": "metadata_configs",
             "value": {
-              "enable_multi_language_detection": true,
               "log_sanitize_operations": false,
               "log_template_operations": false,
-              "ignore_partial_invocation_failures": false
+              "ignore_partial_invocation_failures": false,
+              "enable_multi_language_detection": true
             }
           }
         ],
@@ -1971,16 +1973,16 @@
             "key": "containers",
             "value": [
               {
-                "resources": {
-                  "cpu_idle": true,
-                  "startup_cpu_boost": false
-                },
-                "container_name": "service-container",
                 "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/frontend:v4",
                 "ports": {
                   "name": "http1",
                   "container_port": 80
-                }
+                },
+                "resources": {
+                  "startup_cpu_boost": false,
+                  "cpu_idle": true
+                },
+                "container_name": "service-container"
               }
             ]
           },
@@ -1993,11 +1995,11 @@
           {
             "key": "vpc_access",
             "value": {
+              "egress": "PRIVATE_RANGES_ONLY",
               "network_interfaces": {
-                "network": "default",
-                "subnetwork": "default"
-              },
-              "egress": "PRIVATE_RANGES_ONLY"
+                "subnetwork": "default",
+                "network": "default"
+              }
             }
           }
         ],

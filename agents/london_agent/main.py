@@ -15,6 +15,7 @@
 import os
 import uvicorn
 import logging
+from london_agent.config import configs
 from google.adk.cli.fast_api import get_fast_api_app
 from fastapi import FastAPI
 from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
@@ -37,14 +38,16 @@ from google.adk.runners import Runner
 from google.adk.sessions import VertexAiSessionService, InMemorySessionService
 from google.adk.memory import VertexAiMemoryBankService, InMemoryMemoryService
 from london_agent.utils import setup_logging, setup_telemetry
-from london_agent.config import configs
+from london_agent.config import Config
 from london_agent.agent import adk_app
 
+configs = Config()
 
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_ORIGINS = ["*"]
 
 setup_logging()
+setup_telemetry()
 
 # Artifact bucket for ADK (created by Terraform, passed via env var)
 artifact_service = (
@@ -64,11 +67,8 @@ else:
 app: FastAPI = get_fast_api_app(
     agents_dir=os.path.dirname(AGENT_DIR),
     allow_origins=ALLOWED_ORIGINS,
-    session_service_uri=configs.session_service_uri,
     memory_service_uri=configs.memory_service_uri,
     web=True,
-    trace_to_cloud=True,
-    otel_to_cloud=False,
 )
 
 @app.get("/health")

@@ -16,6 +16,10 @@ from google.adk.agents import Agent
 from google.adk.apps import App
 from google.genai import types
 from google.adk.tools import load_memory
+from google.adk.tools.agent_tool import AgentTool
+from google.adk.agents.remote_a2a_agent import AGENT_CARD_WELL_KNOWN_PATH, RemoteA2aAgent
+from google.adk.plugins.bigquery_agent_analytics_plugin import BigQueryAgentAnalyticsPlugin, BigQueryLoggerConfig
+from google.adk.tools.bigquery import BigQueryToolset, BigQueryCredentialsConfig
 
 import google.auth
 from london_agent.types import AgentOutput
@@ -31,7 +35,39 @@ logger = logging.getLogger(__name__)
 
 APP_NAME=configs.app_name
 
-model_armor_guard = create_model_armor_guard()
+if configs.use_model_armor:
+    model_armor_guard = create_model_armor_guard()
+    before_model_callback = model_armor_guard.before_model_callback
+    after_model_callback = model_armor_guard.after_model_callback
+else:
+    before_model_callback = None
+    after_model_callback = None
+
+if configs.use_remote_ticket_agent:
+    ticket_agent_remote = RemoteA2aAgent(
+        name="ticket_agent_remote",
+        description="Agent that books tickets for activities in London",
+        agent_card=f"{configs.remote_ticket_agent_url}{AGENT_CARD_WELL_KNOWN_PATH}",
+    )
+    tools = [search_mcp_tool, load_memory, AgentTool(ticket_agent_remote)]
+else:
+    tools = [search_mcp_tool, load_memory]
+
+
+plugins = []
+if configs.use_bq_analytics:
+    bq_analytics_plugin = BigQueryAgentAnalyticsPlugin(
+        project_id=configs.project_id,
+        dataset_id=configs.bq_dataset_id,
+        location=configs.location,
+        config=BigQueryLoggerConfig(
+            batch_size=1,
+            batch_flush_interval=0.5,
+            log_session_metadata=True,
+        ),
+    )
+    plugins.append(bq_analytics_plugin)
+  
 
 # Initialize the agent outside the request handler for efficiency.
 root_agent = Agent(
@@ -40,16 +76,16 @@ root_agent = Agent(
     name=configs.agent_settings.name,
     output_schema = AgentOutput,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
-    tools=[
-        search_mcp_tool, load_memory
-    ],
-    before_model_callback=model_armor_guard.before_model_callback,
-    after_model_callback=model_armor_guard.after_model_callback,
+    tools=tools,
+    before_model_callback=before_model_callback,
+    after_model_callback=after_model_callback,
 )
+
 # --- Create the App ---
 adk_app = App(
     name="london_agent",
     root_agent=root_agent,
+    plugins=plugins,
 )
 
 

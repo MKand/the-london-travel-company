@@ -12,8 +12,9 @@ services:
       GOOGLE_CLOUD_PROJECT: $PROJECT_ID
       GOOGLE_CLOUD_LOCATION: $LOCATION
       DATA_BACKEND_URL: "http://data_mcp:8002"
-      AGENT_ENGINE_ID: $AGENT_ENGINE_ID
       MODEL_ARMOR_TEMPLATE_NAME: $MODEL_ARMOR_TEMPLATE_NAME
+      REMOTE_TICKET_AGENT_URL: "http://ticket_agent:8000"
+      BIG_QUERY_DATASET_ID: agent_telemetry
     volumes:
       - .key.json:/app/.key.json:ro
 
@@ -22,7 +23,7 @@ services:
       context: agents/ticket_agent
       dockerfile: Dockerfile
     ports:
-      - "8002:8000"
+      - "8004:8000"
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
       GOOGLE_CLOUD_PROJECT: $PROJECT_ID
@@ -105,7 +106,7 @@ services:
       GOOGLE_CLOUD_PROJECT: $PROJECT_ID
       GOOGLE_CLOUD_LOCATION: $LOCATION
       GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
-      LONDON_AGENT_URL: "http://london_agent:8000"
+      LONDON_AGENT_URL: "https://agent-backend-88ee-23134220601.us-central1.run.app"
     volumes:
       - .key.json:/app/.key.json:ro
     depends_on:

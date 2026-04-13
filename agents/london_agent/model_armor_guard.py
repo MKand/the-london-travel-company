@@ -133,6 +133,10 @@ class ModelArmorGuard:
 
 
 def create_model_armor_guard() -> ModelArmorGuard:
+    if not configs.use_model_armor:
+        logger.info("Model Armor is not enabled.")
+        return None
+    
     template_name = f"projects/{configs.project_id}/locations/{configs.location}/templates/{configs.model_armor_template_name}"
     logger.info(f"Model Armor Location: {configs.location}, Template Name: {template_name}")
     if not template_name:
