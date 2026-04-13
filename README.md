@@ -8,7 +8,10 @@ The London Travel Company is a generative AI-powered travel assistant based on t
 - `frontend/`: The Vue 3 frontend application built with Vite and Tailwind CSS.
 - `london_data_mcp/`: The Data MCP Server built to query the PostgreSQL database.
 - `data_syncer/`: A FastAPI service that synchronizes initial travel data into the database.
-- `deploy/`: Terraform configurations for deploying the application to Google Cloud (Cloud Run, Artifact Registry, etc.).
+- `deploy/`: Deployment configurations including ADC templates and scripts.
+- `fake_user/`: A load tester / user simulator service.
+- `codelab/`: Codelab documentation for the project.
+- `data_london/`: Contains data files or scripts.
 - `docker-compose.yaml`: Local container orchestration configuration to easily spin up all services.
 
 ## Requirements
@@ -43,22 +46,18 @@ The London Travel Company is a generative AI-powered travel assistant based on t
 3. Initialize the database and sync the data:
 
    ```bash
-   # Initialize the database and user (requires superuser access)
-   curl -X POST http://<cloud run url>/init -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://londondatauser:<password>@postgres:5432/postgres"}'
-
+   # Initialize the database and user
    curl -X POST http://localhost:8003/init -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://user:password@postgres:5432/postgres"}'
    
    # Synchronize travel data
-   curl -X POST https://<cloud run url>/sync -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://londondatauser:<password>>@<ip_addr>/london_travel"}'
-
    curl -X POST http://localhost:8003/sync -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://user:password@postgres:5432/london_travel"}'
    ```
 
    *Verify the synced metadata:*
 
-```bash
-  curl -X POST https://<cloud run url>/read -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://londondatauser:<password>>@<ip_addr>/london_travel"}'
-```
+   ```bash
+   curl -X POST http://localhost:8003/read -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://user:password@postgres:5432/london_travel"}'
+   ```
 
 4. Access the application components:
    - **Frontend:** http://localhost:8080
@@ -84,8 +83,11 @@ To deploy the full architecture to a GCP project using Cloud Run and App Hub:
 
 ## Importing the MCP server to the registry
 
-Registry link https://pantheon.corp.google.com/agent-management/agent-registry?e=AgentManagementLaunch::AgentManagementEnabled&project=$PROJECT_ID
+Registry link (Internal to Google): https://pantheon.corp.google.com/agent-management/agent-registry?e=AgentManagementLaunch::AgentManagementEnabled&project=$PROJECT_ID
 
 ADK: API Registry: https://google.github.io/adk-docs/integrations/api-registry/#use-with-agent
 
+
+
+  curl -X POST https://data-syncer-96bb-390120015761.us-central1.run.app/sync -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://londondatauser:UbLUvhYgwE6YYW2bSpt2VCExXctEsvM8@34.171.180.7/london_travel"}'
 
