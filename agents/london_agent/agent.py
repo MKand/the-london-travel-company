@@ -19,7 +19,7 @@ from google.adk.tools import load_memory
 from google.adk.tools.agent_tool import AgentTool
 from google.adk.agents.remote_a2a_agent import AGENT_CARD_WELL_KNOWN_PATH, RemoteA2aAgent
 from google.adk.plugins.bigquery_agent_analytics_plugin import BigQueryAgentAnalyticsPlugin, BigQueryLoggerConfig
-from google.adk.tools.bigquery import BigQueryToolset, BigQueryCredentialsConfig
+from google.cloud import bigquery
 
 import google.auth
 from london_agent.types import AgentOutput
@@ -54,20 +54,6 @@ else:
     tools = [search_mcp_tool, load_memory]
 
 
-plugins = []
-if configs.use_bq_analytics:
-    bq_analytics_plugin = BigQueryAgentAnalyticsPlugin(
-        project_id=configs.project_id,
-        dataset_id=configs.bq_dataset_id,
-        location=configs.location,
-        config=BigQueryLoggerConfig(
-            batch_size=1,
-            batch_flush_interval=0.5,
-            log_session_metadata=True,
-        ),
-    )
-    plugins.append(bq_analytics_plugin)
-  
 
 # Initialize the agent outside the request handler for efficiency.
 root_agent = Agent(
@@ -81,8 +67,34 @@ root_agent = Agent(
     after_model_callback=after_model_callback,
 )
 
+
+plugins = []
+if configs.use_bq_analytics:
+    try:
+        bq = bigquery.Client(project=configs.project_id)
+        bq.create_dataset(f"{configs.project_id}.{configs.bq_dataset_id}", exists_ok=True)
+        bq_config = BigQueryLoggerConfig(
+            enabled=True,
+            log_multi_modal_content=False,
+            max_content_length=500 * 1024, # 500 KB limit for inline text
+            batch_size=1, 
+            shutdown_timeout=10.0
+        )
+        bq_analytics_plugin = BigQueryAgentAnalyticsPlugin(
+            project_id=configs.project_id,
+            dataset_id=configs.bq_dataset_id,
+            location="US",
+            config=bq_config
+        )
+        plugins.append(bq_analytics_plugin)
+    except Exception as e:
+        logging.warning(f"Failed to initialize BigQuery Analytics: {e}")
+
+logger.info(f"ADK plugins being initialized: {plugins}")
+  
+
 # --- Create the App ---
-adk_app = App(
+app = App(
     name="london_agent",
     root_agent=root_agent,
     plugins=plugins,

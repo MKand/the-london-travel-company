@@ -23,7 +23,7 @@ usage() {
     echo "Example (defaults): $0 my-dest-123 my-dest-space"
     exit 1
 }
-JSON_FILE="1_london-travel-company-template.json"
+JSON_FILE="4_agentic-app-template.json"
 OUTPUT_FILE="import_substituted.json"
 
 

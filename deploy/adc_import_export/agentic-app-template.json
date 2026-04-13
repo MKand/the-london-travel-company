@@ -1163,7 +1163,7 @@
             "key": "containers",
             "value": [
               {
-                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/london_agent:v6",
+                "container_image": "us-central1-docker.pkg.dev/o11y-movie-guru/london-travel-agency/london_agent:v-n26-lab4",
                 "env_vars": {
                   "AGENT_ENGINE_ID": "module.agent-engine-1.reasoning_engine_id",
                   "BIG_QUERY_DATASET_ID": "agent_telemetry",

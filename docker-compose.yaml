@@ -15,6 +15,7 @@ services:
       MODEL_ARMOR_TEMPLATE_NAME: $MODEL_ARMOR_TEMPLATE_NAME
       REMOTE_TICKET_AGENT_URL: "http://ticket_agent:8000"
       BIG_QUERY_DATASET_ID: agent_telemetry
+      LOGS_BUCKET_NAME: $LOGS_BUCKET_NAME
     volumes:
       - .key.json:/app/.key.json:ro
 

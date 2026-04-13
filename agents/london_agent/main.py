@@ -39,7 +39,6 @@ from google.adk.sessions import VertexAiSessionService, InMemorySessionService
 from google.adk.memory import VertexAiMemoryBankService, InMemoryMemoryService
 from london_agent.utils import setup_logging, setup_telemetry
 from london_agent.config import Config
-from london_agent.agent import adk_app
 
 configs = Config()
 

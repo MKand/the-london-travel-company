@@ -334,3 +334,28 @@ cd deploy/adc_import_export
 This will:
 1. Fetch the template from ADC
 2. Save it as `$SOURCE_APP_TEMPLATE.json`
+
+
+# 2. Deploy the Ticket Agent
+
+```
+gcloud run deploy ticket-agent \
+  --source ./agents/ticket_agent \
+  --region us-central1 \
+  --project "n26-learn-c2c-app-dev-4" \
+  --min-instances 1 \
+  --no-cpu-throttling \
+  --port 8000 \
+  --set-env-vars "GOOGLE_CLOUD_PROJECT=n26-learn-c2c-app-dev-4,GOOGLE_CLOUD_LOCATION=us-central1" \
+  --allow-unauthenticated
+```
+
+gcloud run deploy user-simulator \
+  --source ./fake_user \
+  --region us-central1 \
+  --project n26-learn-c2c-app-dev-1b \
+  --min-instances 1 \
+  --no-cpu-throttling \
+  --port 8080 \
+  --set-env-vars "LONDON_AGENT_URL=${AGENT_URL},GOOGLE_CLOUD_PROJECT=n26-learn-c2c-app-dev-1b,GOOGLE_CLOUD_LOCATION=us-central1" \
+  --allow-unauthenticated
