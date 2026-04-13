@@ -29,7 +29,7 @@ LOCATION=os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 # https://docs.cloud.google.com/stackdriver/docs/instrumentation/ai-agent-adk#configure
 os.environ["GOOGLE_CLOUD_LOCATION"] = LOCATION
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "true"
-os.environ["OTEL_SERVICE_NAME"] = "cymbal-LONDON-concierge-agent"
+os.environ["OTEL_SERVICE_NAME"] = "cymbal-london-concierge-agent"
 os.environ["OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED"] = "true"
 os.environ["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] = "true"
 os.environ["ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS"] = "false"

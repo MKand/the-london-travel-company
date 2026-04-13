@@ -35,7 +35,7 @@ def setup_telemetry() -> str | None:
 
     bucket = os.environ.get("LOGS_BUCKET_NAME")
     capture_content = os.environ.get(
-        "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "false"
+        "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "NO_CONTENT"
     )
     if bucket and capture_content != "false":
         logging.info(

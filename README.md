@@ -86,8 +86,3 @@ To deploy the full architecture to a GCP project using Cloud Run and App Hub:
 Registry link (Internal to Google): https://console.cloud.google.com/agent-management/agent-registry?e=AgentManagementLaunch::AgentManagementEnabled&project=$PROJECT_ID
 
 ADK: API Registry: https://google.github.io/adk-docs/integrations/api-registry/#use-with-agent
-
-
-
-  curl -X POST https://data-syncer-96bb-390120015761.us-central1.run.app/sync -H "Content-Type: application/json" -d '{"admin_db_url": "postgresql://londondatauser:UbLUvhYgwE6YYW2bSpt2VCExXctEsvM8@34.171.180.7/london_travel"}'
-
