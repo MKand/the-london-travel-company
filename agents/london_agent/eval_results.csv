@@ -1,0 +1,75 @@
+invocation_id,eval_id,prompt,expected_response,actual_response,expected_tool_calls,actual_tool_calls,tool_trajectory_avg_score,final_response_match_v2,hallucinations_v1,safety_v1,overall_tool_trajectory_avg_score,overall_final_response_match_v2,overall_hallucinations_v1,overall_safety_v1
+e-ba6ed074-ec2e-47fa-92e9-ea260fd39cdd,samplecase,I would like to plan 3 evenings while on a work trip in london,"{
+  ""text_response"": ""I can help you plan 3 evenings in London. To give you the best recommendations, could you tell me a bit about your interests? For example, are you looking for dining, entertainment, cultural experiences, or something else?"",
+  ""recommendations"": [],
+  ""error"": """"
+}","{
+  ""text_response"": ""I can help you plan 3 evenings in London. To give you the best recommendations, could you tell me a bit about your interests? For example, are you looking for dining, entertainment, cultural experiences, or something else?"",
+  ""recommendations"": [],
+  ""error"": """"
+}",,,1.0,1.0,1.0,1.0,0.5,0.5,0.6666666666666666,1.0
+e-afc9d400-a710-4172-8799-fd528f186ee1,samplecase,dining and museums,"{
+  ""text_response"": ""Here are some suggestions for your 3 evenings in London, combining dining and museum experiences. Please note that you should check the specific evening opening hours for museums and exhibitions, as these can vary."",
+  ""recommendations"": [
+    {
+      ""day"": 0,
+      ""time"": ""evening"",
+      ""name"": ""Pre-Theatre Dinner in Soho"",
+      ""description"": ""Soak up the vibrant atmosphere and grab a meal from one of the hundreds of diverse restaurants before a West End show."",
+      ""duration"": ""60-90 mins"",
+      ""cost"": ""30 pounds"",
+      ""kid_friendly"": ""N/A""
+    },
+    {
+      ""day"": 0,
+      ""time"": ""evening"",
+      ""name"": ""Museum of London"",
+      ""description"": ""Tells the story of the capital from its first settlers to modern times."",
+      ""duration"": ""2-3 hours"",
+      ""cost"": ""Free (check for special exhibitions)"",
+      ""kid_friendly"": ""Yes""
+    },
+    {
+      ""day"": 1,
+      ""time"": ""evening"",
+      ""name"": ""Enjoy a Brick Lane Curry"",
+      ""description"": ""Experience London's famous 'curry mile' by having a meal at one of the many Bangladeshi restaurants."",
+      ""duration"": ""60-90 mins"",
+      ""cost"": ""20 pounds"",
+      ""kid_friendly"": ""N/A""
+    },
+    {
+      ""day"": 1,
+      ""time"": ""evening"",
+      ""name"": ""Explore the London Transport Museum"",
+      ""description"": ""Climb aboard historic buses and trains, and explore the link between transport and the growth of modern London. Great for families."",
+      ""duration"": ""2-3 hours"",
+      ""cost"": ""24 pounds"",
+      ""kid_friendly"": ""Yes""
+    },
+    {
+      ""day"": 2,
+      ""time"": ""evening"",
+      ""name"": ""Dining in Soho"",
+      ""description"": ""Explore the vibrant area of Soho for diverse dining options."",
+      ""duration"": ""60-90 mins"",
+      ""cost"": ""Varies"",
+      ""kid_friendly"": ""N/A""
+    },
+    {
+      ""day"": 2,
+      ""time"": ""evening"",
+      ""name"": ""Visit the Summer Exhibition"",
+      ""description"": ""Visit the world's largest open-submission art show, a fixture of the London summer since 1769."",
+      ""duration"": ""1.5-2.5 hours"",
+      ""cost"": ""22 pounds"",
+      ""kid_friendly"": ""N/A""
+    }
+  ],
+  ""error"": """"
+}","{
+  ""text_response"": ""Great! I'll look for some dining and museum options for your 3 evenings. Please note that museums typically close in the late afternoon or early evening, so I'll suggest museums for earlier in the evening, followed by dining."",
+  ""recommendations"": [],
+  ""error"": """"
+}","id='adk-084c3bb6-664a-4380-b22a-9ad1db93f005' args={'limit': 3, 'query': 'dining options in London for evenings'} name='search_with_natural_language' partial_args=None will_continue=None
+id='adk-3d2ccc82-6ac6-4792-ab80-1fc6c3cacced' args={'limit': 3, 'query': 'museums in London open in the evenings'} name='search_with_natural_language' partial_args=None will_continue=None",,0.0,0.0,0.3333333333333333,1.0,0.5,0.5,0.6666666666666666,1.0

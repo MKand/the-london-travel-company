@@ -1,0 +1,147 @@
+{
+  "eval_set_id": "evalset",
+  "name": "evalset",
+  "eval_cases": [
+    {
+      "eval_id": "samplecase",
+      "conversation": [
+        {
+          "invocation_id": "e-ec62fc99-d1d6-4c48-a77d-d124ffaacc7d",
+          "user_content": {
+            "parts": [
+              {
+                "text": "I would like to plan 3 evenings while on a work trip in london"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "{\n  \"text_response\": \"I can help you plan 3 evenings in London. To give you the best recommendations, could you tell me a bit about your interests? For example, are you looking for dining, entertainment, cultural experiences, or something else?\",\n  \"recommendations\": [],\n  \"error\": \"\"\n}",
+                "thought_signature": "CtQCAY89a1_OGzj3fPIJFxOGLq3bo0Ss1m6Cj9AsDFhc0QzXv4hdiyp-zbnYv6a7lUMEk02QyUuNmiJwNXoy9T_aqAqaQHfZ60brbAcHxrlUf8XFFq8TRPOr8Yl8Ie65N76UY3UgxXlt9AJRdvQhGBRG1sczhed2tL1sqAZBQuRF9OrNLVU2EEBD0S5up26xIWKLDuCxDNwlcR7-dVLzrHZWuErXvgDjTPWztOTrgMS2sBxebun8Xa3qQHwqZfbvNEydVAyQAGuFLNhGQfP7oP3MeBT5AJW2uNqXVMMivZwo6Kx8e35sCKetaP8FhUVbm5JVwQfjfkCgx63RHAd7E4Syd9_fxDPKUxH_unY6rLmiW0b_GXludz_kIjC7RACa9-EZIfx_dzUu9HrY_J6kXifXSR_we7Jc77NE2KFqFj2KdPkcDVOQeIY-n7LJ3OBX9gZzhgkxUg=="
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {},
+          "creation_timestamp": 1776092324.379397
+        },
+        {
+          "invocation_id": "e-3b5d68f1-4ff5-42b8-a74c-aee03f42e4bd",
+          "user_content": {
+            "parts": [
+              {
+                "text": "dining and museums"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "{\n  \"text_response\": \"Here are some suggestions for your 3 evenings in London, combining dining and museum experiences. Please note that you should check the specific evening opening hours for museums and exhibitions, as these can vary.\",\n  \"recommendations\": [\n    {\n      \"day\": 0,\n      \"time\": \"evening\",\n      \"name\": \"Pre-Theatre Dinner in Soho\",\n      \"description\": \"Soak up the vibrant atmosphere and grab a meal from one of the hundreds of diverse restaurants before a West End show.\",\n      \"duration\": \"60-90 mins\",\n      \"cost\": \"30 pounds\",\n      \"kid_friendly\": \"N/A\"\n    },\n    {\n      \"day\": 0,\n      \"time\": \"evening\",\n      \"name\": \"Museum of London\",\n      \"description\": \"Tells the story of the capital from its first settlers to modern times.\",\n      \"duration\": \"2-3 hours\",\n      \"cost\": \"Free (check for special exhibitions)\",\n      \"kid_friendly\": \"Yes\"\n    },\n    {\n      \"day\": 1,\n      \"time\": \"evening\",\n      \"name\": \"Enjoy a Brick Lane Curry\",\n      \"description\": \"Experience London's famous 'curry mile' by having a meal at one of the many Bangladeshi restaurants.\",\n      \"duration\": \"60-90 mins\",\n      \"cost\": \"20 pounds\",\n      \"kid_friendly\": \"N/A\"\n    },\n    {\n      \"day\": 1,\n      \"time\": \"evening\",\n      \"name\": \"Explore the London Transport Museum\",\n      \"description\": \"Climb aboard historic buses and trains, and explore the link between transport and the growth of modern London. Great for families.\",\n      \"duration\": \"2-3 hours\",\n      \"cost\": \"24 pounds\",\n      \"kid_friendly\": \"Yes\"\n    },\n    {\n      \"day\": 2,\n      \"time\": \"evening\",\n      \"name\": \"Dining in Soho\",\n      \"description\": \"Explore the vibrant area of Soho for diverse dining options.\",\n      \"duration\": \"60-90 mins\",\n      \"cost\": \"Varies\",\n      \"kid_friendly\": \"N/A\"\n    },\n    {\n      \"day\": 2,\n      \"time\": \"evening\",\n      \"name\": \"Visit the Summer Exhibition\",\n      \"description\": \"Visit the world's largest open-submission art show, a fixture of the London summer since 1769.\",\n      \"duration\": \"1.5-2.5 hours\",\n      \"cost\": \"22 pounds\",\n      \"kid_friendly\": \"N/A\"\n    }\n  ],\n  \"error\": \"\"\n}",
+                "thought_signature": "CtAeAY89a1-55K5JaIJZp0TfDfPKz-BBp0guMVtra1-ERD6zGmpwMrgYZLOKUiEbQgGKhKVni8C6wJ7f4Z9BStVL3exVbY7HmtTxOlxPhB81QJkZNfk58r4RXZHn_4BmiotSGyjhxmnrUDrOyoS49PMUZc04kK5PM3QP3KAOvJLsF_Eq-2_YctI8CG0ymqH3x251KvRsXQdS5WROTIgFGWCsYImAKNH9aGnuD_-z0GqG_67v6lDp8myECSo5iBLj-N4uPM5BdfoFhB447OE572enGwUxzcsjgWHeSDANat6KwxUsX4PXPCAewVa2-tpe-gHeQZeZi5v-EzDQexVBEKVNM4tfDmZVGNK9FEsoIByj76-3fQQ8Rdg5uqu7GCesIA9_IPsnWpV9bUQpVMHfeva4-5cvaQDCXD1uGFe-N_T8ili4ANqZcwg-YWLc1ZUf7NuwfUQOQCWlT1rcSu0jq7tcOlkvMnXqA1J3xlx1R56YBBnuYf8OO7lK7rIUuXkUSgi2OfYXrHecGkibG-OvRJzvcM4RIH_dCHQu0_EX8Swilh-XU5TuRmJ1IjH7qgrSKolkvPzbSXXvZecScwth9_x5NSWmL-8R7wtgmRL9vF2SFXLGu-mHQaxaDsQV2jaZ_yfjvHzaqjnQyQfpq9RJi7ZTtKNXNslI1HYx8io-0K4QQdqtrGY51-IX7uTpLreyCn2CUvKVOzI4hOWL8WwptFste13KnD8CqgqHrGX4MaIF_gKZhg8lf9Diwkpl1kmbg6fmpan8V_gtKJ2TMHsjawK62hJWMdSfwwNdUUyf6m0C07yXforXvbD7rwzyVXHUF3NJE-L0b-5VyvxEiVEBemcLZ7m6E-YP1HCgQKjfYiuV_tbMn__WFZNaeKF3reXTJ3J49WDnluE7ONSYAd59jK5cgdgFSbv6tq858H0ww2L1Nzdc9Ddw0Z5n2OFyY1YxPUrqBRpdW5DwH2JaiPWeiJRdO4UwLJBt7lZ-x2irbOF2nCJdVboWKr-5NBV6SOIpkrb3tFoWUOu9SvMJwZ0A0r47tabSCUrUm8VX4Dew-S7vmhvqO5JKrOLxUTKayKGULgUqZWLCldtqQ4hbIaxBb6E7z0pzEjuLLNyFkOjkgDMvlZhj5b1uUUjOG6mmzySK0FUP3jmsuwtiH0lH3qhVE3x8ZVXdNJmYtsVp9QqvzTCqcwy1PzXrlhlW40WpqzXuFZL1fnxMunzid9wb50-68kv1bQBDp7_pnOjMa6VUGEpvi7gOg2Y9YgDX7jP9j8K3ckmmUowTCvlORAwoq4HP18mqhAbGLVBFKVMstLFVD3tOw1M8ggN1fbr10TIbdTflPIPGZiLfeL8m-_SV48XmUgHyMlpl7at2nKfwG0iwllWVTaGxONUSdQ-koh19Yn5mgY3uq7F7g2M38zFbEIZdtDwP613-J1N-enJKEWcSc-LCJehpluoXVVozPZTmtI7G6c1uDj_63gyaRieo0LKEISZQpj53ALb5cboQ57X1Vx64zui5XfsMFmw_69nb2C4nEjtN7PwPcbDdvVFe80PFjS5z946MJehsJEAoxtzT4z-nS-GxF17kWNTxsTRYBRC3tIutfMjjGohB3psSo1Z8W6qDOdTGViZHah_hQ0ofsZuzYwchBkTgqHlFS4rXBJy5TTzfRczs6OFSbdNo1Gts_GBQNQ8P2v0sTCFg4TRtA9i-cEcuvYdLuDVN1EegRWmXNGImxtLwqrb-f9CTAm0HWJsTQOx1fWn9GcFKy7ZF5_bCBkV5K5C6zyRfPlsgVOTFzGqtwVGlqCdqe0Cjf9s-7k0G_LrYyQmDMBLATJd44eo4nNjN-2vtlpY76kkgD7QdTESxZGvJBaunEK6gW0NPk4eTz5mvaJgOA5SVCSel6X12-dciXFMwrAxiMqHSNHyqmMqJATlXHWzSMBfPBGT8h9S7ZsBTRTXJHj1dJJ95YeOR1FQ8RIkCvfFlkZlPWqTTeKy6vSXH8NqS1CPIeRdbxMNcRNmGOyW6AGukT_rPGMiiy4hXOGwdUuJkSM6J068P_Jy-gTG3jhWWCNyqUxe6FHevckbeog9jkpykyqJYA-sfkXKDtAn5Rr4PQ0fpzlE2hMQvMwaZqeNz8_zz0YwrGuMazTiwnV0g8vkNridcGkOefKLKzUzoy8DlI6YycdR5dFfelqkfCpMPDDo06Di26YMx_OdrRJ7nB4V8e5J4OlWdjoi8FM31-Bztish8_Q8RhbnhrvX7k0uGoHamT1YcBvm60fsjHX0uuwkZUMkGrQBQlYp0_r7cZOVguTVVvljCcYhfqACX-iOhyv2IyloBjvXX8DnFmz5LtSsrnug57elcDyjfZ5tdpFgA5ydZtBSSJrr1lH48qQqOCRaNJjIluqtwuVY6sp3UP15i2GbxWoN3mC93yGcArvAonMzIYB5UtqiiahXqonwTJFm5cdCBCXSXka1vL6R3fUqp1APkwz4DtkxScVH9NKKQNcILSWQcYM8nuvQtnY_wi4ykTnrjfYm9ijx55h3OHq29scg-Y5pKbsNwCEh36Tyww0lSVj-JRgax-yhpFen9EDhxV80J-Zybd8IKSfg57wOky12mQ4qtXSyOfPb2EeY_taowSVS_UBZxALhAlt6Op4KJENgtIRcca0tcaR8WEzf3VwbuYusC-2RKjWu1JmAI42vSljSBYPcr0-e-Oi9k5X-skRQIA15AbyXfgPOymsbpcTPsZRVw7FzgHuzwwLHSji8x4lJW2CX3u5JSHrJ36BziIyEWZ4qu0eaW-YlFP_zE9xM1NYwoMUk-NgMMZDc7Ou2Y-M384tgqcIclBksCrWeMeNHSXDiNJ3m8VPCSY4sEMRL22AJKrFk8jd30LkDo1_691jAC1Qk3GVPxq0VaU7cAi5CBili5KBLeHirfwpAM9z6VdVOwREnWsh8fbSP4WK5dvdc-817R4MuU0nZVZ-C8NCBRWqRFTKoJUAuHiqTEKin06bp4S4VeWGphk0sNPSThyRFzisxwmedRBJG1wGKZy0pIHIaUAjvvb1f4R7W5FlVnYSmzBBWLApvPRt5EPWRv1Wdh_OCbkBM8zT0C8P2umi1Ei67DvF_ngv6Wp9UdsgcKHJvzP4ydJ7zZAUTvfW64tOdlF8g6D17EKRzFQ7G6igbarDcQNJtLSAi_uu_Y5xg8eVsKSmggVsRNn6aQnqv0d99mN6duUSUWn511FR9N2YLthmGwdzGdRndieYt1l7fFpQtQi52Q5hcr3cxTLRWoG3pEZnv_va6kkpF2ImZV_OoyloJdt3HN6lnCkfzCK4JhylcuvFXg6JyFq0bfbepuuYqKmBuwGUd7XYR_dqXYRbOICnT37th618L4HmSt9IV4evYe6Hmoj4yuDa0TR2-BSg9NGU7T3AP4CGhbvmJ7qc1ypcqkWbrKJI_BTdBTrc14tDiiA7BNsa1dKR5e3D2zbyquZfP_UwkUV51HeUy58XQ2CFaWdlA_zNNiaqzsA-kkNA9eKQEz-q1S2cnmp78Ny5E1yyONhmeLpsGlkxlSu24dBIc8Kb2GKateykTGYdC7bFDhDzFQEOQQbgUQcs31rq7Nlm-PTTo1mgt19LgZiEu86KBxTSAdjmsbfEY8VPT9UPZ0fB6Yx8cKxrwyu6O4G_8kF2meg1HGcr2iF2KakMja9jNjmXcJwD7YoNzv5sRkDZaX59hN7chLj1eTtUYSQwP7dgs2JB7vv_bdjwVkp-cEGgqZ1rAWfuA0pm3y1R55XfIOHaZW9KLJBLzcugWwFgZ5-9LkV3ol_skrJKQXuw-zaPOMq5CvNcgxKtNC7nu099pvg8nT39J1eHN00eAq2xlYVxWm4S_6GwUSEAt9LNIFcKNo-9ZGDt2Dg-JH8ALihcF6T_sdGS1-IcnHj3cav8KlP8mV-EBaz_yGwMtH6IKKS0OnTnGB6B4jjyR-RUezz3DXtWo-Z7ACTC-5IJEweKVPV1sH5jKJIYkEVFXyjmBJh6yAk-Zeyje_7ghX9-DdKlLW2DTFF3ae8BKK3sjDVizf5HKyJBfYK2o1RP-mBqR_yYXa7yYMBXOPidJMcreKd_Py5cr6Fdexg1t5bYtu5ocizSvak2225-ybOip6elS7Q3CddB1_HcdjEyiawAGKun3yOTBYcgHOh5SmWExyz_14Ura8TLyNjvSMAIMHxfr_6I3_ZfPYJDQD3bfxsKzxvoEMEvY9IHKqVXtjqtwlsU5Ku6oOndN2o5dVd6MLKm0uMpiwHSnsOPR1DCceUOJzP5hsKqYx5Fi8zRT3DPXmQplsabinn2eJr-doaoOFxKCZUGl1h4v_RGBVyYblbODOSmozVfa42Loj1c2MsImEnAamt4jp3Ei230PXs53lzKRkn6dyOQG6srWXal87fnzdE3HWEvdmZhtHYy0gEqUwJyW38qEKqNLc6qRiVVqQoI3lCI_m7L4OckkucXcaXA_ku738crTzQSkLTvTKEC46NReXizLsv-NG3R4LpdIH8yiiXJyTQgxBDnnf5cZBgRVrsqsjmgO64-8G-pJz3KIzVW6s6ykFxMpFEhqR65ILg6KPdEo8-KWGQfKKL6NECQ8slghVFoGG41wUpMSRngbRoXVOF_pyBx6pGzZKM__6v19QOpfUPDkCgSUcJbU7avPuPmSzWUOryWUtEZCnXCrC1IcyLYn17VTRJtTdIa9bTCZOTKKNMqng2tdJJU5GmOtIJ-ixkIc2tqckFzOS4E0AKIt7rIy7NjiEw9mzx8z3QDAr6VKnu4u1LFTJuNcuQg-Bx-RSiTMsN9eeqDy0CvfgWqwsYvSzqJ0Eai7uNmr85jnDECvnQunCRI7IkFZlHXWb7vPoB8q7isPiHETYX-g5W191CChYIh5YMSlKTXNgx3ptSOrmJW-SeF-YCMddoDuRJqd5yWTrN6Ik-XEupEBkh7rEcvKteSpnblGMV1CViYmGcI3QM_SMaox3feNfEmqeDIg4XMfZwb-yw_my3A8qRPYSwPvcV8g9lGVRxC4ETUo2mbF4NKGdm0XnbqGDz1JmABci18eWRHGNFfwV2r6FBDpxOKr2yjrGw8_UvkYMgHAIqoHsEDrY7l0qqNhT4VCtj2WmiLGqLUsDooof26FByybYJm1J_djmUqGKHazE9gnqiTU1-UwnBs-8DAWhyKthRi2_9I_BPNL1VqhxUiaBJhiUXwRA-_ZaZbobcR7xouC_15un1XDDXIkLdwpzlCplgnKE0yI="
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "london_holiday_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "adk-084c3bb6-664a-4380-b22a-9ad1db93f005",
+                        "args": {
+                          "limit": 3,
+                          "query": "dining options in London for evenings"
+                        },
+                        "name": "search_with_natural_language"
+                      },
+                      "thought_signature": "CuIDAY89a1_UvBYClVXbjMykcxII2cWJKpk-V2m7Fi1ZyO5wAYAf6y7rJFQZM-eSqKzB1JTjvfoYNZ2Ne7P-cu8yiFy7txkYLMjXw71BrDwfHWC14OTmwo1EiHLiabLtelVR9MihAWiLHfwAzdDD3Z9_ZoT3SeyouFhV20JnHpU5bqbtjuaX8XJbwGryPAVmVRUwGLDVNeuPHSM5Rf9aZmj9-jD3sGWszbxMJp2mfRTUJKQ17ScVqfX_dKjOObjUK0HS5Urd2nVkDBFYbH1zQenYDuOYdORBi52IzoS0T_MM7raoIyFwxFixkhrrdvRkIRRsmL5vVfVxD7lsvB-uTUzY-fmI1A-T6G7qsXbfyQgrKi_CG3MNbtHnAvVxPZtH9wat_AR8Hl2FHRMtODiLGidCygKeCtxn1tYjTCaBF9VSPJjxbyIYBrw9a1ZGvLQv25pQtQbwzRNfEETYMX4Y0HTQEacBA6_YuTRQjR8FkgEHjv79ioB__DWTbuUhPeeEI5glChsPWu80O3TDzC9YrhmWAdbNwjKvfxHkohVfgnGoN8Y1wPo-fKyV0UgxIxUAtpSDxh_OyMvIlFgsDBqdWEBuXD4zFFekzksaaS-ToBiCWTLbiWKYO9Pvs0lYx-YIk_cV0o4="
+                    },
+                    {
+                      "function_call": {
+                        "id": "adk-3d2ccc82-6ac6-4792-ab80-1fc6c3cacced",
+                        "args": {
+                          "limit": 3,
+                          "query": "museums in London open in the evenings"
+                        },
+                        "name": "search_with_natural_language"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "london_holiday_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "adk-084c3bb6-664a-4380-b22a-9ad1db93f005",
+                        "name": "search_with_natural_language",
+                        "response": {
+                          "meta": {
+                            "fastmcp": {
+                              "wrap_result": true
+                            }
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "[{\"id\": \"LON-079-A1\", \"name\": \"Pre-Theatre Dinner in Soho\", \"description\": \"Soak up the vibrant atmosphere and grab a meal from one of the hundreds of diverse restaurants before a West End show.\", \"score\": 0.3322845995426178, \"type\": \"activity\", \"cost\": 30.0, \"duration\": \"60-90 mins\"}, {\"id\": \"LON-051-A1\", \"name\": \"Enjoy a Brick Lane Curry\", \"description\": \"Experience London's famous 'curry mile' by having a meal at one of the many Bangladeshi restaurants.\", \"score\": 0.3908270001411438, \"type\": \"activity\", \"cost\": 20.0, \"duration\": \"60-90 mins\"}, {\"id\": \"LON-079\", \"name\": \"Soho\", \"description\": \"A vibrant area in the West End, packed with theatres, restaurants, pubs, and a lively nightlife.\", \"score\": 0.4210089147090912, \"type\": \"location\", \"category\": \"Neighborhood\"}]"
+                            }
+                          ],
+                          "structuredContent": {
+                            "result": "[{\"id\": \"LON-079-A1\", \"name\": \"Pre-Theatre Dinner in Soho\", \"description\": \"Soak up the vibrant atmosphere and grab a meal from one of the hundreds of diverse restaurants before a West End show.\", \"score\": 0.3322845995426178, \"type\": \"activity\", \"cost\": 30.0, \"duration\": \"60-90 mins\"}, {\"id\": \"LON-051-A1\", \"name\": \"Enjoy a Brick Lane Curry\", \"description\": \"Experience London's famous 'curry mile' by having a meal at one of the many Bangladeshi restaurants.\", \"score\": 0.3908270001411438, \"type\": \"activity\", \"cost\": 20.0, \"duration\": \"60-90 mins\"}, {\"id\": \"LON-079\", \"name\": \"Soho\", \"description\": \"A vibrant area in the West End, packed with theatres, restaurants, pubs, and a lively nightlife.\", \"score\": 0.4210089147090912, \"type\": \"location\", \"category\": \"Neighborhood\"}]"
+                          },
+                          "isError": false
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "adk-3d2ccc82-6ac6-4792-ab80-1fc6c3cacced",
+                        "name": "search_with_natural_language",
+                        "response": {
+                          "meta": {
+                            "fastmcp": {
+                              "wrap_result": true
+                            }
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "[{\"id\": \"LON-054\", \"name\": \"Museum of London\", \"description\": \"Tells the story of the capital from its first settlers to modern times.\", \"score\": 0.329312801361084, \"type\": \"location\", \"category\": \"Museum\"}, {\"id\": \"LON-067-A1\", \"name\": \"Explore the London Transport Museum\", \"description\": \"Climb aboard historic buses and trains, and explore the link between transport and the growth of modern London. Great for families.\", \"score\": 0.36413878202438354, \"type\": \"activity\", \"cost\": 24.0, \"duration\": \"120-180 mins\"}, {\"id\": \"LON-056-A1\", \"name\": \"Visit the Summer Exhibition\", \"description\": \"Visit the world's largest open-submission art show, a fixture of the London summer since 1769.\", \"score\": 0.3690843880176544, \"type\": \"activity\", \"cost\": 22.0, \"duration\": \"90-150 mins\"}]"
+                            }
+                          ],
+                          "structuredContent": {
+                            "result": "[{\"id\": \"LON-054\", \"name\": \"Museum of London\", \"description\": \"Tells the story of the capital from its first settlers to modern times.\", \"score\": 0.329312801361084, \"type\": \"location\", \"category\": \"Museum\"}, {\"id\": \"LON-067-A1\", \"name\": \"Explore the London Transport Museum\", \"description\": \"Climb aboard historic buses and trains, and explore the link between transport and the growth of modern London. Great for families.\", \"score\": 0.36413878202438354, \"type\": \"activity\", \"cost\": 24.0, \"duration\": \"120-180 mins\"}, {\"id\": \"LON-056-A1\", \"name\": \"Visit the Summer Exhibition\", \"description\": \"Visit the world's largest open-submission art show, a fixture of the London summer since 1769.\", \"score\": 0.3690843880176544, \"type\": \"activity\", \"cost\": 22.0, \"duration\": \"90-150 mins\"}]"
+                          },
+                          "isError": false
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              }
+            ]
+          },
+          "creation_timestamp": 1776092340.127026
+        }
+      ],
+      "session_input": {
+        "app_name": "london_agent",
+        "user_id": "user"
+      },
+      "creation_timestamp": 1776092408.662383
+    }
+  ],
+  "creation_timestamp": 1776092396.262128
+}
