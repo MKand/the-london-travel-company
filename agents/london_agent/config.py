@@ -60,8 +60,6 @@ LOGS_BUCKET_NAME = os.getenv("LOGS_BUCKET_NAME")
 AGENT_ENGINE_ID = os.getenv("AGENT_ENGINE_ID", "")
 if "/" in AGENT_ENGINE_ID:
     AGENT_ENGINE_ID = AGENT_ENGINE_ID.split("/")[-1]
-
-
 if AGENT_ENGINE_ID == "" or AGENT_ENGINE_ID is None:
     USE_AGENT_ENGINE = False
     logger.info("Not using Agent Engine")

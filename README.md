@@ -83,7 +83,7 @@ To deploy the full architecture to a GCP project using Cloud Run and App Hub:
 
 ## Importing the MCP server to the registry
 
-Registry link (Internal to Google): https://pantheon.corp.google.com/agent-management/agent-registry?e=AgentManagementLaunch::AgentManagementEnabled&project=$PROJECT_ID
+Registry link (Internal to Google): https://console.cloud.google.com/agent-management/agent-registry?e=AgentManagementLaunch::AgentManagementEnabled&project=$PROJECT_ID
 
 ADK: API Registry: https://google.github.io/adk-docs/integrations/api-registry/#use-with-agent
 
