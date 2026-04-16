@@ -46,7 +46,6 @@ AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_ORIGINS = ["*"]
 
 setup_logging()
-# setup_telemetry()
 
 # Artifact bucket for ADK (created by Terraform, passed via env var)
 artifact_service = (
@@ -70,6 +69,10 @@ app: FastAPI = get_fast_api_app(
     otel_to_cloud=True,
     web=True
 )
+
+HTTPXClientInstrumentor().instrument()
+FastAPIInstrumentor.instrument_app(app)
+
 
 @app.get("/health")
 async def health_check():

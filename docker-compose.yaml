@@ -1,23 +1,23 @@
 services:
-  # london_agent:
-  #   build:
-  #     context: agents 
-  #     dockerfile: Dockerfile
-  #     args:
-  #       - AGENT_NAME=london_agent
-  #   ports:
-  #     - "8001:8000"
-  #   environment:
-  #     # GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
-  #     GOOGLE_CLOUD_PROJECT: $PROJECT_ID
-  #     GOOGLE_CLOUD_LOCATION: $LOCATION
-  #     DATA_BACKEND_URL: "http://data_mcp:8002"
-  #     MODEL_ARMOR_TEMPLATE_NAME: $MODEL_ARMOR_TEMPLATE_NAME
-  #     REMOTE_TICKET_AGENT_URL: "http://ticket_agent:8000"
-  #     BIG_QUERY_DATASET_ID: agent_telemetry
-  #     LOGS_BUCKET_NAME: $LOGS_BUCKET_NAME
-  #   volumes:
-  #     - .key.json:/app/.key.json:ro
+  london_agent:
+    build:
+      context: agents 
+      dockerfile: Dockerfile
+      args:
+        - AGENT_NAME=london_agent
+    ports:
+      - "8001:8000"
+    environment:
+      # GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
+      GOOGLE_CLOUD_PROJECT: $PROJECT_ID
+      GOOGLE_CLOUD_LOCATION: $LOCATION
+      DATA_BACKEND_URL: "http://data_mcp:8002"
+      MODEL_ARMOR_TEMPLATE_NAME: $MODEL_ARMOR_TEMPLATE_NAME
+      REMOTE_TICKET_AGENT_URL: "http://ticket_agent:8000"
+      BIG_QUERY_DATASET_ID: agent_telemetry
+      LOGS_BUCKET_NAME: $LOGS_BUCKET_NAME
+    volumes:
+      - .key.json:/app/.key.json:ro
 
   ticket_agent:
     build:
@@ -95,17 +95,16 @@ services:
     environment:
       - API_BASE_URL=http://localhost:8001
    
-
-  # fake_user:
-  #   build:
-  #     context: fake_user
-  #   ports:
-  #     - "8085:8080"
-  #   environment:
-  #     GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
-  #     GOOGLE_CLOUD_PROJECT: $PROJECT_ID
-  #     GOOGLE_CLOUD_LOCATION: $LOCATION
-  #     GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
-  #     LONDON_AGENT_URL: "https://agent-backend-88ee-23134220601.us-central1.run.app"
-  #   volumes:
-  #     - .key.json:/app/.key.json:ro
+  fake_user:
+    build:
+      context: fake_user
+    ports:
+      - "8085:8080"
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
+      GOOGLE_CLOUD_PROJECT: $PROJECT_ID
+      GOOGLE_CLOUD_LOCATION: $LOCATION
+      GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
+      LONDON_AGENT_URL: "https://agent-backend-88ee-23134220601.us-central1.run.app"
+    volumes:
+      - .key.json:/app/.key.json:ro
