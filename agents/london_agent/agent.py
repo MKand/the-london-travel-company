@@ -22,7 +22,7 @@ from google.adk.plugins.bigquery_agent_analytics_plugin import BigQueryAgentAnal
 from google.cloud import bigquery
 
 import google.auth
-from london_agent.types import AgentOutput
+from london_agent.agenttypes import AgentOutput
 from london_agent.tools import search_mcp_tool
 from london_agent.config import configs
 from london_agent.model_armor_guard import create_model_armor_guard
