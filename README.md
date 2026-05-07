@@ -1,17 +1,22 @@
-# The London Travel Company
+# Cymbal London Concierge
 
-The London Travel Company is a generative AI-powered travel assistant based on the Google Agent Development Kit (ADK) designed to help users plan trips to London. It features semantic search capabilities using Vertex AI embeddings and pgvector.
+Cymbal London Concierge is a generative AI-powered travel assistant designed to help users plan trips to London. It supports multiple agent architectures:
+- **Agent Engine Agents**: Built with the Google Agent Development Kit (ADK) and running on Gemini Enterprise Agent Runtime (Agent Engine).
+- **Cloud Run Agents**: FastAPI-based agents that can be deployed to Cloud Run using a Dockerfile.
+
+It features semantic search capabilities using Vertex AI embeddings and pgvector.
 
 ## Folder Structure
 
-- `agents/`: The main FastAPI backend containing the hierarchical AI agents (london agent and ticket agent).
+- `agents/`: Contains the AI agents.
+  - `london-agent-ae/`, `ticket-agent-ae/`, `weather-agent-ae/`: Agents designed for Agent Engine (Gemini Enterprise Agent Runtime) using Google ADK.
+  - `london_agent/`: A FastAPI-based agent that can be containerized and deployed to Cloud Run using the Dockerfile in the `agents/` directory.
 - `frontend/`: The Vue 3 frontend application built with Vite and Tailwind CSS.
 - `london_data_mcp/`: The Data MCP Server built to query the PostgreSQL database.
 - `data_syncer/`: A FastAPI service that synchronizes initial travel data into the database.
 - `deploy/`: Deployment configurations including ADC templates and scripts.
 - `fake_user/`: A load tester / user simulator service.
-- `codelab/`: Codelab documentation for the project.
-- `data_london/`: Contains data files or scripts.
+- `fake_user_ae/`: A load tester / user simulator service targeting the Agent Engine agents.
 - `docker-compose.yaml`: Local container orchestration configuration to easily spin up all services.
 
 ## Requirements

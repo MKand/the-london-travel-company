@@ -1,8 +1,8 @@
 {
   "serialized_application_template": {
     "uri": "projects/n26-learn-c2c-app-dev-6/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-agent-template",
-    "displayName": "The London Travel Company Architecture",
-    "description": "Architecture for The London Travel Company including Vue 3 frontend, FastAPI backend, Data Syncer, Data MCP, Global LB, Cloud SQL PostgreSQL, and Redis Cache.",
+    "displayName": "Cymbal London Concierge Architecture",
+    "description": "Architecture for Cymbal London Concierge including Vue 3 frontend, FastAPI backend, Data Syncer, Data MCP, Global LB, Cloud SQL PostgreSQL, and Redis Cache.",
     "components": [
       {
         "uri": "projects/n26-learn-c2c-app-dev-6/locations/us-central1/spaces/default-space/applicationTemplates/london-travel-agent-template/components/global-lb-backend",

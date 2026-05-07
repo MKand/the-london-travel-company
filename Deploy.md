@@ -1,6 +1,6 @@
-# London Travel Company - Deployment Guide
+# Cymbal London Concierge - Deployment Guide
 
-This document provides step-by-step instructions for deploying the London Travel Company application using Google Cloud App Design Centre (ADC).
+This document provides step-by-step instructions for deploying the Cymbal London Concierge application using Google Cloud App Design Centre (ADC).
 
 ## Prerequisites
 
@@ -93,13 +93,13 @@ This script will:
 
 **Verify successful import:**
 - Navigate to App Design Centre in the Google Cloud Console
-- Check under Application Templates for `london-travel-company-template`
+- Check under Application Templates for `agentic-app-template`
 
 ---
 
 ## Step 3: Deploy the Application from ADC
 
-1. In App Design Centre, select the `london-travel-company-template`
+1. In App Design Centre, select the `agentic-app-template`
 2. Click **Deploy** or **Create Deployment**
 3. Configure the deployment:
    - Name: `london-travel-deployment`
