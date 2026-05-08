@@ -28,8 +28,7 @@ _, project_id = google.auth.default()
 os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
 os.environ["GOOGLE_CLOUD_LOCATION"] = "global"
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
-os.environ["OTEL_SEMCONV_STABILITY_OPT_IN"] = 'gen_ai_latest_experimental'
-os.environ["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] = 'EVENT_ONLY'
+
 
 def get_weather(query: str) -> str:
     """Simulates a web search. Use it get information on weather.
@@ -74,7 +73,8 @@ root_agent = Agent(
     tools=[get_weather, get_current_time],
 )
 
+# --- Create the App ---
 app = App(
+    name="weather_agent",
     root_agent=root_agent,
-    name="app",
 )

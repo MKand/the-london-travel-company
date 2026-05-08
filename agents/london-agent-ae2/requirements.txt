@@ -1,5 +1,5 @@
 google-cloud-aiplatform>=1.140.0
-google-adk[a2a,otel-gcp]==1.32.0
+google-adk[a2a,otel-gcp]==1.26.0
 google-cloud-logging>=3.13.0
 google-cloud-modelarmor
 pydantic>=2.12.5

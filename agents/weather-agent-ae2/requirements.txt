@@ -1,0 +1,5 @@
+google-cloud-aiplatform>=1.82.0
+google-adk[a2a,otel-gcp]==1.32.0
+pydantic>=2.12.5
+uvicorn>=0.40.0
+fastapi

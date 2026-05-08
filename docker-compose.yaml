@@ -1,114 +1,128 @@
 services:
-  london_agent:
+  # london_agent:
+  #   build:
+  #     context: agents/london-agent-ae2 
+  #     dockerfile: Dockerfile
+  #     args:
+  #       - AGENT_NAME=london_agent
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
+  #     GOOGLE_CLOUD_PROJECT: $PROJECT_ID
+  #     GOOGLE_CLOUD_LOCATION: $LOCATION
+  #     DATA_BACKEND_URL: "http://data_mcp:8002"
+  #     # MODEL_ARMOR_TEMPLATE_NAME: $MODEL_ARMOR_TEMPLATE_NAME
+  #     # REMOTE_TICKET_AGENT_URL: "http://ticket_agent:8000"
+  #     # BIG_QUERY_DATASET_ID: agent_telemetry
+  #     # LOGS_BUCKET_NAME: $LOGS_BUCKET_NAME
+  #   volumes:
+  #     - .key.json:/app/.key.json:ro
+
+  weather_agent:
     build:
-      context: agents 
+      context: agents/weather-agent-ae2 
       dockerfile: Dockerfile
       args:
-        - AGENT_NAME=london_agent
+        - AGENT_NAME=weather_agent
     ports:
-      - "8001:8000"
+      - "8082:8080"
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
       GOOGLE_CLOUD_PROJECT: $PROJECT_ID
       GOOGLE_CLOUD_LOCATION: $LOCATION
-      DATA_BACKEND_URL: "http://data_mcp:8002"
-      MODEL_ARMOR_TEMPLATE_NAME: $MODEL_ARMOR_TEMPLATE_NAME
-      REMOTE_TICKET_AGENT_URL: "http://ticket_agent:8000"
-      BIG_QUERY_DATASET_ID: agent_telemetry
-      LOGS_BUCKET_NAME: $LOGS_BUCKET_NAME
     volumes:
       - .key.json:/app/.key.json:ro
+  # ticket_agent:
+  #   build:
+  #     context: agents/ticket_agent
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8004:8000"
+  #   environment:
+  #     GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
+  #     GOOGLE_CLOUD_PROJECT: $PROJECT_ID
+  #   volumes:
+  #     - .key.json:/app/.key.json:ro
 
-  ticket_agent:
-    build:
-      context: agents/ticket_agent
-      dockerfile: Dockerfile
-    ports:
-      - "8004:8000"
-    environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
-      GOOGLE_CLOUD_PROJECT: $PROJECT_ID
-    volumes:
-      - .key.json:/app/.key.json:ro
+  # data_mcp:
+  #   build:
+  #     context: london_data_mcp
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8002:8002"
+  #   environment:
+  #     GOOGLE_APPLICATION_CREDENTIALS: "/app/.key.json"
+  #     GOOGLE_CLOUD_PROJECT: "${PROJECT_ID}"
+  #     GOOGLE_CLOUD_LOCATION: "${LOCATION}"
+  #     DB_TYPE: "postgres"
+  #     POSTGRES_USER: "user"
+  #     POSTGRES_PASSWORD: "password"
+  #     POSTGRES_DB: "london_travel"
+  #     POSTGRES_HOST: "postgres"
+  #     POSTGRES_PORT: "5432"
+  #   volumes:
+  #     - .key.json:/app/.key.json:ro
+  #   depends_on:
+  #     - postgres
 
-  data_mcp:
-    build:
-      context: london_data_mcp
-      dockerfile: Dockerfile
-    ports:
-      - "8002:8002"
-    environment:
-      GOOGLE_APPLICATION_CREDENTIALS: "/app/.key.json"
-      GOOGLE_CLOUD_PROJECT: "${PROJECT_ID}"
-      GOOGLE_CLOUD_LOCATION: "${LOCATION}"
-      DB_TYPE: "postgres"
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: "london_travel"
-      POSTGRES_HOST: "postgres"
-      POSTGRES_PORT: "5432"
-    volumes:
-      - .key.json:/app/.key.json:ro
-    depends_on:
-      - postgres
+  # # syncer:
+  # #   build:
+  # #     context: data_syncer
+  # #     dockerfile: Dockerfile
+  # #   ports:
+  # #     - "8003:8001"
+  # #   environment:
+  # #     GOOGLE_APPLICATION_CREDENTIALS: "/app/.key.json"
+  # #     GOOGLE_CLOUD_PROJECT: "${PROJECT_ID}"
+  # #     GOOGLE_CLOUD_LOCATION: "${LOCATION}"
+  # #     POSTGRES_USER: "user"
+  # #     POSTGRES_PASSWORD: "password"
+  # #     POSTGRES_DB: "london_travel"
+  # #     POSTGRES_HOST: "postgres"
+  # #     POSTGRES_PORT: "5432"
+  # #   volumes:
+  # #     - .key.json:/app/.key.json:ro
+  # #   depends_on:
+  # #     - postgres
 
-  syncer:
-    build:
-      context: data_syncer
-      dockerfile: Dockerfile
-    ports:
-      - "8003:8001"
-    environment:
-      GOOGLE_APPLICATION_CREDENTIALS: "/app/.key.json"
-      GOOGLE_CLOUD_PROJECT: "${PROJECT_ID}"
-      GOOGLE_CLOUD_LOCATION: "${LOCATION}"
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: "london_travel"
-      POSTGRES_HOST: "postgres"
-      POSTGRES_PORT: "5432"
-    volumes:
-      - .key.json:/app/.key.json:ro
-    depends_on:
-      - postgres
+  # postgres:
+  #   image: pgvector/pgvector:pg16
+  #   environment:
+  #     POSTGRES_USER: "user"
+  #     POSTGRES_PASSWORD: "password"
+  #     POSTGRES_DB: "london_travel"
+  #   ports:
+  #     - "5432:5432"
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U user -d london_travel"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
 
-  postgres:
-    image: pgvector/pgvector:pg16
-    environment:
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: "london_travel"
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user -d london_travel"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+  # frontend:
+  #   build:
+  #     context: frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8081:80"
+  #   environment:
+  #     - API_BASE_URL=http://localhost:8080
+  #   depends_on:
+  #     - london_agent
 
-  frontend:
-    build:
-      context: frontend
-      dockerfile: Dockerfile
-    ports:
-      - "8080:80"
-    environment:
-      - API_BASE_URL=http://localhost:8001
-    depends_on:
-      - london_agent
-
-  fake_user:
-    build:
-      context: fake_user
-    ports:
-      - "8085:8080"
-    environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
-      GOOGLE_CLOUD_PROJECT: $PROJECT_ID
-      GOOGLE_CLOUD_LOCATION: $LOCATION
-      GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
-      LONDON_AGENT_URL: "https://agent-backend-88ee-23134220601.us-central1.run.app"
-    volumes:
-      - .key.json:/app/.key.json:ro
-    depends_on:
-      - london_agent
+  # # fake_user:
+  # #   build:
+  # #     context: fake_user
+  # #   ports:
+  # #     - "8085:8080"
+  # #   environment:
+  # #     GOOGLE_APPLICATION_CREDENTIALS: /app/.key.json
+  # #     GOOGLE_CLOUD_PROJECT: $PROJECT_ID
+  # #     GOOGLE_CLOUD_LOCATION: $LOCATION
+  # #     GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
+  # #     LONDON_AGENT_URL: "https://agent-backend-88ee-23134220601.us-central1.run.app"
+  # #   volumes:
+  # #     - .key.json:/app/.key.json:ro
+  # #   depends_on:
+  # #     - london_agent
