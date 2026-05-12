@@ -1,4 +1,0 @@
-google-cloud-aiplatform[adk,agent_engines]>=1.32.0
-fastapi
-uvicorn
-pydantic
