@@ -17,7 +17,7 @@ import uvicorn
 import logging
 from google.adk.cli.fast_api import get_fast_api_app
 from fastapi import FastAPI
-from weather_agent.agent import root_agent
+from agent.agent import root_agent
 from pydantic import BaseModel
 
 

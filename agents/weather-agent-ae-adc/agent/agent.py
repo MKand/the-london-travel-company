@@ -13,21 +13,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+import vertexai
+from google.adk.agents import LlmAgent
+from vertexai.preview.reasoning_engines import AdkApp
+import google.auth
 import datetime
 from zoneinfo import ZoneInfo
 
-from google.adk.agents import Agent
-from google.adk.apps import App
-from google.adk.models import Gemini
-from google.genai import types
-
-import os
-import google.auth
-
 _, project_id = google.auth.default()
 os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
-os.environ["GOOGLE_CLOUD_LOCATION"] = "global"
+os.environ["GOOGLE_CLOUD_LOCATION"] = "us-central1"
+
+# --- Set Telemetry Environment Variables ---
+# Enables the collection of traces and logs via OpenTelemetry
+os.environ["GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY"] = "true"
+
+# Optional: Enables capturing the actual prompt and response content in traces
+os.environ["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] = "true"
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
+
 
 
 def get_weather(query: str) -> str:
@@ -63,18 +68,15 @@ def get_current_time(query: str) -> str:
     return f"The current time for query {query} is {now.strftime('%Y-%m-%d %H:%M:%S %Z%z')}"
 
 
-root_agent = Agent(
-    name="root_agent",
-    model=Gemini(
-        model="gemini-3-flash-preview",
-        retry_options=types.HttpRetryOptions(attempts=3),
-    ),
+weather_agent = Agent(
+    name="weather_agent",
+    model="gemini-2.5-flash",
+    description="Weather Agent for ADC",
     instruction="You are a helpful AI assistant designed to provide accurate and useful information.",
     tools=[get_weather, get_current_time],
 )
 
-# --- Create the App ---
-app = App(
-    name="weather_agent",
-    root_agent=root_agent,
+app = AdkApp(
+    agent=weather_agent,
+    enable_tracing=True,
 )
