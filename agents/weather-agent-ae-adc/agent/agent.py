@@ -25,6 +25,8 @@ _, project_id = google.auth.default()
 os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
 os.environ["GOOGLE_CLOUD_LOCATION"] = "us-central1"
 
+vertexai.init(project=project_id, location="us-central1")
+
 # --- Set Telemetry Environment Variables ---
 # Enables the collection of traces and logs via OpenTelemetry
 os.environ["GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY"] = "true"
@@ -68,7 +70,7 @@ def get_current_time(query: str) -> str:
     return f"The current time for query {query} is {now.strftime('%Y-%m-%d %H:%M:%S %Z%z')}"
 
 
-weather_agent = Agent(
+weather_agent = LlmAgent(
     name="weather_agent",
     model="gemini-2.5-flash",
     description="Weather Agent for ADC",
@@ -76,7 +78,7 @@ weather_agent = Agent(
     tools=[get_weather, get_current_time],
 )
 
-app = AdkApp(
+root_agent = AdkApp(
     agent=weather_agent,
     enable_tracing=True,
 )
