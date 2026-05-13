@@ -13,20 +13,23 @@
 # limitations under the License.
 
 import logging
-from google.adk.tools.mcp_tool import McpToolset, StreamableHTTPConnectionParams
 from london_agent.auth import get_bearer_token
+from google.adk.integrations.agent_registry import AgentRegistry
 
 from london_agent.config import Config
 
 logger = logging.getLogger(__name__)
 configs = Config()
 
-token = get_bearer_token(configs.data_backend_url)
-
-search_mcp_server_url = f"{configs.data_backend_url}/mcp"
-search_mcp_tool = McpToolset(
-    connection_params=StreamableHTTPConnectionParams(url=search_mcp_server_url,
-    headers={"Authorization": f"Bearer {token}"}),
-    tool_filter = ["search_with_natural_language"],
+registry = AgentRegistry(
+    project_id=configs.project_id,
+    location=configs.location,
 )
 
+mcp_server_name = f"projects/{configs.project_id}/locations/{configs.location}/mcpServers/{configs.london_data_mcp_server_name}"
+
+try:
+    mcp_tool = registry.get_mcp_toolset(mcp_server_name=mcp_server_name)
+except Exception as e:
+    logger.error(f"Error getting MCP toolset for server {mcp_server_name}: {e}", exc_info=True)
+    raise RuntimeError(f"Failed to load MCP toolset from {mcp_server_name}. Ensure the server exists and is accessible.") from e

@@ -1,0 +1,24 @@
+{
+  "tools": [
+    {
+      "name": "search_with_natural_language",
+      "description": "Search for London locations and activities using natural language.\n    \n    Args:\n        query: The natural language query to search for.\n        limit: The maximum number of results to return. Defaults to 10. This needs to be proportional to the number of days.\n            \n    Returns:\n        List[SearchResult]: A list of location or activity search results.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The natural language query to search for.",
+            "default": "fun activities"
+          },
+          "limit": {
+            "type": "number",
+            "description": "The maximum number of results to return. Defaults to 10.",
+            "default": 10
+          }
+        },
+        "required": []
+      }
+    }
+  ]
+}
