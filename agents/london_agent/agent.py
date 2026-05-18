@@ -23,23 +23,15 @@ from london_agent.config import configs
 from london_agent.model_armor_guard import create_model_armor_guard
 from london_agent.prompts import return_instructions_agent
 from london_agent.tools import mcp_tool
+import vertexai
 from vertexai.preview.reasoning_engines import AdkApp
-
-
 import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-_, project_id = google.auth.default()
-os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
-os.environ["GOOGLE_CLOUD_LOCATION"] = "us-central1"
 
-vertexai.init(project=project_id, location="us-central1")
-
-os.environ["GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY"] = "true"
-os.environ["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] = "true"
-os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
+vertexai.init(project=configs.project_id, location=configs.location)
 
 if configs.use_model_armor:
     model_armor_guard = create_model_armor_guard()
@@ -49,6 +41,12 @@ else:
     before_model_callback = None
     after_model_callback = None
 
+tools = []
+if mcp_tool is not None:
+    tools.append(mcp_tool)
+    logger.info(f"Adding MCP toolset")
+else:
+    logger.info(f"Not adding MCP toolset")
 
 # Initialize the agent outside the request handler for efficiency.
 root_agent = Agent(
@@ -57,10 +55,11 @@ root_agent = Agent(
     name=configs.agent_name,
     output_schema = AgentOutput,
     generate_content_config=types.GenerateContentConfig(temperature=0.01),
-    tools=[mcp_tool],
+    tools=tools,
     before_model_callback=before_model_callback,
     after_model_callback=after_model_callback,
 )
+
 
 # --- Create the App ---
 app = AdkApp(

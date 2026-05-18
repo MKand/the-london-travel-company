@@ -13,23 +13,29 @@
 # limitations under the License.
 
 import logging
-from london_agent.auth import get_bearer_token
 from google.adk.integrations.agent_registry import AgentRegistry
-
-from london_agent.config import Config
+from london_agent.config import configs
 
 logger = logging.getLogger(__name__)
-configs = Config()
+mcp_tool = None
 
 registry = AgentRegistry(
     project_id=configs.project_id,
     location=configs.location,
 )
 
+try:
+    logger.info(f"Listing MCP Servers for project {configs.project_id} in location {configs.location}...")
+    mcp_servers_response = registry.list_mcp_servers()
+    for server in mcp_servers_response.get("mcpServers", []):
+        logger.info(f"  - {server.get('name')} ({server.get('displayName')})")
+except Exception as e:
+    logger.error(f"Error listing MCP tools for project {configs.project_id}: {e}", exc_info=True)
+    
 mcp_server_name = f"projects/{configs.project_id}/locations/{configs.location}/mcpServers/{configs.london_data_mcp_server_name}"
-
+logger.info(f"MCP server name: {mcp_server_name}")
 try:
     mcp_tool = registry.get_mcp_toolset(mcp_server_name=mcp_server_name)
+    logger.info(f"Successfully loaded MCP toolset for server {mcp_server_name}")
 except Exception as e:
     logger.error(f"Error getting MCP toolset for server {mcp_server_name}: {e}", exc_info=True)
-    raise RuntimeError(f"Failed to load MCP toolset from {mcp_server_name}. Ensure the server exists and is accessible.") from e

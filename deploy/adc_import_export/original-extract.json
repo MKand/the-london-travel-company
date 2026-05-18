@@ -1,0 +1,21 @@
+{
+  "error": {
+    "code": 401,
+    "message": "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
+    "status": "UNAUTHENTICATED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.DebugInfo",
+        "detail": "Authentication error: 16; Error Details: The account was restricted due to a domain admin's policies. Learn more at https://accounts.google.com/info/servicerestricted?es=ABAdc_jhx0mCxqlSI0KY_tIEGWs4Jr5KxH_uvlG2L050M8xogCuA8cl5EhL-2p1ZNP8PxJNjkKl3YOgBuvL9lxk8jB-4ccZksr69x-zL-NqmWWUYMu9qyXo. Trace ID: 0x68baeae863de02b9"
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "ACCESS_TOKEN_TYPE_UNSUPPORTED",
+        "metadata": {
+          "method": "google.cloud.designcenter.v1alpha.DesignCenter.GetApplicationTemplate",
+          "service": "designcenter.googleapis.com"
+        }
+      }
+    ]
+  }
+}

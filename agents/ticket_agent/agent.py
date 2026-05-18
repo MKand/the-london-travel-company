@@ -1,5 +1,6 @@
 import os
 import google.auth
+import vertexai
 from google.adk.agents import Agent
 from vertexai.preview.reasoning_engines import AdkApp
 

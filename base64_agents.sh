@@ -19,12 +19,15 @@ for agent_path in "$AGENTS_DIR"/*; do
         rm -f "$agent_path"/.*.tar.gz
         rm -f "$agent_path"/.*.tar.gz.b64
         
-        # Create tarball, excluding large/unnecessary directories
+        # Create tarball in parent directory, excluding large/unnecessary directories
         # Using -C to avoid full paths in tarball
-        tar --exclude=".venv" --exclude="__pycache__" --exclude=".adk" -czf "$agent_path/.$agent_name.tar.gz" -C "$AGENTS_DIR" "$agent_name"
+        tar --exclude=".venv" --exclude="__pycache__" --exclude=".adk" -czf "$AGENTS_DIR/.$agent_name.tar.gz" -C "$AGENTS_DIR" "$agent_name"
         
         # Base64 encode
-        base64 -w 0 "$agent_path/.$agent_name.tar.gz" > "$agent_path/.$agent_name.tar.gz.b64"
+        base64 -w 0 "$AGENTS_DIR/.$agent_name.tar.gz" > "$agent_path/.$agent_name.tar.gz.b64"
+        
+        # Clean up temporary tarball
+        rm -f "$AGENTS_DIR/.$agent_name.tar.gz"
         
         echo "Created $agent_path/.$agent_name.tar.gz.b64"
     fi
