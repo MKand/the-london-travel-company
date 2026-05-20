@@ -11,6 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import logging
+import os
+from london_agent.config import configs
 
 from google.adk.agents import Agent
 from google.adk.apps import App
@@ -19,17 +22,19 @@ from google.adk.tools import load_memory
 
 import google.auth
 from london_agent.types import AgentOutput
-from london_agent.config import configs
 from london_agent.model_armor_guard import create_model_armor_guard
 from london_agent.prompts import return_instructions_agent
 from london_agent.tools import mcp_tool
 import vertexai
 from vertexai.preview.reasoning_engines import AdkApp
+
 import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
+logger.info("GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES is %s", os.environ.get("GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES"))
 
 vertexai.init(project=configs.project_id, location=configs.location)
 
@@ -59,7 +64,6 @@ root_agent = Agent(
     before_model_callback=before_model_callback,
     after_model_callback=after_model_callback,
 )
-
 
 # --- Create the App ---
 app = AdkApp(

@@ -31,12 +31,12 @@ LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 
 # Set the location for the Vertex AI client
 # https://docs.cloud.google.com/stackdriver/docs/instrumentation/ai-agent-adk#configure
+os.environ["GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES"] = "false"
 os.environ["GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY"] = "true"
 os.environ["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] = "true"
 os.environ["OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED"] = "true"
 os.environ["ADK_CAPTURE_MESSAGE_CONTENT_IN_SPANS"] = "true"
 os.environ["OTEL_SERVICE_NAME"] = "cymbal-london-concierge-agent"
-os.environ["GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES"] = "false"
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
 
 # Default values for the agent
